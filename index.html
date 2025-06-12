@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- 1 -->
+<head> <!-- 2 -->
+  <meta charset="UTF-8" /> <!-- 3 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- 4 -->
+  <title>Jeffston Court Hostel</title> <!-- 5 -->
+  <link rel="stylesheet" href="style.css" /> <!-- 6 -->
+
+  <!-- AOS CSS for animations -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" /> <!-- new CSS -->
+
+  <!-- Paystack inline SDK -->
+  <script src="https://js.paystack.co/v1/inline.js" defer></script> <!-- new SDK -->
+
+  <script defer src="script.js"></script> <!-- 7 -->
+
+  <!-- AOS script -->
+  <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> <!-- new script -->
+</head> <!-- 8 -->
+
+<body> <!-- 9 -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header role="banner" class="navbar"> <!-- 11 -->
+    <div class="navbar-inner">
+      <a href="#home" class="logo" aria-label="Go to Home">
+        <img src="Assets/images/logo2.jpg" alt="Jeffston Court Hostel Logo" width="40" height="40" loading="lazy">
+        <span class="logo-text">JCH</span>
+      </a>
+
+      <button id="mobile-menu" class="nav-toggle" aria-label="Toggle navigation" aria-controls="primary-navigation" aria-expanded="false">
+        <span class="hamburger"></span>
+      </button>
+
+      <nav id="primary-navigation" class="nav-links" role="navigation" aria-label="Primary">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#facilities">Facilities</a></li>
+          <li><a href="#rooms">Rooms</a></li>
+          <li><a href="#booking">Booking</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" role="main">
+    <!-- HERO SECTION -->
+    <section id="home" class="hero" aria-labelledby="hero-heading">
+      <div class="hero-wrapper">
+        <picture class="hero-picture">
+          <source media="(max-width:768px)" srcset="Assets/images/banner-small.webp">
+          <source media="(min-width:769px)" srcset="Assets/images/banner.webp">
+          <img src="Assets/images/banner.webp" alt="Students at Jeffston Court Hostel" class="hero-img" loading="eager">
+        </picture>
+        <div class="hero-content" data-aos="fade-up">
+          <h1 id="hero-heading">Welcome to Jeffston Court Hostel</h1>
+          <p>Your modern student accommodation in Adenta</p>
+          <a href="#booking" class="btn btn-primary" role="button">Book a Room</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="about-section" aria-labelledby="about-heading">
+      <h2 id="about-heading" class="visually-hidden">About Jeffston Court Hostel</h2>
+      <div class="about-container" data-aos="fade-up">
+        <div class="about-text">
+          <h2>About Jeffston Court Hostel</h2>
+          <p>At Jeffston Court Hostel, we’re redefining student living by offering a home away from home. Located in the peaceful Adenta Court Complex, our facility is tailored for students seeking comfort, safety, and academic focus in Accra.</p>
+          <p>Our rooms are fully furnished, air-conditioned, and equipped with Smart TVs and study essentials. We offer high-speed Wi-Fi, uninterrupted power and water, and shared kitchens to make life convenient for every resident.</p>
+          <p>With added benefits like on-site transport, 24/7 staff support, and wellness partnerships for gym, medical, and food services, Jeffston Court Hostel ensures you're supported throughout your stay.</p>
+        </div>
+        <div class="about-image" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- FACILITIES SECTION -->
+    <section id="facilities" class="facilities-section" aria-labelledby="facilities-heading">
+      <h2 id="facilities-heading" data-aos="fade-up">Our Facilities</h2>
+      <div class="facilities-grid">
+        <article class="facility-box facility-modern" role="region" aria-labelledby="fac-modern" data-aos="fade-up" data-aos-delay="100">
+          <h3 id="fac-modern">Modern Living Spaces</h3>
+          <p>Air-conditioned rooms and Smart TVs with Netflix & DSTV for your comfort.</p>
+        </article>
+        <article class="facility-box facility-common" role="region" aria-labelledby="fac-common" data-aos="fade-up" data-aos-delay="200">
+          <h3 id="fac-common">Spacious Common Area</h3>
+          <p>Comfortable lounge where residents can relax, study, or socialize.</p>
+        </article>
+        <article class="facility-box facility-exec" role="region" aria-labelledby="fac-exec" data-aos="fade-up" data-aos-delay="300">
+          <h3 id="fac-exec">Dining & Kitchen Facilities</h3>
+          <p>Fully equipped kitchen and dining area with fridge, microwave, and more.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ROOMS SECTION -->
+    <section id="rooms" class="rooms-section" aria-labelledby="rooms-heading">
+      <h2 id="rooms-heading" data-aos="fade-up">Room Options</h2>
+      <div class="rooms-grid">
+        <article class="room-card" role="region" aria-labelledby="room-budget" data-aos="fade-up" data-aos-delay="100">
+          <figure>
+            <img src="Assets/images/bedroom1.jpg" alt="Two students sharing a budget room">
+            <figcaption><h3 id="room-budget">2-in-a-Room (Budget)</h3></figcaption>
+          </figure>
+          <p>Perfect for students on a budget. Shared bathroom, furnished, and well‑ventilated with ceiling fans.</p>
+        </article>
+        <article class="room-card" role="region" aria-labelledby="room-standard" data-aos="fade-up" data-aos-delay="200">
+          <figure>
+            <img src="Assets/images/bedroom2.jpg" alt="Four students in a standard room">
+            <figcaption><h3 id="room-standard">4-in-a-Room (Standard)</h3></figcaption>
+          </figure>
+          <p>Spacious and air‑conditioned with Smart TV and shared study desks. Ideal for group study.</p>
+        </article>
+        <article class="room-card" role="region" aria-labelledby="room-exec" data-aos="fade-up" data-aos-delay="300">
+          <figure>
+            <img src="Assets/images/liv2.jpg" alt="Executive room interior">
+            <figcaption><h3 id="room-exec">Executive Room</h3></figcaption>
+          </figure>
+          <p>Premium private rooms offering extra space, privacy, and top‑tier amenities.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- BOOKING SECTION -->
+    <section id="booking" class="booking-section" aria-labelledby="booking-heading">
+      <h2 id="booking-heading" data-aos="fade-up">Book a Room</h2>
+      <form id="booking-form" class="booking-form" action="#" method="post" novalidate>
+        <fieldset>
+          <!-- Personal info fields -->
+          <legend>Personal Information</legend>
+          <label for="fullName">Full Name</label>
+          <input id="fullName" type="text" name="fullName" placeholder="John Doe" required aria-describedby="error-fullName">
+          <span id="error-fullName" class="error-message" role="alert"></span>
+
+          <label for="email">Email Address</label>
+          <input id="email" type="email" name="email" placeholder="you@example.com" required aria-describedby="error-email">
+          <span id="error-email" class="error-message" role="alert"></span>
+
+          <label for="phone">Phone Number</label>
+          <input id="phone" type="tel" name="phone" placeholder="+233 123 456 789" required aria-describedby="error-phone">
+          <span id="error-phone" class="error-message" role="alert"></span>
+        </fieldset>
+
+        <fieldset>
+          <!-- Booking details -->
+          <legend>Booking Details</legend>
+          <label for="roomType">Room Type</label>
+          <select id="roomType" name="roomType" required aria-describedby="error-roomType">
+            <option value="" disabled selected>Select Room Type</option>
+            <option value="2-in-a-room">2-in-a-Room (Budget)</option>
+            <option value="4-in-a-room">4-in-a-Room (Standard)</option>
+            <option value="executive">Executive Room</option>
+          </select>
+          <span id="error-roomType" class="error-message" role="alert"></span>
+
+          <label for="duration">Duration</label>
+          <select id="duration" name="duration" required aria-describedby="error-duration">
+            <option value="" disabled selected>Select Duration</option>
+            <option value="1-month">1 Month</option>
+            <option value="3-months">3 Months</option>
+            <option value="academic-year">Academic Year</option>
+          </select>
+          <span id="error-duration" class="error-message" role="alert"></span>
+        </fieldset>
+
+        <input type="hidden" name="paystackKey" value="YOUR_PUBLIC_KEY">
+        <input type="hidden" name="amountInKobo" id="amountInKobo" value="">
+        <input type="hidden" name="bookingReference" id="bookingRef" value="">
+
+        <button type="button" class="btn btn-primary" id="paystack-trigger">Proceed to Payment</button>
+      </form>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact-section" aria-labelledby="contact-heading">
+      <h2 id="contact-heading" data-aos="fade-up">Contact Us</h2>
+      <div class="contact-container">
+        <form class="contact-form" action="#" method="post" novalidate>
+          <fieldset>
+            <legend>Your Message</legend>
+            <label for="contactName">Name</label>
+            <input id="contactName" type="text" name="contactName" placeholder="Jane Smith" required>
+            <label for="contactEmail">Email</label>
+            <input id="contactEmail" type="email" name="contactEmail" placeholder="you@example.com" required>
+            <label for="contactPhone">Phone</label>
+            <input id="contactPhone" type="tel" name="contactPhone" placeholder="+233 987 654 321">
+            <label for="contactMessage">Message</label>
+            <textarea id="contactMessage" name="contactMessage" rows="5" placeholder="How can we help you?" required></textarea>
+          </fieldset>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+
+        <aside class="map-container" role="complementary" aria-label="Location map">
+          <iframe
+            title="Map of Jeffston Court Hostel"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3969.9659927402618!2d-0.161464!3d5.7180379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9d6fb7bd4b43%3A0xc48d1a5c5f6f085a!2sJeffston%20Court%20Hostel!5e0!3m2!1sen!2suk!4v1748303937640!5m2!1sen!2suk"
+            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo" class="footer" data-aos="fade-up">
+    <div class="footer-container">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <ul class="footer-column" role="group" aria-labelledby="footer-about">
+          <li id="footer-about"><h3>About Us</h3></li>
+          <li><a href="#">How It Works</a></li>  
+          <li><a href="#">Testimonials</a></li>  
+          <li><a href="#">Careers</a></li>
+        </ul>
+        <ul class="footer-column" role="group" aria-labelledby="footer-services">
+          <li id="footer-services"><h3>Services</h3></li>
+          <li><a href="#">Room Booking</a></li>
+          <li><a href="#">Laundry</a></li>
+          <li><a href="#">Transport</a></li>
+        </ul>
+        <ul class="footer-column" role="group" aria-labelledby="footer-legal">
+          <li id="footer-legal"><h3>Legal</h3></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Code of Conduct</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-bottom">
+        <a href="#home" class="footer-logo" aria-label="Back to top">
+          <i class="fas fa-gem" aria-hidden="true"></i>
+          <span>JCH</span>
+        </a>
+        <p class="footer-copy">© 2025 Jeffston Court Hostel. All rights reserved.</p>
+        <div class="footer-social" role="menu" aria-label="Social links">
+          <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AOS.init({ duration: 600, once: true });
+    });
+  </script>
+</body>
+</html>
