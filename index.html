@@ -120,7 +120,8 @@
 <!-- BOOKING SECTION -->
 <section id="booking" class="booking-section" aria-labelledby="booking-heading">
   <h2 id="booking-heading" data-aos="fade-up">Book a Room</h2>
-  <form id="booking-form" class="booking-form" action="#" method="post" novalidate>
+  <form id="booking-form" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="booking-form">
+  <input type="hidden" name="form-name" value="booking" />
     <fieldset>
       <!-- Personal info fields -->
       <legend>Personal Information</legend>
@@ -176,10 +177,17 @@
   <h2 id="contact-heading" data-aos="fade-up">Contact Us</h2>
   <div class="contact-container">
     
-    <!-- Netlify Form: Add name, data-netlify, and hidden form-name field -->
-    <form class="contact-form" name="contact" method="post" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+    <!-- Netlify Contact Form -->
+    <form 
+      class="contact-form" 
+      name="contact" 
+      method="POST" 
+      data-netlify="true" 
+      netlify-honeypot="bot-field"
+    >
       <!-- Hidden input for Netlify: identifies the form -->
-      <input type="hidden" name="form-name" value="contact">
+      <input type="hidden" name="form-name" value="contact" />
+
       <!-- Honeypot field for spam prevention (hidden from users) -->
       <p hidden>
         <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
@@ -187,17 +195,18 @@
 
       <fieldset>
         <legend>Your Message</legend>
+
         <label for="contactName">Name</label>
-        <input id="contactName" type="text" name="contactName" placeholder="Jane Smith" required>
-        
+        <input id="contactName" type="text" name="name" placeholder="Jane Smith" required />
+
         <label for="contactEmail">Email</label>
-        <input id="contactEmail" type="email" name="contactEmail" placeholder="you@example.com" required>
-        
+        <input id="contactEmail" type="email" name="email" placeholder="you@example.com" required />
+
         <label for="contactPhone">Phone</label>
-        <input id="contactPhone" type="tel" name="contactPhone" placeholder="+233 987 654 321">
-        
+        <input id="contactPhone" type="tel" name="phone" placeholder="+233 987 654 321" />
+
         <label for="contactMessage">Message</label>
-        <textarea id="contactMessage" name="contactMessage" rows="5" placeholder="How can we help you?" required></textarea>
+        <textarea id="contactMessage" name="message" rows="5" placeholder="How can we help you?" required></textarea>
       </fieldset>
       
       <button type="submit" class="btn btn-primary">Send Message</button>
