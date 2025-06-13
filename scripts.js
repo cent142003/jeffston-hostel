@@ -65,7 +65,6 @@ function onScroll() {
   });
 }
 
-// Attach events
 menuBtn.addEventListener('click', toggleMenu);
 navAnchors.forEach(link => {
   link.addEventListener('click', () => {
@@ -75,32 +74,38 @@ navAnchors.forEach(link => {
   });
 });
 window.addEventListener('scroll', onScroll);
-document.addEventListener('DOMContentLoaded', onScroll); // Initial highlight
+document.addEventListener('DOMContentLoaded', onScroll);
 
 // ============================================================================
 // 2. Paystack Integration
 // ============================================================================
 
-const bookingForm = document.querySelector('.booking-form');
+const bookingForm = document.querySelector('#booking-form');
 const payBtn = document.querySelector('#paystack-trigger');
 
-// Toggle loading state
-function setLoading(isLoading) {
-  payBtn.disabled = isLoading;
-  payBtn.classList.toggle('loading', isLoading);
-}
-
-// Calculate price based on duration
+// Determine amount in kobo from duration
 function calculateAmount(duration) {
   switch (duration) {
-    case 'academic-year': return 120000; // GHS 1200
+    case 'academic-year': return 120000;  // GHS 1200
     case '3-months': return 90000;
     case '1-month': return 35000;
     default: return 0;
   }
 }
 
-// Paystack flow
+// Update amount hidden field when user selects duration
+const durationInput = document.querySelector('#duration');
+if (durationInput) {
+  durationInput.addEventListener('change', function () {
+    const amount = calculateAmount(this.value) * 100; // convert to kobo
+    const amountField = document.querySelector('#amountInKobo');
+    if (amountField) {
+      amountField.value = amount;
+    }
+  });
+}
+
+// Launch Paystack
 function openPaystack() {
   const formData = new FormData(bookingForm);
 
@@ -109,56 +114,46 @@ function openPaystack() {
   const phone = formData.get('phone');
   const roomType = formData.get('roomType');
   const duration = formData.get('duration');
-  const amount = calculateAmount(duration);
+  const amount = calculateAmount(duration) * 100;
 
   if (!email || !fullName || !phone || !roomType || !duration || amount === 0) {
-    alert('Please complete all required fields.');
+    alert('Please complete all booking fields before payment.');
     return;
   }
 
-  setLoading(true);
-
   const handler = PaystackPop.setup({
-    key: 'pk_test_your_public_key_here', // Replace with your real public key
+    key: 'pk_live_9302b8356f0551937a496101908e2eb772328962', // Your live public key
     email,
     amount,
     currency: 'GHS',
     metadata: {
       custom_fields: [
         { display_name: 'Full Name', value: fullName },
-        { display_name: 'Phone', value: phone },
+        { display_name: 'Phone Number', value: phone },
         { display_name: 'Room Type', value: roomType },
         { display_name: 'Duration', value: duration }
       ]
     },
     callback: function (response) {
-      alert(`Payment complete! Reference: ${response.reference}`);
+      alert(`✅ Payment successful! Reference: ${response.reference}`);
       bookingForm.reset();
-      setLoading(false);
     },
     onClose: function () {
-      setLoading(false);
-      alert('Payment was not completed.');
+      alert('Payment window closed.');
     }
   });
 
   handler.openIframe();
 }
 
-// Attach Paystack button event
+// Attach Paystack button
 payBtn.addEventListener('click', openPaystack);
 
 // ============================================================================
-// 3. Optional: Animate On Scroll Library Setup (AOS)
+// 3. Animate On Scroll Initialization
 // ============================================================================
-
-/* Added here */
 document.addEventListener('DOMContentLoaded', function () {
   if (window.AOS) {
-    AOS.init({
-      duration: 800,
-      easing: 'ease-in-out',
-      once: true
-    });
+    AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
   }
 });

@@ -17,7 +17,6 @@
   <!-- AOS script -->
   <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> <!-- new script -->
 </head> <!-- 8 -->
-
 <body> <!-- 9 -->
   <a class="skip-link" href="#main">Skip to main content</a>
 
@@ -47,20 +46,13 @@
 
   <main id="main" role="main">
     <!-- HERO SECTION -->
-    <section id="home" class="hero" aria-labelledby="hero-heading">
-      <div class="hero-wrapper">
-        <picture class="hero-picture">
-          <source media="(max-width:768px)" srcset="Assets/images/banner-small.webp">
-          <source media="(min-width:769px)" srcset="Assets/images/banner.webp">
-          <img src="Assets/images/banner.webp" alt="Students at Jeffston Court Hostel" class="hero-img" loading="eager">
-        </picture>
-        <div class="hero-content" data-aos="fade-up">
-          <h1 id="hero-heading">Welcome to Jeffston Court Hostel</h1>
-          <p>Your modern student accommodation in Adenta</p>
-          <a href="#booking" class="btn btn-primary" role="button">Book a Room</a>
-        </div>
-      </div>
-    </section>
+<section id="home" class="hero" aria-labelledby="hero-heading" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('Assets/images/HERO.png') center/cover no-repeat;">
+  <div class="hero-content" data-aos="fade-up">
+    <h1 id="hero-heading">Welcome to Jeffston Court Hostel</h1>
+    <p>Your modern student accommodation in Adenta</p>
+    <a href="#booking" class="btn btn-primary" role="button">Book a Room</a>
+  </div>
+</section>
 
     <!-- ABOUT SECTION -->
     <section id="about" class="about-section" aria-labelledby="about-heading">
@@ -123,28 +115,27 @@
       </div>
     </section>
 
-    <!-- BOOKING SECTION -->
-    <section id="booking" class="booking-section" aria-labelledby="booking-heading">
-      <h2 id="booking-heading" data-aos="fade-up">Book a Room</h2>
-      <form id="booking-form" class="booking-form" action="#" method="post" novalidate>
-        <fieldset>
-          <!-- Personal info fields -->
-          <legend>Personal Information</legend>
-          <label for="fullName">Full Name</label>
-          <input id="fullName" type="text" name="fullName" placeholder="John Doe" required aria-describedby="error-fullName">
-          <span id="error-fullName" class="error-message" role="alert"></span>
+ <!-- BOOKING SECTION -->
+<section id="booking" class="booking-section" aria-labelledby="booking-heading">
+  <h2 id="booking-heading" data-aos="fade-up">Book a Room</h2>
+  <form id="booking-form" class="booking-form" action="#" method="post" novalidate>
+    <fieldset>
+      <!-- Personal info fields -->
+      <legend>Personal Information</legend>
+      <label for="fullName">Full Name</label>
+      <input id="fullName" type="text" name="fullName" placeholder="John Doe" required aria-describedby="error-fullName">
+      <span id="error-fullName" class="error-message" role="alert"></span>
 
-          <label for="email">Email Address</label>
-          <input id="email" type="email" name="email" placeholder="you@example.com" required aria-describedby="error-email">
-          <span id="error-email" class="error-message" role="alert"></span>
+      <label for="email">Email Address</label>
+      <input id="email" type="email" name="email" placeholder="you@example.com" required aria-describedby="error-email">
+      <span id="error-email" class="error-message" role="alert"></span>
 
-          <label for="phone">Phone Number</label>
-          <input id="phone" type="tel" name="phone" placeholder="+233 123 456 789" required aria-describedby="error-phone">
-          <span id="error-phone" class="error-message" role="alert"></span>
-        </fieldset>
-
-        <fieldset>
-          <!-- Booking details -->
+      <label for="phone">Phone Number</label>
+      <input id="phone" type="tel" name="phone" placeholder="+233 123 456 789" required aria-describedby="error-phone">
+      <span id="error-phone" class="error-message" role="alert"></span>
+    </fieldset>
+    <fieldset>
+      <!-- Booking details -->
           <legend>Booking Details</legend>
           <label for="roomType">Room Type</label>
           <select id="roomType" name="roomType" required aria-describedby="error-roomType">
