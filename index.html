@@ -12,7 +12,7 @@
   <!-- Paystack inline SDK -->
   <script src="https://js.paystack.co/v1/inline.js" defer></script> <!-- new SDK -->
 
-  <script defer src="script.js"></script> <!-- 7 -->
+  <script defer src="scripts.js"></script> <!-- 7 -->
 
   <!-- AOS script -->
   <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> <!-- new script -->
@@ -87,35 +87,37 @@
       </div>
     </section>
 
-    <!-- ROOMS SECTION -->
-    <section id="rooms" class="rooms-section" aria-labelledby="rooms-heading">
-      <h2 id="rooms-heading" data-aos="fade-up">Room Options</h2>
-      <div class="rooms-grid">
-        <article class="room-card" role="region" aria-labelledby="room-budget" data-aos="fade-up" data-aos-delay="100">
-          <figure>
-            <img src="Assets/images/bedroom1.jpg" alt="Two students sharing a budget room">
-            <figcaption><h3 id="room-budget">2-in-a-Room (Budget)</h3></figcaption>
-          </figure>
-          <p>Perfect for students on a budget. Shared bathroom, furnished, and well‑ventilated with ceiling fans.</p>
-        </article>
-        <article class="room-card" role="region" aria-labelledby="room-standard" data-aos="fade-up" data-aos-delay="200">
-          <figure>
-            <img src="Assets/images/bedroom2.jpg" alt="Four students in a standard room">
-            <figcaption><h3 id="room-standard">4-in-a-Room (Standard)</h3></figcaption>
-          </figure>
-          <p>Spacious and air‑conditioned with Smart TV and shared study desks. Ideal for group study.</p>
-        </article>
-        <article class="room-card" role="region" aria-labelledby="room-exec" data-aos="fade-up" data-aos-delay="300">
-          <figure>
-            <img src="Assets/images/liv2.jpg" alt="Executive room interior">
-            <figcaption><h3 id="room-exec">Executive Room</h3></figcaption>
-          </figure>
-          <p>Premium private rooms offering extra space, privacy, and top‑tier amenities.</p>
-        </article>
-      </div>
-    </section>
+   <!-- ROOMS SECTION -->
+<section id="rooms" class="rooms-section" aria-labelledby="rooms-heading">
+  <h2 id="rooms-heading" data-aos="fade-up">Room Options</h2>
+  <div class="rooms-grid">
+    <article class="room-card" role="region" aria-labelledby="room-budget" data-aos="fade-up" data-aos-delay="100">
+      <figure>
+        <img src="Assets/images/bedroom1.jpg" alt="Two students sharing a budget room">
+        <figcaption><h3 id="room-budget">2-in-a-Room (Budget)</h3></figcaption>
+      </figure>
+      <p>Room 1: Meant for 2 students, but currently occupied by 1 with a discount. Room 2: GHS 4,250 per semester, flexible 22-week plan offered.</p>
+    </article>
 
- <!-- BOOKING SECTION -->
+    <article class="room-card" role="region" aria-labelledby="room-premium" data-aos="fade-up" data-aos-delay="200">
+      <figure>
+        <img src="Assets/images/bedroom2.jpg" alt="Three students sharing a premium room">
+        <figcaption><h3 id="room-premium">3-in-a-Room (Premium)</h3></figcaption>
+      </figure>
+      <p>Room 3: Shared by 3 students at GHS 3,800 each for the 4-month semester. Room 5: Another 3-in-a-room at GHS 5,500 each for more amenities.</p>
+    </article>
+
+    <article class="room-card" role="region" aria-labelledby="room-standard" data-aos="fade-up" data-aos-delay="300">
+      <figure>
+        <img src="Assets/images/liv2.jpg" alt="Standard 4-in-a-room setup">
+        <figcaption><h3 id="room-standard">4-in-a-Room (Standard)</h3></figcaption>
+      </figure>
+      <p>Room 4: Occupied by 2 students at GHS 4,300 per semester. Room 6: Typical 4-person suite. Room 7: Fully booked at GHS 4,700 per occupant.</p>
+    </article>
+  </div>
+</section>
+
+<!-- BOOKING SECTION -->
 <section id="booking" class="booking-section" aria-labelledby="booking-heading">
   <h2 id="booking-heading" data-aos="fade-up">Book a Room</h2>
   <form id="booking-form" class="booking-form" action="#" method="post" novalidate>
@@ -134,108 +136,80 @@
       <input id="phone" type="tel" name="phone" placeholder="+233 123 456 789" required aria-describedby="error-phone">
       <span id="error-phone" class="error-message" role="alert"></span>
     </fieldset>
+
     <fieldset>
       <!-- Booking details -->
-          <legend>Booking Details</legend>
-          <label for="roomType">Room Type</label>
-          <select id="roomType" name="roomType" required aria-describedby="error-roomType">
-            <option value="" disabled selected>Select Room Type</option>
-            <option value="2-in-a-room">2-in-a-Room (Budget)</option>
-            <option value="4-in-a-room">4-in-a-Room (Standard)</option>
-            <option value="executive">Executive Room</option>
-          </select>
-          <span id="error-roomType" class="error-message" role="alert"></span>
+      <legend>Booking Details</legend>
+      <label for="roomType">Room Type</label>
+      <select id="roomType" name="roomType" required aria-describedby="error-roomType">
+        <option value="" disabled selected>Select Room Type</option>
+        <option value="room1">Room 1 – Discounted Solo Occupancy</option>
+        <option value="room2">Room 2 – GHS 4250 / Semester</option>
+        <option value="room3">Room 3 – GHS 3800 / Semester</option>
+        <option value="room4">Room 4 – GHS 4300 / Semester</option>
+        <option value="room5">Room 5 – GHS 5500 / Semester</option>
+        <option value="room6">Room 6 – Standard Shared Room</option>
+        <option value="room7">Room 7 – GHS 4700 / Semester</option>
+      </select>
+      <span id="error-roomType" class="error-message" role="alert"></span>
 
-          <label for="duration">Duration</label>
-          <select id="duration" name="duration" required aria-describedby="error-duration">
-            <option value="" disabled selected>Select Duration</option>
-            <option value="1-month">1 Month</option>
-            <option value="3-months">3 Months</option>
-            <option value="academic-year">Academic Year</option>
-          </select>
-          <span id="error-duration" class="error-message" role="alert"></span>
-        </fieldset>
+      <label for="duration">Duration</label>
+      <select id="duration" name="duration" required aria-describedby="error-duration">
+        <option value="" disabled selected>Select Duration</option>
+        <option value="22-weeks">22 Weeks</option>
+        <option value="1-semester">1 Semester (4 months)</option>
+        <option value="academic-year">Academic Year</option>
+      </select>
+      <span id="error-duration" class="error-message" role="alert"></span>
+    </fieldset>
 
-        <input type="hidden" name="paystackKey" value="YOUR_PUBLIC_KEY">
-        <input type="hidden" name="amountInKobo" id="amountInKobo" value="">
-        <input type="hidden" name="bookingReference" id="bookingRef" value="">
+    <input type="hidden" name="paystackKey" value="YOUR_PUBLIC_KEY">
+    <input type="hidden" name="amountInKobo" id="amountInKobo" value="">
+    <input type="hidden" name="bookingReference" id="bookingRef" value="">
 
-        <button type="button" class="btn btn-primary" id="paystack-trigger">Proceed to Payment</button>
-      </form>
-    </section>
+    <button type="button" class="btn btn-primary" id="paystack-trigger">Proceed to Payment</button>
+  </form>
+</section>
 
-    <!-- CONTACT SECTION -->
-    <section id="contact" class="contact-section" aria-labelledby="contact-heading">
-      <h2 id="contact-heading" data-aos="fade-up">Contact Us</h2>
-      <div class="contact-container">
-        <form class="contact-form" action="#" method="post" novalidate>
-          <fieldset>
-            <legend>Your Message</legend>
-            <label for="contactName">Name</label>
-            <input id="contactName" type="text" name="contactName" placeholder="Jane Smith" required>
-            <label for="contactEmail">Email</label>
-            <input id="contactEmail" type="email" name="contactEmail" placeholder="you@example.com" required>
-            <label for="contactPhone">Phone</label>
-            <input id="contactPhone" type="tel" name="contactPhone" placeholder="+233 987 654 321">
-            <label for="contactMessage">Message</label>
-            <textarea id="contactMessage" name="contactMessage" rows="5" placeholder="How can we help you?" required></textarea>
-          </fieldset>
-          <button type="submit" class="btn btn-primary">Send Message</button>
-        </form>
+   <!-- CONTACT SECTION -->
+<section id="contact" class="contact-section" aria-labelledby="contact-heading">
+  <h2 id="contact-heading" data-aos="fade-up">Contact Us</h2>
+  <div class="contact-container">
+    
+    <!-- Netlify Form: Add name, data-netlify, and hidden form-name field -->
+    <form class="contact-form" name="contact" method="post" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <!-- Hidden input for Netlify: identifies the form -->
+      <input type="hidden" name="form-name" value="contact">
+      <!-- Honeypot field for spam prevention (hidden from users) -->
+      <p hidden>
+        <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+      </p>
 
-        <aside class="map-container" role="complementary" aria-label="Location map">
-          <iframe
-            title="Map of Jeffston Court Hostel"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3969.9659927402618!2d-0.161464!3d5.7180379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9d6fb7bd4b43%3A0xc48d1a5c5f6f085a!2sJeffston%20Court%20Hostel!5e0!3m2!1sen!2suk!4v1748303937640!5m2!1sen!2suk"
-            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </aside>
-      </div>
-    </section>
-  </main>
+      <fieldset>
+        <legend>Your Message</legend>
+        <label for="contactName">Name</label>
+        <input id="contactName" type="text" name="contactName" placeholder="Jane Smith" required>
+        
+        <label for="contactEmail">Email</label>
+        <input id="contactEmail" type="email" name="contactEmail" placeholder="you@example.com" required>
+        
+        <label for="contactPhone">Phone</label>
+        <input id="contactPhone" type="tel" name="contactPhone" placeholder="+233 987 654 321">
+        
+        <label for="contactMessage">Message</label>
+        <textarea id="contactMessage" name="contactMessage" rows="5" placeholder="How can we help you?" required></textarea>
+      </fieldset>
+      
+      <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
 
-  <footer role="contentinfo" class="footer" data-aos="fade-up">
-    <div class="footer-container">
-      <nav class="footer-links" aria-label="Footer navigation">
-        <ul class="footer-column" role="group" aria-labelledby="footer-about">
-          <li id="footer-about"><h3>About Us</h3></li>
-          <li><a href="#">How It Works</a></li>  
-          <li><a href="#">Testimonials</a></li>  
-          <li><a href="#">Careers</a></li>
-        </ul>
-        <ul class="footer-column" role="group" aria-labelledby="footer-services">
-          <li id="footer-services"><h3>Services</h3></li>
-          <li><a href="#">Room Booking</a></li>
-          <li><a href="#">Laundry</a></li>
-          <li><a href="#">Transport</a></li>
-        </ul>
-        <ul class="footer-column" role="group" aria-labelledby="footer-legal">
-          <li id="footer-legal"><h3>Legal</h3></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Code of Conduct</a></li>
-        </ul>
-      </nav>
-
-      <div class="footer-bottom">
-        <a href="#home" class="footer-logo" aria-label="Back to top">
-          <i class="fas fa-gem" aria-hidden="true"></i>
-          <span>JCH</span>
-        </a>
-        <p class="footer-copy">© 2025 Jeffston Court Hostel. All rights reserved.</p>
-        <div class="footer-social" role="menu" aria-label="Social links">
-          <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      AOS.init({ duration: 600, once: true });
-    });
-  </script>
-</body>
-</html>
+    <aside class="map-container" role="complementary" aria-label="Location map">
+      <iframe
+        title="Map of Jeffston Court Hostel"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3969.9659927402618!2d-0.161464!3d5.7180379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9d6fb7bd4b43%3A0xc48d1a5c5f6f085a!2sJeffston%20Court%20Hostel!5e0!3m2!1sen!2suk!4v1748303937640!5m2!1sen!2suk"
+        allowfullscreen loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </aside>
+  </div>
+</section>
