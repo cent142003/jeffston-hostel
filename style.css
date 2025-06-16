@@ -266,7 +266,11 @@
   .about-text {
     flex: 1 1 300px;
   }
-  
+  .about-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
   /* ==========================================================================  
      9. Facilities Section  
      ========================================================================== */
