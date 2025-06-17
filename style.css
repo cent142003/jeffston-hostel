@@ -1,5 +1,5 @@
-/* ==========================================================================  
-1. Brand Palette & Base  
+/* ==========================================================================
+1. JCH Brand Palette (CSS Variables)
 ========================================================================== */
 :root {
   --black: #000;
@@ -9,71 +9,124 @@
   --pink: #ff85c2;
   --gray-11: #fafaf9;
   --white: #fff;
+
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
   --spacing-xl: 32px;
+
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
-  --duration-fast: .2s;
-  --duration-mid: .3s;
+
+  --duration-fast: 0.2s;
+  --duration-mid: 0.3s;
+
   --logo-gradient: linear-gradient(45deg, var(--green), var(--pink));
 }
 
+/* ==========================================================================
+2. Reset & Base
+========================================================================== */
 *,
 *::before,
 *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
+
 body {
   font-family: "Segoe UI", sans-serif;
-  background-color: var(--gray-11);
-  color: #444;
   line-height: 1.6;
+  background-color: var(--gray-11);
+  color: #333;
 }
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+}
+
+ul {
+  padding-left: 1.2em;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+
+/* ==========================================================================
+3. Accessibility
+========================================================================== */
 .visually-hidden {
   position: absolute !important;
-  width: 1px;
   height: 1px;
-  padding: 0;
-  margin: -1px;
+  width: 1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
 }
 
-/* ==========================================================================  
-2. Skip Link + Header + Nav  
+/* ==========================================================================
+4. Skip Link
 ========================================================================== */
-.skip-link { position: absolute; top: var(--spacing-sm); left: var(--spacing-sm); background: var(--purple); color: #fff; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-sm); text-decoration: none; z-index: 1000; transform: translateY(-150%); transition: transform var(--duration-fast); }
-.skip-link:focus { transform: translateY(0); }
+.skip-link {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  padding: 6px 12px;
+  background: var(--purple);
+  color: var(--white);
+  z-index: 1000;
+  border-radius: var(--radius-sm);
+  transform: translateY(-150%);
+  transition: transform var(--duration-fast);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
 
+/* ==========================================================================
+5. Navbar
+========================================================================== */
 header.navbar {
+  background: var(--purple);
   position: sticky;
   top: 0;
-  background: var(--purple);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  z-index: 1000;
+  z-index: 999;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
+
 .navbar-inner {
   max-width: 1200px;
   margin: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-md);
 }
-.logo { display: flex; align-items: center; text-decoration: none; }
-.logo img { width: 40px; height: 40px; margin-right: var(--spacing-sm); }
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+.logo img {
+  width: 40px;
+  height: 40px;
+  margin-right: var(--spacing-sm);
+}
 .logo-text {
   font-size: 1.6rem;
   font-weight: bold;
@@ -82,161 +135,193 @@ header.navbar {
   -webkit-text-fill-color: transparent;
 }
 
-/* Mobile nav controls */
 .nav-toggle {
-  display: block;
+  display: none;
   background: none;
   border: none;
   cursor: pointer;
 }
-.hamburger, .hamburger::before, .hamburger::after {
-  content: '';
+.hamburger,
+.hamburger::before,
+.hamburger::after {
   display: block;
-  width: 1.6rem;
-  height: 0.2rem;
-  background: #fff;
-  border-radius: var(--radius-sm);
-  transition: transform var(--duration-mid);
+  background: var(--white);
+  width: 1.5rem;
+  height: 2px;
+  border-radius: 2px;
+  position: relative;
+  transition: all 0.3s ease;
 }
-.hamburger::before { transform: translateY(-0.6rem); }
-.hamburger::after { transform: translateY(0.4rem); }
-.toggle-active .hamburger { background: transparent; }
-.toggle-active .hamburger::before { transform: rotate(45deg) translate(0.4rem,0.4rem); }
-.toggle-active .hamburger::after { transform: rotate(-45deg) translate(0.4rem,-0.4rem); }
+.hamburger::before,
+.hamburger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+.hamburger::before {
+  top: -8px;
+}
+.hamburger::after {
+  top: 8px;
+}
+.toggle-active .hamburger {
+  background: transparent;
+}
+.toggle-active .hamburger::before {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.toggle-active .hamburger::after {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
 
 .nav-links {
-  display: none;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-.nav-links.nav-open {
   display: flex;
 }
-.nav-links a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.1rem;
+.nav-links ul {
+  display: flex;
+  gap: var(--spacing-md);
+  list-style: none;
 }
+.nav-links a {
+  color: var(--white);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover,
 .nav-links a.active {
-  font-weight: bold;
+  color: var(--green);
 }
 
-/* ==========================================================================  
-3. Hero + Buttons  
+/* ==========================================================================
+6. Hero Section
 ========================================================================== */
 .hero {
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-              url('Assets/images/HERO.png') center/cover no-repeat;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: var(--spacing-xl) var(--spacing-md);
-  color: #fff;
+  color: var(--white);
+  padding: var(--spacing-lg) var(--spacing-md);
 }
-.hero-content h1 {
-  font-size: 2rem;
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-sm);
+}
+.hero p {
+  font-size: 1.25rem;
   margin-bottom: var(--spacing-md);
 }
-.hero-content p {
-  font-size: 1rem;
-  margin-bottom: var(--spacing-md);
-}
-.btn,
-.btn-primary {
+
+/* ==========================================================================
+7. Buttons
+========================================================================== */
+.btn {
   display: inline-block;
   padding: var(--spacing-sm) var(--spacing-md);
-  border: none;
   border-radius: var(--radius-md);
   font-weight: bold;
-  cursor: pointer;
   transition: background-color var(--duration-fast);
-  text-decoration: none;
 }
 .btn-primary {
   background: var(--green);
-  color: #fff;
+  color: var(--white);
 }
 .btn-primary:hover,
 .btn-primary:focus {
   background: var(--green-light);
 }
 
-/* ==========================================================================  
-4. Section Headings  
+/* ==========================================================================
+8. Section Basics
 ========================================================================== */
+section {
+  padding: var(--spacing-xl) var(--spacing-md);
+}
+
 section h2 {
   text-align: center;
   color: var(--green);
-  font-size: 1.8rem;
-  margin: var(--spacing-lg) 0;
+  margin-bottom: var(--spacing-lg);
+  font-size: 2rem;
 }
 
-/* ==========================================================================  
-5. About / Facilities / Rooms / Booking / Contact  
+/* ==========================================================================
+9. About Section
 ========================================================================== */
-.about-section,
-.facilities-section,
-.rooms-section,
-.booking-section,
-.contact-section {
-  background: var(--white);
-  padding: var(--spacing-xl) var(--spacing-md);
-}
-.about-container,
-.facilities-grid,
-.rooms-grid {
-  display: grid;
-  gap: var(--spacing-md);
-}
 .about-container {
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  max-width: 1100px;
+  margin: auto;
 }
-.facilities-grid,
-.rooms-grid {
-  grid-template-columns: 1fr;
+
+.about-text {
+  flex: 1 1 500px;
 }
-.facility-box,
-.room-card {
-  background: var(--gray-11);
-  border-radius: var(--radius-lg);
+.about-text ul {
+  margin: var(--spacing-md) 0;
+  padding-left: 1.2em;
+}
+.about-text li {
+  list-style-type: disc;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
   overflow: hidden;
-  box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+.video-container iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+
+/* ==========================================================================
+10. Facilities
+========================================================================== */
+.facilities-grid {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  max-width: 1100px;
+  margin: auto;
 }
 .facility-box {
-  position: relative;
+  background: var(--white);
   padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
   text-align: center;
 }
-.facility-box::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.1;
-  z-index: 0;
+
+/* ==========================================================================
+11. Rooms
+========================================================================== */
+.rooms-grid {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  max-width: 1100px;
+  margin: auto;
 }
-.facility-modern::before { background-image: url('Assets/images/bedroom1.jpg'); }
-.facility-common::before { background-image: url('Assets/images/liv3.jpg'); }
-.facility-exec::before  { background-image: url('Assets/images/liv2.jpg'); }
-.facility-box h3,
-.facility-box p {
-  position: relative;
-  z-index: 1;
-  color: var(--black);
+.room-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 .room-card img {
   width: 100%;
   height: auto;
-  object-fit: cover;
-}
-.room-card h3 {
-  margin: var(--spacing-md) var(--spacing-sm) var(--spacing-xs);
-}
-.room-card p {
-  padding: var(--spacing-sm) var(--spacing-md);
-  color: #555;
 }
 
-/* Form elements */
+/* ==========================================================================
+12. Forms (Booking & Contact)
+========================================================================== */
 .booking-form,
 .contact-form {
   display: grid;
@@ -244,50 +329,40 @@ section h2 {
   max-width: 600px;
   margin: auto;
 }
-.booking-form fieldset,
-.contact-form fieldset {
+fieldset {
   border: 1px solid #ccc;
-  border-radius: var(--radius-sm);
   padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
 }
-.booking-form legend,
-.contact-form legend {
+legend {
   font-weight: bold;
   padding: 0 var(--spacing-sm);
 }
 label {
   display: block;
-  margin-bottom: var(--spacing-xs);
-  font-weight: 500;
+  margin-bottom: 4px;
 }
 input,
 select,
 textarea {
+  width: 100%;
   padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
   border: 1px solid #ccc;
   border-radius: var(--radius-sm);
-  width: 100%;
 }
-button {
-  justify-self: start;
-}
-input:invalid,
-select:invalid,
-textarea:invalid {
-  border-color: red;
-}
-input:invalid:focus,
-select:invalid:focus,
-textarea:invalid:focus {
-  outline: 2px solid red;
+.error-message {
+  color: red;
+  font-size: 0.875rem;
 }
 
-/* Map Embed */
-.map-container {
-  margin: var(--spacing-lg) 0;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* ==========================================================================
+13. Contact Map
+========================================================================== */
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
 }
 .map-container iframe {
   width: 100%;
@@ -295,99 +370,32 @@ textarea:invalid:focus {
   border: none;
 }
 
-/* Footer */
-.footer {
-  background: var(--purple);
-  color: #fff;
-  padding: var(--spacing-lg) var(--spacing-md);
-}
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-lg);
-  justify-content: space-between;
-}
-.footer-links a {
-  color: #fff;
-  text-decoration: none;
-}
-.footer-links a:hover {
-  text-decoration: underline;
-}
-.footer-bottom {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  border-top: 1px solid rgba(255,255,255,0.2);
-  padding-top: var(--spacing-md);
-}
-
-/* ==========================================================================  
-6. Responsive Breakpoints  
+/* ==========================================================================
+14. Media Queries
 ========================================================================== */
-/* Tablet & above */
-@media (min-width: 600px) {
-  .hero-content h1 { font-size: 2.5rem; }
-  .hero-content p { font-size: 1.2rem; margin-bottom: 2rem; }
-  .rooms-grid,
-  .facilities-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
   }
-}
-
-/* Desktop & above */
-@media (min-width: 992px) {
-  .hero-content {
-    padding: var(--spacing-xl) var(--spacing-lg);
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: var(--purple);
+    padding: var(--spacing-md);
   }
-  .hero-content h1 {
-    font-size: 3rem;
+  .nav-links.nav-open {
+    display: flex;
   }
-  .rooms-grid,
-  .facilities-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  .navbar-inner {
+    flex-wrap: wrap;
   }
-}
-
-/* ==========================================================================  
-7. Paystack Button & Loading State  
-========================================================================== */
-#paystack-trigger {
-  width: 100%;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: none;
-  background: var(--green);
-  color: #fff;
-  font-weight: bold;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: background-color var(--duration-fast), opacity var(--duration-fast);
-}
-#paystack-trigger:hover,
-#paystack-trigger:focus {
-  background: var(--green-light);
-}
-#paystack-trigger[disabled] {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-#paystack-trigger.loading {
-  position: relative;
-  pointer-events: none;
-}
-#paystack-trigger.loading::after {
-  content: '';
-  position: absolute;
-  right: var(--spacing-md);
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1rem;
-  height: 1rem;
-  border: 2px solid #fff;
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: spin .7s linear infinite;
-}
-@keyframes spin {
-  to { transform: rotate(360deg) translateY(-50%); }
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+  section h2 {
+    font-size: 1.6rem;
+  }
 }
