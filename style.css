@@ -1,79 +1,68 @@
-/* ==========================================================================
-  1. JCH Brand Palette (CSS Variables)
+/* ==========================================================================  
+1. Brand Palette & Base  
 ========================================================================== */
 :root {
-  --black:         #000;
-  --green:         #07c160;
-  --green-light:   #96d200;
-  --purple:        #312f3e;
-  --pink:          #ff85c2;
-  --gray-11:       #fafaf9;
-  --white:         #fff;
-
-  --spacing-xs:    4px;
-  --spacing-sm:    8px;
-  --spacing-md:    16px;
-  --spacing-lg:    24px;
-  --spacing-xl:    32px;
-
-  --radius-sm:     4px;
-  --radius-md:     8px;
-  --radius-lg:     12px;
-
-  --duration-fast: 0.2s;
-  --duration-mid:  0.3s;
-
+  --black: #000;
+  --green: #07c160;
+  --green-light: #96d200;
+  --purple: #312f3e;
+  --pink: #ff85c2;
+  --gray-11: #fafaf9;
+  --white: #fff;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --duration-fast: .2s;
+  --duration-mid: .3s;
   --logo-gradient: linear-gradient(45deg, var(--green), var(--pink));
 }
 
-/* ==========================================================================
-  2. Base Reset
-========================================================================== */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 html {
   scroll-behavior: smooth;
-  font-size: 100%;
+  font-size: 16px;
 }
 body {
   font-family: "Segoe UI", sans-serif;
-  background: var(--gray-11);
+  background-color: var(--gray-11);
   color: #444;
   line-height: 1.6;
 }
-
-/* ==========================================================================
-  3. Skip Link
-========================================================================== */
-.skip-link {
-  position: absolute;
-  top: var(--spacing-sm);
-  left: var(--spacing-sm);
-  background: var(--purple);
-  color: var(--white);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-sm);
-  text-decoration: none;
-  z-index: 1000;
-  transform: translateY(-150%);
-  transition: transform var(--duration-fast);
-}
-.skip-link:focus {
-  transform: translateY(0);
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* ==========================================================================
-  4. Header / Navbar
+/* ==========================================================================  
+2. Skip Link + Header + Nav  
 ========================================================================== */
+.skip-link { position: absolute; top: var(--spacing-sm); left: var(--spacing-sm); background: var(--purple); color: #fff; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-sm); text-decoration: none; z-index: 1000; transform: translateY(-150%); transition: transform var(--duration-fast); }
+.skip-link:focus { transform: translateY(0); }
+
 header.navbar {
   position: sticky;
   top: 0;
-  z-index: 999;
   background: var(--purple);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 1000;
 }
 .navbar-inner {
   max-width: 1200px;
@@ -83,17 +72,8 @@ header.navbar {
   justify-content: space-between;
   padding: var(--spacing-md) var(--spacing-lg);
 }
-.logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-.logo img {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  margin-right: var(--spacing-sm);
-}
+.logo { display: flex; align-items: center; text-decoration: none; }
+.logo img { width: 40px; height: 40px; margin-right: var(--spacing-sm); }
 .logo-text {
   font-size: 1.6rem;
   font-weight: bold;
@@ -102,90 +82,65 @@ header.navbar {
   -webkit-text-fill-color: transparent;
 }
 
-/* ==========================================================================
-  5. Navigation & Toggle
-========================================================================== */
+/* Mobile nav controls */
 .nav-toggle {
-  display: none;
+  display: block;
   background: none;
   border: none;
   cursor: pointer;
 }
-.hamburger,
-.hamburger::before,
-.hamburger::after {
-  content: "";
+.hamburger, .hamburger::before, .hamburger::after {
+  content: '';
   display: block;
   width: 1.6rem;
   height: 0.2rem;
-  background: var(--white);
+  background: #fff;
   border-radius: var(--radius-sm);
   transition: transform var(--duration-mid);
 }
-.hamburger::before {
-  transform: translateY(-0.6rem);
-}
-.hamburger::after {
-  transform: translateY(0.4rem);
-}
-.toggle-active .hamburger {
-  background: transparent;
-}
-.toggle-active .hamburger::before {
-  transform: rotate(45deg) translate(0.4rem, 0.4rem);
-}
-.toggle-active .hamburger::after {
-  transform: rotate(-45deg) translate(0.4rem, -0.4rem);
-}
+.hamburger::before { transform: translateY(-0.6rem); }
+.hamburger::after { transform: translateY(0.4rem); }
+.toggle-active .hamburger { background: transparent; }
+.toggle-active .hamburger::before { transform: rotate(45deg) translate(0.4rem,0.4rem); }
+.toggle-active .hamburger::after { transform: rotate(-45deg) translate(0.4rem,-0.4rem); }
 
-nav#primary-navigation {
+.nav-links {
+  display: none;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+.nav-links.nav-open {
   display: flex;
 }
-.nav-links ul {
-  list-style: none;
-  display: flex;
-  gap: var(--spacing-lg);
-}
-.nav-links li a {
-  color: var(--white);
+.nav-links a {
+  color: #fff;
   text-decoration: none;
-  font-weight: 500;
-  position: relative;
+  font-size: 1.1rem;
 }
-.nav-links li a::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--green);
-  transform: scaleX(0);
-  transition: transform var(--duration-fast);
-}
-.nav-links li a:hover::after,
-.nav-links li a:focus::after {
-  transform: scaleX(1);
+.nav-links a.active {
+  font-weight: bold;
 }
 
-/* ==========================================================================
-  6. Hero
+/* ==========================================================================  
+3. Hero + Buttons  
 ========================================================================== */
 .hero {
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('Assets/images/HERO.png') center/cover no-repeat;
-  color: var(--white);
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+              url('Assets/images/HERO.png') center/cover no-repeat;
   text-align: center;
   padding: var(--spacing-xl) var(--spacing-md);
+  color: #fff;
 }
 .hero-content h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: var(--spacing-md);
 }
 .hero-content p {
-  font-size: 1.3rem;
-  margin-bottom: var(--spacing-lg);
+  font-size: 1rem;
+  margin-bottom: var(--spacing-md);
 }
-.btn {
+.btn,
+.btn-primary {
   display: inline-block;
   padding: var(--spacing-sm) var(--spacing-md);
   border: none;
@@ -193,53 +148,62 @@ nav#primary-navigation {
   font-weight: bold;
   cursor: pointer;
   transition: background-color var(--duration-fast);
+  text-decoration: none;
 }
 .btn-primary {
   background: var(--green);
-  color: var(--white);
+  color: #fff;
 }
 .btn-primary:hover,
 .btn-primary:focus {
   background: var(--green-light);
 }
 
-/* ==========================================================================
-  7. Headings
+/* ==========================================================================  
+4. Section Headings  
 ========================================================================== */
 section h2 {
   text-align: center;
   color: var(--green);
-  font-size: 2.2rem;
-  margin: var(--spacing-xl) 0 var(--spacing-lg);
+  font-size: 1.8rem;
+  margin: var(--spacing-lg) 0;
 }
 
-/* ==========================================================================
-  8. About & Facilities
+/* ==========================================================================  
+5. About / Facilities / Rooms / Booking / Contact  
 ========================================================================== */
 .about-section,
-.facilities-section {
+.facilities-section,
+.rooms-section,
+.booking-section,
+.contact-section {
+  background: var(--white);
   padding: var(--spacing-xl) var(--spacing-md);
 }
 .about-container,
-.facilities-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-lg);
-  max-width: 1200px;
-  margin: auto;
+.facilities-grid,
+.rooms-grid {
+  display: grid;
+  gap: var(--spacing-md);
 }
-.about-text {
-  flex: 1 1 300px;
+.about-container {
+  grid-template-columns: 1fr;
+}
+.facilities-grid,
+.rooms-grid {
+  grid-template-columns: 1fr;
+}
+.facility-box,
+.room-card {
+  background: var(--gray-11);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0,0,0,0.05);
 }
 .facility-box {
-  background: var(--white);
+  position: relative;
   padding: var(--spacing-lg);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
   text-align: center;
-}
-.facility-box:hover {
-  transform: translateY(-var(--spacing-xs));
 }
 .facility-box::before {
   content: '';
@@ -250,52 +214,29 @@ section h2 {
   opacity: 0.1;
   z-index: 0;
 }
+.facility-modern::before { background-image: url('Assets/images/bedroom1.jpg'); }
+.facility-common::before { background-image: url('Assets/images/liv3.jpg'); }
+.facility-exec::before  { background-image: url('Assets/images/liv2.jpg'); }
 .facility-box h3,
 .facility-box p {
   position: relative;
   z-index: 1;
   color: var(--black);
 }
-
-/* ==========================================================================
-  9. Rooms Section
-========================================================================== */
-.rooms-section {
-  background: var(--white);
-  padding: var(--spacing-xl) var(--spacing-md);
-}
-.rooms-grid {
-  display: grid;
-  gap: var(--spacing-lg);
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  max-width: 1100px;
-  margin: auto;
-}
-.room-card {
-  background: var(--gray-11);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-}
 .room-card img {
   width: 100%;
-  max-height: 200px;
+  height: auto;
   object-fit: cover;
 }
 .room-card h3 {
   margin: var(--spacing-md) var(--spacing-sm) var(--spacing-xs);
 }
 .room-card p {
-  padding: 0 var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: #555;
 }
 
-/* ==========================================================================
-  10. Forms (Booking + Contact)
-========================================================================== */
-.booking-section,
-.contact-section {
-  padding: var(--spacing-xl) var(--spacing-md);
-}
+/* Form elements */
 .booking-form,
 .contact-form {
   display: grid;
@@ -303,14 +244,16 @@ section h2 {
   max-width: 600px;
   margin: auto;
 }
-fieldset {
+.booking-form fieldset,
+.contact-form fieldset {
   border: 1px solid #ccc;
   border-radius: var(--radius-sm);
   padding: var(--spacing-md);
 }
-legend {
-  padding: 0 var(--spacing-sm);
+.booking-form legend,
+.contact-form legend {
   font-weight: bold;
+  padding: 0 var(--spacing-sm);
 }
 label {
   display: block;
@@ -325,6 +268,9 @@ textarea {
   border-radius: var(--radius-sm);
   width: 100%;
 }
+button {
+  justify-self: start;
+}
 input:invalid,
 select:invalid,
 textarea:invalid {
@@ -335,24 +281,87 @@ select:invalid:focus,
 textarea:invalid:focus {
   outline: 2px solid red;
 }
-button {
-  justify-self: start;
+
+/* Map Embed */
+.map-container {
+  margin: var(--spacing-lg) 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.map-container iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
 }
 
-/* ==========================================================================
-  11. Paystack Button
+/* Footer */
+.footer {
+  background: var(--purple);
+  color: #fff;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  justify-content: space-between;
+}
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+}
+.footer-links a:hover {
+  text-decoration: underline;
+}
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding-top: var(--spacing-md);
+}
+
+/* ==========================================================================  
+6. Responsive Breakpoints  
+========================================================================== */
+/* Tablet & above */
+@media (min-width: 600px) {
+  .hero-content h1 { font-size: 2.5rem; }
+  .hero-content p { font-size: 1.2rem; margin-bottom: 2rem; }
+  .rooms-grid,
+  .facilities-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+/* Desktop & above */
+@media (min-width: 992px) {
+  .hero-content {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+  .hero-content h1 {
+    font-size: 3rem;
+  }
+  .rooms-grid,
+  .facilities-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* ==========================================================================  
+7. Paystack Button & Loading State  
 ========================================================================== */
 #paystack-trigger {
+  width: 100%;
   padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-md);
-  font-weight: bold;
-  cursor: pointer;
   border: none;
   background: var(--green);
-  color: var(--white);
+  color: #fff;
+  font-weight: bold;
+  border-radius: var(--radius-md);
+  cursor: pointer;
   transition: background-color var(--duration-fast), opacity var(--duration-fast);
-  width: 100%;
-  text-align: center;
 }
 #paystack-trigger:hover,
 #paystack-trigger:focus {
@@ -362,113 +371,23 @@ button {
   opacity: 0.6;
   cursor: not-allowed;
 }
+#paystack-trigger.loading {
+  position: relative;
+  pointer-events: none;
+}
 #paystack-trigger.loading::after {
-  content: "";
+  content: '';
   position: absolute;
   right: var(--spacing-md);
   top: 50%;
   transform: translateY(-50%);
   width: 1rem;
   height: 1rem;
-  border: 2px solid var(--white);
+  border: 2px solid #fff;
   border-top-color: transparent;
   border-radius: 50%;
-  animation: spin 0.7s linear infinite;
+  animation: spin .7s linear infinite;
 }
 @keyframes spin {
-  to {
-    transform: rotate(360deg) translateY(-50%);
-  }
-}
-
-/* ==========================================================================
-  12. Map Embed
-========================================================================== */
-.map-container {
-  margin-top: var(--spacing-lg);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-.map-container iframe {
-  width: 100%;
-  height: 400px;
-  border: 0;
-}
-
-/* ==========================================================================
-  13. Footer
-========================================================================== */
-.footer {
-  background: var(--purple);
-  color: var(--white);
-  padding: var(--spacing-lg) var(--spacing-md);
-}
-.footer-container {
-  max-width: 1100px;
-  margin: auto;
-}
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-lg);
-  justify-content: space-between;
-  margin-bottom: var(--spacing-lg);
-}
-.footer-column a {
-  display: block;
-  color: var(--white);
-  text-decoration: none;
-  margin-bottom: var(--spacing-xs);
-}
-.footer-column a:hover {
-  text-decoration: underline;
-}
-.footer-bottom {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid rgba(255,255,255,0.2);
-  padding-top: var(--spacing-md);
-}
-
-/* ==========================================================================
-  14. Mobile Responsive
-========================================================================== */
-@media (max-width: 768px) {
-  .nav-toggle {
-    display: block;
-  }
-  nav#primary-navigation {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--purple);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height var(--duration-mid) ease;
-    z-index: 999;
-  }
-  nav#primary-navigation.nav-open {
-    max-height: 300px;
-  }
-  .nav-links ul {
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md) 0;
-  }
-
-  .footer-links,
-  .footer-bottom,
-  .about-container {
-    flex-direction: column;
-    gap: var(--spacing-md);
-  }
-
-  .hero-content h1 {
-    font-size: 2rem;
-  }
+  to { transform: rotate(360deg) translateY(-50%); }
 }
