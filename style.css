@@ -1,5 +1,5 @@
-/* ==========================================================================  
-1. JCH Brand Palette (CSS Variables)  
+/* ==========================================================================
+  1. JCH Brand Palette (CSS Variables)
 ========================================================================== */
 :root {
   --black:         #000;
@@ -26,8 +26,8 @@
   --logo-gradient: linear-gradient(45deg, var(--green), var(--pink));
 }
 
-/* ==========================================================================  
-2. Global Reset & Base  
+/* ==========================================================================
+  2. Base Reset
 ========================================================================== */
 *, *::before, *::after {
   margin: 0;
@@ -36,28 +36,17 @@
 }
 html {
   scroll-behavior: smooth;
-  font-size: 100%; /* 16px */
+  font-size: 100%;
 }
 body {
   font-family: "Segoe UI", sans-serif;
-  background-color: var(--gray-11);
+  background: var(--gray-11);
   color: #444;
   line-height: 1.6;
 }
-.visually-hidden {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-  border: 0;
-}
 
-/* ==========================================================================  
-3. Skip Link  
+/* ==========================================================================
+  3. Skip Link
 ========================================================================== */
 .skip-link {
   position: absolute;
@@ -76,17 +65,17 @@ body {
   transform: translateY(0);
 }
 
-/* ==========================================================================  
-4. Sticky Header / Navbar  
+/* ==========================================================================
+  4. Header / Navbar
 ========================================================================== */
 header.navbar {
   position: sticky;
   top: 0;
   z-index: 999;
   background: var(--purple);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
-header.navbar .navbar-inner {
+.navbar-inner {
   max-width: 1200px;
   margin: auto;
   display: flex;
@@ -113,10 +102,15 @@ header.navbar .navbar-inner {
   -webkit-text-fill-color: transparent;
 }
 
-/* ==========================================================================  
-5. Nav Links & Mobile Toggle  
+/* ==========================================================================
+  5. Navigation & Toggle
 ========================================================================== */
-.nav-toggle { display: none; background: none; border: none; cursor: pointer; }
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 .hamburger,
 .hamburger::before,
 .hamburger::after {
@@ -128,53 +122,60 @@ header.navbar .navbar-inner {
   border-radius: var(--radius-sm);
   transition: transform var(--duration-mid);
 }
-.hamburger::before { transform: translateY(-0.6rem); }
-.hamburger::after  { transform: translateY(0.4rem); }
-.toggle-active .hamburger { background: transparent; }
-.toggle-active .hamburger::before { transform: rotate(45deg) translate(0.4rem,0.4rem); }
-.toggle-active .hamburger::after  { transform: rotate(-45deg) translate(0.4rem,-0.4rem); }
+.hamburger::before {
+  transform: translateY(-0.6rem);
+}
+.hamburger::after {
+  transform: translateY(0.4rem);
+}
+.toggle-active .hamburger {
+  background: transparent;
+}
+.toggle-active .hamburger::before {
+  transform: rotate(45deg) translate(0.4rem, 0.4rem);
+}
+.toggle-active .hamburger::after {
+  transform: rotate(-45deg) translate(0.4rem, -0.4rem);
+}
 
-.nav-links ul { list-style: none; display: flex; gap: var(--spacing-lg); }
-.nav-links a {
+nav#primary-navigation {
+  display: flex;
+}
+.nav-links ul {
+  list-style: none;
+  display: flex;
+  gap: var(--spacing-lg);
+}
+.nav-links li a {
   color: var(--white);
   text-decoration: none;
+  font-weight: 500;
   position: relative;
 }
-.nav-links a.active::after {
-  content: '';
+.nav-links li a::after {
+  content: "";
   position: absolute;
-  height: 2px;
-  width: 100%;
-  background: var(--green);
   bottom: -4px;
   left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--green);
+  transform: scaleX(0);
+  transition: transform var(--duration-fast);
 }
-@media (max-width: 768px) {
-  .nav-toggle { display: block; }
-  .nav-links {
-    position: absolute;
-    top: 60px;
-    right: var(--spacing-md);
-    background: var(--purple);
-    border: 1px solid #444;
-    padding: var(--spacing-md);
-    display: none;
-  }
-  .nav-open.nav-links { display: block; }
-  .nav-links ul { flex-direction: column; gap: var(--spacing-sm); }
+.nav-links li a:hover::after,
+.nav-links li a:focus::after {
+  transform: scaleX(1);
 }
 
-/* ==========================================================================  
-6. Hero Section + Buttons  
+/* ==========================================================================
+  6. Hero
 ========================================================================== */
 .hero {
-  background:
-    linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
-    url('Assets/images/HERO.png') center/contain no-repeat;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('Assets/images/HERO.png') center/cover no-repeat;
   color: var(--white);
   text-align: center;
   padding: var(--spacing-xl) var(--spacing-md);
-  min-height: 60vh;
 }
 .hero-content h1 {
   font-size: 3rem;
@@ -202,8 +203,8 @@ header.navbar .navbar-inner {
   background: var(--green-light);
 }
 
-/* ==========================================================================  
-7. Section Headings  
+/* ==========================================================================
+  7. Headings
 ========================================================================== */
 section h2 {
   text-align: center;
@@ -212,46 +213,34 @@ section h2 {
   margin: var(--spacing-xl) 0 var(--spacing-lg);
 }
 
-/* ==========================================================================  
-8. About Section  
+/* ==========================================================================
+  8. About & Facilities
 ========================================================================== */
-.about-section {
-  background: var(--white);
+.about-section,
+.facilities-section {
   padding: var(--spacing-xl) var(--spacing-md);
 }
-.about-container {
+.about-container,
+.facilities-grid {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   gap: var(--spacing-lg);
   max-width: 1200px;
   margin: auto;
 }
-.about-text { flex: 1 1 300px; }
-
-/* ==========================================================================  
-9. Facilities Section  
-========================================================================== */
-.facilities-section {
-  background: var(--gray-11);
-  padding: var(--spacing-xl) var(--spacing-md);
-}
-.facilities-grid {
-  display: grid;
-  gap: var(--spacing-lg);
-  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-  max-width: 1100px;
-  margin: auto;
+.about-text {
+  flex: 1 1 300px;
 }
 .facility-box {
-  position: relative;
   background: var(--white);
   padding: var(--spacing-lg);
   border-radius: var(--radius-lg);
-  box-shadow: 0 0 15px rgba(0,0,0,0.05);
-  transition: transform var(--duration-fast);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  text-align: center;
 }
-.facility-box:hover { transform: translateY(-var(--spacing-xs)); }
+.facility-box:hover {
+  transform: translateY(-var(--spacing-xs));
+}
 .facility-box::before {
   content: '';
   position: absolute;
@@ -261,19 +250,15 @@ section h2 {
   opacity: 0.1;
   z-index: 0;
 }
-.facility-modern::before { background-image: url('Assets/images/bedroom1.jpg'); }
-.facility-common::before { background-image: url('Assets/images/liv3.jpg'); }
-.facility-exec::before   { background-image: url('Assets/images/liv2.jpg'); }
 .facility-box h3,
 .facility-box p {
   position: relative;
   z-index: 1;
   color: var(--black);
-  margin-bottom: var(--spacing-sm);
 }
 
-/* ==========================================================================  
-10. Rooms Section  
+/* ==========================================================================
+  9. Rooms Section
 ========================================================================== */
 .rooms-section {
   background: var(--white);
@@ -282,7 +267,7 @@ section h2 {
 .rooms-grid {
   display: grid;
   gap: var(--spacing-lg);
-  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   max-width: 1100px;
   margin: auto;
 }
@@ -290,7 +275,7 @@ section h2 {
   background: var(--gray-11);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 0 15px rgba(0,0,0,0.05);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
 }
 .room-card img {
   width: 100%;
@@ -302,11 +287,10 @@ section h2 {
 }
 .room-card p {
   padding: 0 var(--spacing-sm) var(--spacing-md);
-  color: #555;
 }
 
-/* ==========================================================================  
-11. Booking & Contact Forms  
+/* ==========================================================================
+  10. Forms (Booking + Contact)
 ========================================================================== */
 .booking-section,
 .contact-section {
@@ -319,35 +303,27 @@ section h2 {
   max-width: 600px;
   margin: auto;
 }
-.booking-form fieldset,
-.contact-form fieldset {
+fieldset {
   border: 1px solid #ccc;
   border-radius: var(--radius-sm);
   padding: var(--spacing-md);
 }
-.booking-form legend,
-.contact-form legend {
+legend {
   padding: 0 var(--spacing-sm);
   font-weight: bold;
 }
-.booking-form label,
-.contact-form label {
+label {
   display: block;
   margin-bottom: var(--spacing-xs);
   font-weight: 500;
 }
-.booking-form input,
-.booking-form select,
-.contact-form input,
-.contact-form textarea {
+input,
+select,
+textarea {
   padding: var(--spacing-sm);
   border: 1px solid #ccc;
   border-radius: var(--radius-sm);
   width: 100%;
-}
-.booking-form button,
-.contact-form button {
-  justify-self: start;
 }
 input:invalid,
 select:invalid,
@@ -359,104 +335,13 @@ select:invalid:focus,
 textarea:invalid:focus {
   outline: 2px solid red;
 }
-
-/* ==========================================================================  
-12. Map Embed  
-========================================================================== */
-.map-container {
-  margin-top: var(--spacing-lg);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-.map-container iframe {
-  width: 100%;
-  height: 400px;
-  border: 0;
+button {
+  justify-self: start;
 }
 
-/* ==========================================================================  
-13. Footer  
+/* ==========================================================================
+  11. Paystack Button
 ========================================================================== */
-.footer {
-  background: var(--purple);
-  color: var(--white);
-  padding: var(--spacing-lg) var(--spacing-md);
-}
-.footer-container {
-  max-width: 1100px;
-  margin: auto;
-}
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-lg);
-  justify-content: space-between;
-  margin-bottom: var(--spacing-lg);
-}
-.footer-column h3 {
-  margin-bottom: var(--spacing-xs);
-}
-.footer-column a {
-  display: block;
-  color: var(--white);
-  text-decoration: none;
-  margin-bottom: var(--spacing-xs);
-}
-.footer-column a:hover {
-  text-decoration: underline;
-}
-.footer-bottom {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid rgba(255,255,255,0.2);
-  padding-top: var(--spacing-md);
-  gap: var(--spacing-md);
-}
-.footer-logo {
-  font-size: 1.2rem;
-  color: var(--white);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-}
-.footer-copy {
-  margin: var(--spacing-xs) 0;
-}
-.footer-social a {
-  color: var(--white);
-  margin-left: var(--spacing-sm);
-  font-size: 1.2rem;
-}
-.footer-social a:hover {
-  color: var(--pink);
-}
-
-/* ==========================================================================  
-14. Responsive Tweaks  
-========================================================================== */
-@media (max-width: 768px) {
-  .about-container,
-  .facilities-grid,
-  .rooms-grid {
-    gap: var(--spacing-md);
-  }
-  .footer-links {
-    flex-direction: column;
-  }
-  .footer-bottom {
-    flex-direction: column;
-    gap: var(--spacing-sm);
-  }
-}
-
-/* ==========================================================================  
-15. Paystack Button & Form-State Additions  
-========================================================================== */
-/* Match CTA look + full width */
 #paystack-trigger {
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--radius-md);
@@ -473,15 +358,9 @@ textarea:invalid:focus {
 #paystack-trigger:focus {
   background: var(--green-light);
 }
-/* Disabled state */
 #paystack-trigger[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
-}
-/* Loading spinner */
-#paystack-trigger.loading {
-  position: relative;
-  pointer-events: none;
 }
 #paystack-trigger.loading::after {
   content: "";
@@ -501,9 +380,95 @@ textarea:invalid:focus {
     transform: rotate(360deg) translateY(-50%);
   }
 }
-.error-message {
-  color: red;
-  font-size: 0.9rem;
-  margin-top: 4px;
+
+/* ==========================================================================
+  12. Map Embed
+========================================================================== */
+.map-container {
+  margin-top: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.map-container iframe {
+  width: 100%;
+  height: 400px;
+  border: 0;
+}
+
+/* ==========================================================================
+  13. Footer
+========================================================================== */
+.footer {
+  background: var(--purple);
+  color: var(--white);
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+.footer-container {
+  max-width: 1100px;
+  margin: auto;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+}
+.footer-column a {
   display: block;
+  color: var(--white);
+  text-decoration: none;
+  margin-bottom: var(--spacing-xs);
+}
+.footer-column a:hover {
+  text-decoration: underline;
+}
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding-top: var(--spacing-md);
+}
+
+/* ==========================================================================
+  14. Mobile Responsive
+========================================================================== */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+  nav#primary-navigation {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--purple);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--duration-mid) ease;
+    z-index: 999;
+  }
+  nav#primary-navigation.nav-open {
+    max-height: 300px;
+  }
+  .nav-links ul {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) 0;
+  }
+
+  .footer-links,
+  .footer-bottom,
+  .about-container {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
 }
