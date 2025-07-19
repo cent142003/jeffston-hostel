@@ -1,29 +1,46 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- 1 -->
-<head> <!-- 2 -->
-  <meta charset="UTF-8" /> <!-- 3 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- 4 -->
-  <title>Jeffston Court Hostel</title> <!-- 5 -->
-  <link rel="stylesheet" href="style.css" /> <!-- 6 -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeffston Court Hostel</title>
+  
+  <!-- Preload critical resources for faster loading -->
+  <link rel="preload" href="style.css" as="style" />
+  <link rel="preload" href="scripts.js" as="script" />
+  <link rel="preload" href="Assets/images/optimized/HERO.webp" as="image" type="image/webp" />
+  <link rel="preload" href="Assets/images/optimized/HERO.jpg" as="image" type="image/jpeg" />
+  
+  <!-- DNS prefetch for external resources -->
+  <link rel="dns-prefetch" href="//unpkg.com" />
+  <link rel="dns-prefetch" href="//js.paystack.co" />
+  <link rel="dns-prefetch" href="//www.youtube.com" />
+  <link rel="dns-prefetch" href="//www.google.com" />
+  
+  <link rel="stylesheet" href="style.css" />
 
-  <!-- AOS CSS for animations -->
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" /> <!-- new CSS -->
+  <!-- AOS CSS for animations - loaded asynchronously -->
+  <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" /></noscript>
 
-  <!-- Paystack inline SDK -->
-  <script src="https://js.paystack.co/v1/inline.js" defer></script> <!-- new SDK -->
+  <!-- Paystack inline SDK - loaded asynchronously -->
+  <script src="https://js.paystack.co/v1/inline.js" defer></script>
 
-  <script defer src="scripts.js"></script> <!-- 7 -->
+  <script defer src="scripts.js"></script>
 
-  <!-- AOS script -->
-  <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> <!-- new script -->
-</head> <!-- 8 -->
-<body> <!-- 9 -->
+  <!-- AOS script - loaded asynchronously -->
+  <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <header role="banner" class="navbar"> <!-- 11 -->
+  <header role="banner" class="navbar">
     <div class="navbar-inner">
       <a href="#home" class="logo" aria-label="Go to Home">
-        <img src="Assets/images/logo2.jpg" alt="Jeffston Court Hostel Logo" width="40" height="40" loading="lazy">
+        <picture>
+          <source srcset="Assets/images/optimized/logo2.webp" type="image/webp" />
+          <img src="Assets/images/optimized/logo2.jpg" alt="Jeffston Court Hostel Logo" width="40" height="40" loading="lazy">
+        </picture>
         <span class="logo-text">JCH</span>
       </a>
 
@@ -46,7 +63,7 @@
 
   <main id="main" role="main">
     <!-- HERO SECTION -->
-<section id="home" class="hero" aria-labelledby="hero-heading" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('Assets/images/HERO.png') center/cover no-repeat;">
+<section id="home" class="hero" aria-labelledby="hero-heading">
   <div class="hero-content" data-aos="fade-up">
     <h1 id="hero-heading">Welcome to Jeffston Court Hostel</h1>
     <p>Your modern student accommodation in Adenta</p>
@@ -62,7 +79,7 @@
       <h2>About Jeffston Court Hostel</h2>
       <p>Jeffston Court Hostel offers a comprehensive student living experience here in Accra, Ghana. Located in the tranquil Adenta Court Complex, our facility is optimized for students looking for safety, discipline, and a quality living environment.</p>
 
-      <p>Understanding the demands of student life, we aim to offer everything within arm’s reach under one roof. We provide fully furnished and air-conditioned rooms with Smart TVs and study spaces, high-speed Wi-Fi, dependable power and water supply, and shared kitchens. These amenities help in tandem so that you can shift your focus towards studying.</p>
+      <p>Understanding the demands of student life, we aim to offer everything within arm's reach under one roof. We provide fully furnished and air-conditioned rooms with Smart TVs and study spaces, high-speed Wi-Fi, dependable power and water supply, and shared kitchens. These amenities help in tandem so that you can shift your focus towards studying.</p>
 
       <p>In addition to accommodation, we also provide the following important supporting services:</p>
       <ul>
@@ -76,10 +93,10 @@
 
       <p>Discover modern student living at Jeffston Court. Here, you can live better, learn focused, and move freely.</p>
 
-      <!-- Embedded YouTube Video -->
+      <!-- Embedded YouTube Video with improved loading -->
       <div class="video-container">
         <iframe width="560" height="315" src="https://www.youtube.com/embed/UtvsEelOd2w" 
-          title="Jeffston Court Hostel Video" frameborder="0" 
+          title="Jeffston Court Hostel Video" frameborder="0" loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
         </iframe>
       </div>
@@ -112,21 +129,30 @@
   <div class="rooms-grid">
     <article class="room-card" role="region" aria-labelledby="room-budget" data-aos="fade-up" data-aos-delay="100">
       <figure>
-        <img src="Assets/images/bedroom1.jpg" alt="Two students sharing a budget room">
+        <picture>
+          <source srcset="Assets/images/optimized/bedroom1.webp" type="image/webp" />
+          <img src="Assets/images/optimized/bedroom1.jpg" alt="Two students sharing a budget room" loading="lazy">
+        </picture>
         <figcaption><h3 id="room-budget">2-in-a-Room (Budget)</h3></figcaption>
       </figure>
     </article>
 
     <article class="room-card" role="region" aria-labelledby="room-premium" data-aos="fade-up" data-aos-delay="200">
       <figure>
-        <img src="Assets/images/bedroom2.jpg" alt="Three students sharing a premium room">
+        <picture>
+          <source srcset="Assets/images/optimized/bedroom2.webp" type="image/webp" />
+          <img src="Assets/images/optimized/bedroom2.jpg" alt="Three students sharing a premium room" loading="lazy">
+        </picture>
         <figcaption><h3 id="room-premium">3-in-a-Room (Premium)</h3></figcaption>
       </figure>
     </article>
 
     <article class="room-card" role="region" aria-labelledby="room-standard" data-aos="fade-up" data-aos-delay="300">
       <figure>
-        <img src="Assets/images/NEW4.jpg" alt="Standard 4-in-a-room setup">
+        <picture>
+          <source srcset="Assets/images/optimized/NEW4.webp" type="image/webp" />
+          <img src="Assets/images/optimized/NEW4.jpg" alt="Standard 4-in-a-room setup" loading="lazy">
+        </picture>
         <figcaption><h3 id="room-standard">4-in-a-Room (Standard)</h3></figcaption>
       </figure>
     </article>
@@ -206,7 +232,7 @@
 
       <!-- Honeypot field for spam prevention (hidden from users) -->
       <p hidden>
-        <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
       </p>
 
       <fieldset>
@@ -238,3 +264,9 @@
     </aside>
   </div>
 </section>
+
+  </main>
+
+  <!-- Footer could be added here for additional content -->
+</body>
+</html>
