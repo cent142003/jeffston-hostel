@@ -99,40 +99,45 @@ li {
 }
 
 /* ==========================================================================
-5. Navbar
+5. Navigation
 ========================================================================== */
-header.navbar {
-  background: var(--purple);
+.navbar {
   position: sticky;
   top: 0;
-  z-index: 999;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  background: var(--white);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  will-change: transform;
 }
 
 .navbar-inner {
-  max-width: 1200px;
-  margin: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--spacing-md);
+  max-width: 1200px;
+  margin: auto;
 }
 
 .logo {
   display: flex;
   align-items: center;
+  gap: var(--spacing-sm);
+  font-weight: bold;
+  color: var(--green);
 }
+
 .logo img {
-  width: 40px;
-  height: 40px;
-  margin-right: var(--spacing-sm);
+  border-radius: 50%;
 }
+
 .logo-text {
   font-size: 1.6rem;
   font-weight: bold;
   background: var(--logo-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .nav-toggle {
@@ -140,12 +145,15 @@ header.navbar {
   background: none;
   border: none;
   cursor: pointer;
+  padding: var(--spacing-sm);
 }
+
+/* Hamburger menu styles */
 .hamburger,
 .hamburger::before,
 .hamburger::after {
   display: block;
-  background: var(--white);
+  background: var(--purple);
   width: 1.5rem;
   height: 2px;
   border-radius: 2px;
@@ -176,34 +184,90 @@ header.navbar {
 
 .nav-links {
   display: flex;
+  list-style: none;
+  gap: var(--spacing-md);
+  margin: 0;
+  padding: 0;
 }
+
 .nav-links ul {
   display: flex;
   gap: var(--spacing-md);
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
+
 .nav-links a {
-  color: var(--white);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--duration-fast);
+  color: var(--purple);
   font-weight: 500;
-  transition: color 0.2s;
 }
+
 .nav-links a:hover,
+.nav-links a:focus,
 .nav-links a.active {
-  color: var(--green);
+  background-color: var(--green);
+  color: var(--white);
 }
 
 /* ==========================================================================
-6. Hero Section
+6. Hero Section with Optimized Background
 ========================================================================== */
 .hero {
-  min-height: 90vh;
+  min-height: 100vh;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6));
+  background-attachment: fixed;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: var(--white);
   padding: var(--spacing-lg) var(--spacing-md);
+  overflow: hidden;
 }
+
+/* Progressive background image loading */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('Assets/images/optimized/HERO.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -2;
+  will-change: transform;
+}
+
+/* Fallback for browsers that don't support WebP */
+.no-webp .hero::before {
+  background-image: url('Assets/images/optimized/HERO.jpg');
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6));
+  z-index: -1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
 .hero h1 {
   font-size: 2.5rem;
   margin-bottom: var(--spacing-sm);
@@ -222,6 +286,9 @@ header.navbar {
   border-radius: var(--radius-md);
   font-weight: bold;
   transition: background-color var(--duration-fast);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
 }
 .btn-primary {
   background: var(--green);
@@ -296,6 +363,12 @@ section h2 {
   border-radius: var(--radius-lg);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
   text-align: center;
+  transition: transform var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.facility-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
 /* ==========================================================================
@@ -313,10 +386,28 @@ section h2 {
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  transition: transform var(--duration-fast), box-shadow var(--duration-fast);
 }
+
+.room-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
 .room-card img {
   width: 100%;
   height: auto;
+  transition: transform var(--duration-mid);
+}
+
+.room-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Picture element support for modern images */
+.room-card picture,
+.logo picture {
+  display: block;
 }
 
 /* ==========================================================================
@@ -341,6 +432,7 @@ legend {
 label {
   display: block;
   margin-bottom: 4px;
+  font-weight: 500;
 }
 input,
 select,
@@ -350,7 +442,17 @@ textarea {
   margin-bottom: var(--spacing-md);
   border: 1px solid #ccc;
   border-radius: var(--radius-sm);
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
 }
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 2px rgba(7, 193, 96, 0.2);
+}
+
 .error-message {
   color: red;
   font-size: 0.875rem;
@@ -368,10 +470,33 @@ textarea {
   width: 100%;
   height: 400px;
   border: none;
+  border-radius: var(--radius-md);
 }
 
 /* ==========================================================================
-14. Media Queries
+14. Performance Optimizations
+========================================================================== */
+
+/* Reduce paint and layout thrashing */
+.hero,
+.facility-box,
+.room-card {
+  will-change: transform;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+15. Media Queries
 ========================================================================== */
 @media (max-width: 768px) {
   .nav-toggle {
@@ -382,12 +507,20 @@ textarea {
     flex-direction: column;
     background: var(--purple);
     padding: var(--spacing-md);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
   .nav-links.nav-open {
     display: flex;
   }
   .navbar-inner {
     flex-wrap: wrap;
+  }
+  .hero {
+    background-attachment: scroll; /* Fix for mobile performance */
   }
   .hero h1 {
     font-size: 1.8rem;
@@ -397,5 +530,21 @@ textarea {
   }
   section h2 {
     font-size: 1.6rem;
+  }
+  .contact-container {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 769px) {
+  .contact-container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .contact-form {
+    flex: 1;
+  }
+  .map-container {
+    flex: 1;
   }
 }
