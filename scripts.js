@@ -225,7 +225,7 @@ if (menuBtn && menuLinks) {
 }
 
 // ============================================================================
-// 2. Paystack Integration (Updated RoomType Pricing) - Optimized
+// 2. Enhanced Paystack Integration - Your Custom Implementation Improved
 // ============================================================================
 document.addEventListener('DOMContentLoaded', function () {
   const bookingForm = document.querySelector('#booking-form');
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const roomTypeInput = document.querySelector('#roomType');
   const amountField = document.querySelector('#amountInKobo');
 
-  // Cache pricing data (amounts in pesewas for Paystack)
+  // Updated pricing structure (amounts in pesewas for Paystack)
   const pricing = {
     '4-in-room-4750': { 'first-semester': 475000, 'second-semester': 450000, 'full-academic-year': 925000 },
     '4-in-room-5750': { 'first-semester': 575000, 'second-semester': 545000, 'full-academic-year': 1120000 },
@@ -245,8 +245,57 @@ document.addEventListener('DOMContentLoaded', function () {
     '2-in-room-9000': { 'first-semester': 900000, 'second-semester': 855000, 'full-academic-year': 1755000 }
   };
 
+  // Enhanced validation function
+  function validateBookingForm() {
+    const fullName = document.getElementById('fullName')?.value?.trim();
+    const email = document.getElementById('email')?.value?.trim();
+    const phone = document.getElementById('phone')?.value?.trim();
+    const roomType = document.getElementById('roomType')?.value;
+    const duration = document.getElementById('duration')?.value;
+
+    // Clear previous error messages
+    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+
+    let isValid = true;
+
+    if (!fullName) {
+      document.getElementById('error-fullName').textContent = 'Full name is required';
+      isValid = false;
+    }
+
+    if (!email || !email.includes('@')) {
+      document.getElementById('error-email').textContent = 'Valid email is required';
+      isValid = false;
+    }
+
+    if (!phone) {
+      document.getElementById('error-phone').textContent = 'Phone number is required';
+      isValid = false;
+    }
+
+    if (!roomType) {
+      document.getElementById('error-roomType').textContent = 'Please select a room type';
+      isValid = false;
+    }
+
+    if (!duration) {
+      document.getElementById('error-duration').textContent = 'Please select duration';
+      isValid = false;
+    }
+
+    return { isValid, fullName, email, phone, roomType, duration };
+  }
+
   function calculateAmount(roomType, duration) {
     return pricing[roomType]?.[duration] || 0;
+  }
+
+  function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-GH', {
+      style: 'currency',
+      currency: 'GHS',
+      minimumFractionDigits: 0
+    }).format(amount / 100);
   }
 
   function updateAmount() {
@@ -254,62 +303,184 @@ document.addEventListener('DOMContentLoaded', function () {
     const duration = durationInput?.value;
     const amount = calculateAmount(roomType, duration);
     if (amountField) amountField.value = amount;
+    
+    // Update payment button with amount (your style enhanced)
+    if (payBtn && amount > 0) {
+      payBtn.textContent = `Proceed to Payment - ${formatCurrency(amount)}`;
+      payBtn.disabled = false;
+    } else {
+      payBtn.textContent = 'Proceed to Payment';
+      payBtn.disabled = true;
+    }
   }
 
-  // Add event listeners with early return if elements don't exist
-  if (roomTypeInput && durationInput) {
-    roomTypeInput.addEventListener('change', updateAmount);
-    durationInput.addEventListener('change', updateAmount);
+  function showThankYouMessage(response, bookingDetails) {
+    // Create thank you modal
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    `;
+
+    const content = document.createElement('div');
+    content.style.cssText = `
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    `;
+
+    content.innerHTML = `
+      <div style="color: #25d366; font-size: 4rem; margin-bottom: 1rem;">✅</div>
+      <h2 style="color: #2c3e50; margin-bottom: 1rem;">Payment Successful!</h2>
+      <p style="color: #7f8c8d; margin-bottom: 1rem;">Thank you for booking with Jeffston Court Hostel</p>
+      
+      <div style="background: #f8f9fa; padding: 1rem; border-radius: 5px; margin: 1rem 0; text-align: left;">
+        <h3 style="color: #2c3e50; margin-bottom: 0.5rem;">Booking Details:</h3>
+        <p><strong>Name:</strong> ${bookingDetails.fullName}</p>
+        <p><strong>Email:</strong> ${bookingDetails.email}</p>
+                          <p><strong>Room:</strong> ${bookingDetails.roomType.replace(/-/g, ' ').replace(/(\d+)/g, '$1 ')}</p>
+         <p><strong>Duration:</strong> ${bookingDetails.duration.replace(/-/g, ' ')}</p>
+        <p><strong>Amount:</strong> ${formatCurrency(bookingDetails.amount)}</p>
+        <p><strong>Reference:</strong> ${response.reference}</p>
+      </div>
+      
+      <div style="background: #e8f5e8; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+        <h4 style="color: #25d366; margin-bottom: 0.5rem;">What's Next?</h4>
+        <p style="font-size: 0.9rem; color: #2c3e50;">
+          • We'll send a confirmation email within 24 hours<br>
+          • You'll receive your room assignment details<br>
+          • Contact us on WhatsApp for any questions
+        </p>
+      </div>
+      
+      <div style="margin-top: 1.5rem;">
+        <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
+                style="background: #25d366; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer; margin-right: 0.5rem;">
+          Close
+        </button>
+        <a href="https://wa.me/233201349321?text=Hi%2C%20I%20just%20completed%20my%20payment%20for%20Jeffston%20Court%20Hostel.%20Reference%3A%20${response.reference}" 
+           target="_blank" rel="noopener noreferrer"
+           style="background: #128c7e; color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; display: inline-block;">
+          Contact on WhatsApp
+        </a>
+      </div>
+    `;
+
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+
+    // Auto-remove after 30 seconds
+    setTimeout(() => {
+      if (document.body.contains(modal)) {
+        modal.remove();
+      }
+    }, 30000);
   }
 
-  if (payBtn && bookingForm) {
-    payBtn.addEventListener('click', () => {
-      const formData = new FormData(bookingForm);
-      const fullName = formData.get('fullName');
-      const email = formData.get('email');
-      const phone = formData.get('phone');
-      const roomType = formData.get('roomType');
-      const duration = formData.get('duration');
-      const amount = calculateAmount(roomType, duration);
+  function showErrorMessage(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #dc3545;
+      color: white;
+      padding: 1rem;
+      border-radius: 5px;
+      z-index: 10000;
+      max-width: 300px;
+    `;
+    errorDiv.textContent = message;
+    document.body.appendChild(errorDiv);
 
-      // Validate required fields
-      if (![fullName, email, phone, roomType, duration].every(Boolean) || amount === 0) {
-        alert('Please complete all booking fields correctly before payment.');
-        return;
+    setTimeout(() => errorDiv.remove(), 5000);
+  }
+
+  // Your original event listeners
+  roomTypeInput?.addEventListener('change', updateAmount);
+  durationInput?.addEventListener('change', updateAmount);
+
+  payBtn?.addEventListener('click', () => {
+    console.log('Payment button clicked!');
+    
+    const formData = new FormData(bookingForm);
+    const fullName = formData.get('fullName');
+    const email = formData.get('email');
+    const phone = formData.get('phone');
+    const roomType = formData.get('roomType');
+    const duration = formData.get('duration');
+    const amount = calculateAmount(roomType, duration);
+
+    console.log('Form data:', { fullName, email, phone, roomType, duration, amount });
+    console.log('Paystack available:', typeof PaystackPop !== 'undefined');
+
+    if (![fullName, email, phone, roomType, duration].every(Boolean) || amount === 0) {
+      alert('Please complete all booking fields correctly before payment.');
+      console.log('Validation failed');
+      return;
+    }
+
+    if (typeof PaystackPop === 'undefined') {
+      alert('Payment system is loading. Please try again in a moment.');
+      console.error('PaystackPop is not available');
+      return;
+    }
+
+    console.log('Setting up Paystack payment...');
+
+    const handler = PaystackPop.setup({
+      key: 'pk_live_9302b8356f0551937a496101908e2eb772328962',
+      email,
+      amount,
+      currency: 'GHS',
+      metadata: {
+        custom_fields: [
+          { display_name: 'Full Name', value: fullName },
+          { display_name: 'Phone Number', value: phone },
+          { display_name: 'Room Type', value: roomType },
+          { display_name: 'Duration', value: duration }
+        ]
+      },
+      callback: function (response) {
+        console.log('Payment successful:', response);
+        // Show professional thank you message
+        showThankYouMessage(response, {
+          fullName,
+          email,
+          phone,
+          roomType,
+          duration,
+          amount,
+          reference: response.reference
+        });
+        
+        bookingForm.reset();
+        if (amountField) amountField.value = '';
+      },
+      onClose: function () {
+        console.log('Payment window closed');
+        alert('Payment window closed.');
       }
-
-      // Check if Paystack is loaded
-      if (typeof PaystackPop === 'undefined') {
-        alert('Payment system is still loading. Please try again in a moment.');
-        return;
-      }
-
-      const handler = PaystackPop.setup({
-        key: 'pk_live_9302b8356f0551937a496101908e2eb772328962',
-        email,
-        amount,
-        currency: 'GHS',
-        metadata: {
-          custom_fields: [
-            { display_name: 'Full Name', value: fullName },
-            { display_name: 'Phone Number', value: phone },
-            { display_name: 'Room Type', value: roomType },
-            { display_name: 'Duration', value: duration }
-          ]
-        },
-        callback: function (response) {
-          alert(`✅ Payment successful! Reference: ${response.reference}`);
-          bookingForm.reset();
-          if (amountField) amountField.value = '';
-        },
-        onClose: function () {
-          alert('Payment window closed.');
-        }
-      });
-
-      handler.openIframe();
     });
-  }
+
+    console.log('Opening Paystack iframe...');
+    handler.openIframe();
+  });
+
+  // Initialize amount display on page load
+  updateAmount();
 });
 
 // ============================================================================

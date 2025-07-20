@@ -229,13 +229,13 @@
       <label for="roomType">Room Type</label>
       <select id="roomType" name="roomType" required aria-describedby="error-roomType">
         <option value="" disabled selected>Select Room Type</option>
-        <option value="4-in-room-4750">4-in-a-Room – GHS 4,750 per semester</option>
-        <option value="4-in-room-5750">4-in-a-Room – GHS 5,750 per semester</option>
-        <option value="3-in-room-5100">3-in-a-Room – GHS 5,100 per semester</option>
-        <option value="3-in-room-6500">3-in-a-Room – GHS 6,500 per semester</option>
-        <option value="2-in-room-5500">2-in-a-Room – GHS 5,500 per semester</option>
-        <option value="2-in-room-8000">2-in-a-Room – GHS 8,000 per semester</option>
-        <option value="2-in-room-9000">2-in-a-Room – GHS 9,000 per semester</option>
+        <option value="4-in-room-4750">4-in-a-Room (Budget) – GHS 4,750 per semester</option>
+        <option value="4-in-room-5750">4-in-a-Room (Premium) – GHS 5,750 per semester</option>
+        <option value="3-in-room-5100">3-in-a-Room (Budget) – GHS 5,100 per semester</option>
+        <option value="3-in-room-6500">3-in-a-Room (Premium) – GHS 6,500 per semester</option>
+        <option value="2-in-room-5500">2-in-a-Room (Budget) – GHS 5,500 per semester</option>
+        <option value="2-in-room-8000">2-in-a-Room (Standard) – GHS 8,000 per semester</option>
+        <option value="2-in-room-9000">2-in-a-Room (Premium) – GHS 9,000 per semester</option>
       </select>
       <span id="error-roomType" class="error-message" role="alert"></span>
 
@@ -243,13 +243,13 @@
       <select id="duration" name="duration" required aria-describedby="error-duration">
         <option value="" disabled selected>Select Duration</option>
         <option value="first-semester">First Semester (2025/2026)</option>
-        <option value="second-semester">Second Semester (2025/2026)</option>
+        <option value="second-semester">Second Semester (2025/2026) - Discounted!</option>
         <option value="full-academic-year">Full Academic Year (2025/2026)</option>
       </select>
       <span id="error-duration" class="error-message" role="alert"></span>
     </fieldset>
 
-    <input type="hidden" name="paystackKey" value="YOUR_PUBLIC_KEY">
+    <input type="hidden" name="paystackKey" value="pk_live_9302b8356f0551937a496101908e2eb772328962">
     <input type="hidden" name="amountInKobo" id="amountInKobo" value="">
     <input type="hidden" name="bookingReference" id="bookingRef" value="">
 

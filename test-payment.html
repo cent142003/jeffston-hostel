@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paystack Payment Test</title>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body>
+    <h1>Payment Test</h1>
+    
+    <form id="test-form">
+        <label>Full Name: <input type="text" id="fullName" value="Test User" required></label><br><br>
+        <label>Email: <input type="email" id="email" value="test@example.com" required></label><br><br>
+        <label>Phone: <input type="tel" id="phone" value="0201234567" required></label><br><br>
+        
+        <label>Room Type:
+            <select id="roomType" required>
+                <option value="">Select Room</option>
+                <option value="4-in-room-4750">4-in-a-Room (Budget) – GHS 4,750</option>
+                <option value="4-in-room-5750">4-in-a-Room (Premium) – GHS 5,750</option>
+            </select>
+        </label><br><br>
+        
+        <label>Duration:
+            <select id="duration" required>
+                <option value="">Select Duration</option>
+                <option value="first-semester">First Semester</option>
+                <option value="second-semester">Second Semester</option>
+            </select>
+        </label><br><br>
+        
+        <button type="button" id="paystack-trigger">Proceed to Payment</button>
+    </form>
+
+    <div id="debug"></div>
+
+    <script>
+        const pricing = {
+            '4-in-room-4750': { 'first-semester': 475000, 'second-semester': 450000 },
+            '4-in-room-5750': { 'first-semester': 575000, 'second-semester': 545000 }
+        };
+
+        function calculateAmount(roomType, duration) {
+            const amount = pricing[roomType]?.[duration] || 0;
+            console.log(`Calculating: ${roomType} + ${duration} = ${amount}`);
+            return amount;
+        }
+
+        document.getElementById('paystack-trigger').addEventListener('click', () => {
+            console.log('Payment button clicked!');
+            
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const roomType = document.getElementById('roomType').value;
+            const duration = document.getElementById('duration').value;
+            const amount = calculateAmount(roomType, duration);
+
+            console.log('Form data:', { fullName, email, phone, roomType, duration, amount });
+
+            if (![fullName, email, phone, roomType, duration].every(Boolean) || amount === 0) {
+                alert('Please complete all fields correctly.');
+                return;
+            }
+
+            if (typeof PaystackPop === 'undefined') {
+                alert('Paystack not loaded!');
+                console.error('PaystackPop is undefined');
+                return;
+            }
+
+            console.log('Setting up Paystack...');
+            
+            const handler = PaystackPop.setup({
+                key: 'pk_live_9302b8356f0551937a496101908e2eb772328962',
+                email: email,
+                amount: amount,
+                currency: 'GHS',
+                metadata: {
+                    custom_fields: [
+                        { display_name: 'Full Name', value: fullName },
+                        { display_name: 'Phone Number', value: phone },
+                        { display_name: 'Room Type', value: roomType },
+                        { display_name: 'Duration', value: duration }
+                    ]
+                },
+                callback: function (response) {
+                    console.log('Payment successful:', response);
+                    alert(`✅ Payment successful! Reference: ${response.reference}`);
+                },
+                onClose: function () {
+                    console.log('Payment window closed');
+                    alert('Payment window closed.');
+                }
+            });
+
+            console.log('Opening Paystack iframe...');
+            handler.openIframe();
+        });
+
+        // Debug info
+        document.addEventListener('DOMContentLoaded', () => {
+            const debug = document.getElementById('debug');
+            debug.innerHTML = `
+                <h3>Debug Info:</h3>
+                <p>Paystack loaded: ${typeof PaystackPop !== 'undefined'}</p>
+                <p>Pricing object: ${JSON.stringify(pricing, null, 2)}</p>
+            `;
+        });
+    </script>
+</body>
+</html>
