@@ -8,7 +8,8 @@
   <!-- Preload critical resources for faster loading -->
   <link rel="preload" href="style.css" as="style" />
   <link rel="preload" href="scripts.js" as="script" />
-  <link rel="preload" href="Assets/images/HERO.png" as="image" type="image/png" />
+  <link rel="preload" href="Assets/images/optimized/HERO.jpg" as="image" type="image/jpeg" />
+  <link rel="preload" href="Assets/images/optimized/HERO.webp" as="image" type="image/webp" />
   
   <!-- DNS prefetch for external resources -->
   <link rel="dns-prefetch" href="//unpkg.com" />
@@ -51,7 +52,10 @@
   <header role="banner" class="navbar">
     <div class="navbar-inner">
       <a href="#home" class="logo" aria-label="Go to Home">
-        <img src="Assets/images/logo2.jpg" alt="Jeffston Court Hostel Logo" width="40" height="40" loading="lazy">
+        <picture>
+          <source srcset="Assets/images/optimized/logo2.webp" type="image/webp" />
+          <img src="Assets/images/optimized/logo2.jpg" alt="Jeffston Court Hostel Logo" width="40" height="40" loading="lazy">
+        </picture>
         <span class="logo-text">JCH</span>
       </a>
 
@@ -100,7 +104,7 @@
   <div class="about-container" data-aos="fade-up">
     <div class="about-text">
       <h2>About Jeffston Court Hostel</h2>
-      <p>Jeffston Court Hostel offers a comprehensive student living experience here in Accra, Ghana. Located in the calm Adenta Court Complex, our facility is optimized for students looking for safety, discipline, and a quality living environment.</p>
+      <p>Jeffston Court Hostel offers a comprehensive student living experience here in Accra, Ghana. Located in the tranquil Adenta Court Complex, our facility is optimized for students looking for safety, discipline, and a quality living environment.</p>
 
       <p>Understanding the demands of student life, we aim to offer everything within arm's reach under one roof. We provide fully furnished and air-conditioned rooms with Smart TVs and study spaces, high-speed Wi-Fi, dependable power and water supply, and shared kitchens. These amenities help in tandem so that you can shift your focus towards studying.</p>
 
@@ -118,12 +122,12 @@
 
       <!-- Embedded YouTube Video with improved loading -->
       <div class="video-container">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/UtvsEelOd2w" 
-          title="Jeffston Court Hostel Ads 1" frameborder="0" loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+          title="Jeffston Court Hostel Video" frameborder="0" loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
         </iframe>
       </div>
+      <p><strong>📹 Note:</strong> Replace the video ID "dQw4w9WgXcQ" in the iframe src with your actual hostel video ID from YouTube.</p>
     </div>
     <div class="about-image" aria-hidden="true"></div>
   </div>
@@ -153,7 +157,10 @@
   <div class="rooms-grid">
     <article class="room-card" role="region" aria-labelledby="room-budget" data-aos="fade-up" data-aos-delay="100">
       <figure>
-        <img src="Assets/images/bedroom1.jpg" alt="Two students sharing a budget room" loading="lazy">
+        <picture>
+          <source srcset="Assets/images/optimized/bedroom1.webp" type="image/webp" />
+          <img src="Assets/images/optimized/bedroom1.jpg" alt="Two students sharing a budget room" loading="lazy">
+        </picture>
         <figcaption><h3 id="room-budget">2-in-a-Room (Budget)</h3></figcaption>
       </figure>
       <div class="room-actions">
@@ -166,7 +173,10 @@
 
     <article class="room-card" role="region" aria-labelledby="room-premium" data-aos="fade-up" data-aos-delay="200">
       <figure>
-        <img src="Assets/images/bedroom2.jpg" alt="Three students sharing a premium room" loading="lazy">
+        <picture>
+          <source srcset="Assets/images/optimized/bedroom2.webp" type="image/webp" />
+          <img src="Assets/images/optimized/bedroom2.jpg" alt="Three students sharing a premium room" loading="lazy">
+        </picture>
         <figcaption><h3 id="room-premium">3-in-a-Room (Premium)</h3></figcaption>
       </figure>
       <div class="room-actions">
@@ -179,7 +189,10 @@
 
     <article class="room-card" role="region" aria-labelledby="room-standard" data-aos="fade-up" data-aos-delay="300">
       <figure>
-        <img src="Assets/images/NEW4.jpg" alt="Standard 4-in-a-room setup" loading="lazy">
+        <picture>
+          <source srcset="Assets/images/optimized/NEW4.webp" type="image/webp" />
+          <img src="Assets/images/optimized/NEW4.jpg" alt="Standard 4-in-a-room setup" loading="lazy">
+        </picture>
         <figcaption><h3 id="room-standard">4-in-a-Room (Standard)</h3></figcaption>
       </figure>
       <div class="room-actions">
@@ -343,10 +356,11 @@
     <aside class="map-container" role="complementary" aria-label="Location map" data-aos="fade-up" data-aos-delay="300">
       <iframe
         title="Map of Jeffston Court Hostel"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3969.9659927402618!2d-0.161464!3d5.7180379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9d6fb7bd4b43%3A0xc48d1a5c5f6f085a!2sJeffston%20Court%20Hostel!5e0!3m2!1sen!2suk!4v1748303937640!5m2!1sen!2suk"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.7267!2d-0.1674622!3d5.6037168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9c7ebb6c7c71%3A0x123!2sAdenta%2C%20Accra%2C%20Ghana!5e0!3m2!1sen!2sus!4v1609459200000!5m2!1sen!2sus"
         allowfullscreen loading="lazy"
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
+      <p><strong>🗺️ Note:</strong> This shows Adenta, Accra. Get your specific location embed code from <a href="https://maps.google.com" target="_blank">Google Maps</a> and replace this iframe src.</p>
     </aside>
   </div>
 </section>
