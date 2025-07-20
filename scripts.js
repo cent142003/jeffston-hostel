@@ -234,15 +234,15 @@ document.addEventListener('DOMContentLoaded', function () {
   const roomTypeInput = document.querySelector('#roomType');
   const amountField = document.querySelector('#amountInKobo');
 
-  // Cache pricing data
+  // Cache pricing data (amounts in pesewas for Paystack)
   const pricing = {
-    room1: { '1-semester': 360000, '22-weeks': 0, 'academic-year': 0 },
-    room2: { '1-semester': 425000, '22-weeks': 0, 'academic-year': 0 },
-    room3: { '1-semester': 380000, '22-weeks': 0, 'academic-year': 0 },
-    room4: { '1-semester': 430000, '22-weeks': 0, 'academic-year': 0 },
-    room5: { '1-semester': 550000, '22-weeks': 0, 'academic-year': 0 },
-    room6: { '1-semester': 470000, '22-weeks': 0, 'academic-year': 0 },
-    room7: { '1-semester': 470000, '22-weeks': 0, 'academic-year': 0 }
+    '4-in-room-4750': { 'first-semester': 475000, 'second-semester': 450000, 'full-academic-year': 925000 },
+    '4-in-room-5750': { 'first-semester': 575000, 'second-semester': 545000, 'full-academic-year': 1120000 },
+    '3-in-room-5100': { 'first-semester': 510000, 'second-semester': 485000, 'full-academic-year': 995000 },
+    '3-in-room-6500': { 'first-semester': 650000, 'second-semester': 615000, 'full-academic-year': 1265000 },
+    '2-in-room-5500': { 'first-semester': 550000, 'second-semester': 520000, 'full-academic-year': 1070000 },
+    '2-in-room-8000': { 'first-semester': 800000, 'second-semester': 760000, 'full-academic-year': 1560000 },
+    '2-in-room-9000': { 'first-semester': 900000, 'second-semester': 855000, 'full-academic-year': 1755000 }
   };
 
   function calculateAmount(roomType, duration) {

@@ -399,6 +399,21 @@ section h2 {
   transform: scale(1.05);
 }
 
+.room-price {
+  color: var(--green);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: var(--spacing-xs) 0 0 0;
+}
+
+.hero-subtitle {
+  color: #ffd700;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: var(--spacing-sm);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
 /* Picture element support for modern images */
 .room-card picture,
 .logo picture {
