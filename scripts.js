@@ -697,6 +697,9 @@ function preloadCriticalResources() {
     'Assets/images/bedroom2.jpg',
     'Assets/images/kit2.jpg',
     'Assets/images/bedroom1.jpg',
+    'Assets/images/bedroom3.jpg',
+    'Assets/images/bedroom4.jpg',
+    'Assets/images/bedroom5.jpg',
     'Assets/images/liv3.jpg'
   ];
   
