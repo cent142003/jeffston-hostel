@@ -688,7 +688,7 @@ function preloadCriticalResources() {
   const criticalResources = [
     'Assets/images/bedroom2.jpg',
     'Assets/images/kit2.jpg',
-    'Assets/images/NEW4.jpg',
+    'Assets/images/bedroom1.jpg',
     'Assets/images/liv3.jpg'
   ];
   

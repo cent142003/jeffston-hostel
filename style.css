@@ -523,6 +523,24 @@ section h2 {
   object-fit: cover;
 }
 
+.slide-label {
+  position: absolute;
+  top: var(--spacing-lg);
+  left: 50%;
+  z-index: 2;
+  color: #2da8ff;
+  font-size: clamp(1.7rem, 5vw, 3.1rem);
+  font-style: italic;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  text-shadow:
+    0 2px 0 var(--white),
+    0 4px 12px rgba(0, 0, 0, 0.45);
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
 .slideshow-control {
   position: absolute;
   top: 50%;
