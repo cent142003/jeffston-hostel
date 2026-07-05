@@ -122,6 +122,106 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================================================
+// 7. Room Photo Slideshow
+// ============================================================================
+document.addEventListener('DOMContentLoaded', function() {
+  const slideshow = document.querySelector('.rooms-slideshow');
+  if (!slideshow) return;
+
+  const slides = Array.from(slideshow.querySelectorAll('.slideshow-slide'));
+  const dots = Array.from(slideshow.querySelectorAll('.slideshow-dots button'));
+  const caption = slideshow.querySelector('.slideshow-caption');
+  const previousButton = slideshow.querySelector('.slideshow-prev');
+  const nextButton = slideshow.querySelector('.slideshow-next');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let currentIndex = slides.findIndex(slide => slide.classList.contains('is-active'));
+  let autoplayId;
+
+  if (currentIndex < 0) currentIndex = 0;
+
+  function showSlide(index) {
+    currentIndex = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, slideIndex) => {
+      slide.classList.toggle('is-active', slideIndex === currentIndex);
+    });
+
+    dots.forEach((dot, dotIndex) => {
+      const isActive = dotIndex === currentIndex;
+      dot.classList.toggle('is-active', isActive);
+      if (isActive) {
+        dot.setAttribute('aria-current', 'true');
+      } else {
+        dot.removeAttribute('aria-current');
+      }
+    });
+
+    if (caption) {
+      caption.textContent = slides[currentIndex].dataset.caption || '';
+    }
+  }
+
+  function nextSlide() {
+    showSlide(currentIndex + 1);
+  }
+
+  function previousSlide() {
+    showSlide(currentIndex - 1);
+  }
+
+  function stopAutoplay() {
+    if (autoplayId) {
+      window.clearInterval(autoplayId);
+      autoplayId = undefined;
+    }
+  }
+
+  function startAutoplay() {
+    if (prefersReducedMotion || autoplayId || slides.length < 2) return;
+    autoplayId = window.setInterval(nextSlide, 5500);
+  }
+
+  previousButton?.addEventListener('click', () => {
+    previousSlide();
+    stopAutoplay();
+  });
+
+  nextButton?.addEventListener('click', () => {
+    nextSlide();
+    stopAutoplay();
+  });
+
+  dots.forEach((dot, dotIndex) => {
+    dot.addEventListener('click', () => {
+      showSlide(dotIndex);
+      stopAutoplay();
+    });
+  });
+
+  slideshow.addEventListener('mouseenter', stopAutoplay);
+  slideshow.addEventListener('mouseleave', startAutoplay);
+  slideshow.addEventListener('focusin', stopAutoplay);
+  slideshow.addEventListener('focusout', startAutoplay);
+
+  slideshow.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      previousSlide();
+      stopAutoplay();
+    }
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      nextSlide();
+      stopAutoplay();
+    }
+  });
+
+  showSlide(currentIndex);
+  startAutoplay();
+});
+
+// ============================================================================
 // 0. WebP Detection and Performance Setup
 // ============================================================================
 (function() {
@@ -586,9 +686,10 @@ function preloadCriticalResources() {
   resourcesPreloaded = true;
   
   const criticalResources = [
-    'Assets/images/bedroom1.jpg',
     'Assets/images/bedroom2.jpg',
-    'Assets/images/NEW4.jpg'
+    'Assets/images/kit2.jpg',
+    'Assets/images/NEW4.jpg',
+    'Assets/images/liv3.jpg'
   ];
   
   criticalResources.forEach(src => {

@@ -174,9 +174,37 @@
   </div>
 
   <div class="rooms-showcase" data-aos="fade-up" data-aos-delay="150">
-    <figure class="rooms-showcase-image">
-      <img src="Assets/images/bedroom2.jpg" alt="Jeffston Court Hostel furnished shared room" loading="lazy">
-    </figure>
+    <div class="rooms-slideshow" aria-label="Jeffston Court Hostel photo slideshow">
+      <div class="slideshow-viewport">
+        <figure class="slideshow-slide is-active" data-caption="Shared furnished room with study desks, air conditioning, and bunk beds">
+          <img src="Assets/images/bedroom2.jpg" alt="Shared furnished hostel room with bunk beds and study desks" loading="lazy">
+        </figure>
+        <figure class="slideshow-slide" data-caption="Shared kitchen with fitted cabinets, sink, microwave, and worktops">
+          <img src="Assets/images/kit2.jpg" alt="Jeffston Court Hostel shared kitchen with cabinets and sink" loading="lazy">
+        </figure>
+        <figure class="slideshow-slide" data-caption="Four-bed room layout with wooden bunk beds and individual tables">
+          <img src="Assets/images/NEW4.jpg" alt="Four-bed hostel room with wooden bunk beds" loading="lazy">
+        </figure>
+        <figure class="slideshow-slide" data-caption="Comfortable common lounge with sofas, television, and air conditioning">
+          <img src="Assets/images/liv3.jpg" alt="Jeffston Court Hostel common lounge with sofas and TV" loading="lazy">
+        </figure>
+        <button class="slideshow-control slideshow-prev" type="button" aria-label="Previous photo">
+          <span aria-hidden="true">&lsaquo;</span>
+        </button>
+        <button class="slideshow-control slideshow-next" type="button" aria-label="Next photo">
+          <span aria-hidden="true">&rsaquo;</span>
+        </button>
+      </div>
+      <div class="slideshow-meta">
+        <p class="slideshow-caption" aria-live="polite">Shared furnished room with study desks, air conditioning, and bunk beds</p>
+        <div class="slideshow-dots" role="tablist" aria-label="Choose slideshow photo">
+          <button type="button" class="is-active" data-slide-index="0" aria-label="Show shared room photo" aria-current="true"></button>
+          <button type="button" data-slide-index="1" aria-label="Show kitchen photo"></button>
+          <button type="button" data-slide-index="2" aria-label="Show four-bed room photo"></button>
+          <button type="button" data-slide-index="3" aria-label="Show common lounge photo"></button>
+        </div>
+      </div>
+    </div>
     <div class="rooms-showcase-copy">
       <h3>Updated 2025/2026 room list</h3>
       <p>Rates now reflect the current room-by-room availability. Available rooms can be selected from this table or directly in the booking form.</p>
