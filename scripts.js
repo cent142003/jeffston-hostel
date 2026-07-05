@@ -262,13 +262,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Updated pricing structure (amounts in pesewas for Paystack)
   const pricing = {
-    '4-in-room-4750': { 'first-semester': 475000, 'second-semester': 450000, 'full-academic-year': 925000 },
-    '4-in-room-5750': { 'first-semester': 575000, 'second-semester': 545000, 'full-academic-year': 1120000 },
-    '3-in-room-5100': { 'first-semester': 510000, 'second-semester': 485000, 'full-academic-year': 995000 },
-    '3-in-room-6500': { 'first-semester': 650000, 'second-semester': 615000, 'full-academic-year': 1265000 },
-    '2-in-room-5500': { 'first-semester': 550000, 'second-semester': 520000, 'full-academic-year': 1070000 },
-    '2-in-room-8000': { 'first-semester': 800000, 'second-semester': 760000, 'full-academic-year': 1560000 },
-    '2-in-room-9000': { 'first-semester': 900000, 'second-semester': 855000, 'full-academic-year': 1755000 }
+    'room-a101': { 'first-semester': 550000, 'second-semester': 550000, 'full-academic-year': 1100000 },
+    'room-a102': { 'first-semester': 670000, 'second-semester': 670000, 'full-academic-year': 1340000 },
+    'room-b201': { 'first-semester': 780000, 'second-semester': 780000, 'full-academic-year': 1560000 },
+    'room-b202': { 'first-semester': 670000, 'second-semester': 670000, 'full-academic-year': 1340000 },
+    'room-b203': { 'first-semester': 680000, 'second-semester': 680000, 'full-academic-year': 1360000 },
+    'room-c301': { 'first-semester': 800000, 'second-semester': 800000, 'full-academic-year': 1600000 },
+    'room-c302': { 'first-semester': 600000, 'second-semester': 600000, 'full-academic-year': 1200000 },
+    'room-c303': { 'first-semester': 550000, 'second-semester': 550000, 'full-academic-year': 1100000 }
   };
 
   // Enhanced validation function
@@ -300,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (!roomType) {
-      document.getElementById('error-roomType').textContent = 'Please select a room type';
+      document.getElementById('error-roomType').textContent = 'Please select a room';
       isValid = false;
     }
 
@@ -461,6 +462,19 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => errorDiv.remove(), 5000);
   }
 
+  function selectRoom(roomValue) {
+    if (!roomTypeInput) return;
+
+    roomTypeInput.value = roomValue;
+    roomTypeInput.dispatchEvent(new Event('change', { bubbles: true }));
+    document.querySelector('#booking')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    durationInput?.focus();
+  }
+
+  document.querySelectorAll('[data-room-value]').forEach(button => {
+    button.addEventListener('click', () => selectRoom(button.dataset.roomValue));
+  });
+
   // Your original event listeners
   roomTypeInput?.addEventListener('change', updateAmount);
   durationInput?.addEventListener('change', updateAmount);
@@ -475,6 +489,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const roomType = formData.get('roomType');
     const duration = formData.get('duration');
     const amount = calculateAmount(roomType, duration);
+    const roomLabel = roomTypeInput?.selectedOptions?.[0]?.textContent?.trim() || roomType;
+    const durationLabel = durationInput?.selectedOptions?.[0]?.textContent?.trim() || duration;
 
     console.log('Form data:', { fullName, email, phone, roomType, duration, amount });
     console.log('Paystack available:', typeof PaystackPop !== 'undefined');
@@ -502,8 +518,8 @@ document.addEventListener('DOMContentLoaded', function () {
         custom_fields: [
           { display_name: 'Full Name', value: fullName },
           { display_name: 'Phone Number', value: phone },
-          { display_name: 'Room Type', value: roomType },
-          { display_name: 'Duration', value: duration }
+          { display_name: 'Room', value: roomLabel },
+          { display_name: 'Duration', value: durationLabel }
         ]
       },
       callback: function (response) {
@@ -514,9 +530,9 @@ document.addEventListener('DOMContentLoaded', function () {
           email,
           phone,
           roomType,
-          roomLabel: roomTypeInput?.selectedOptions?.[0]?.textContent?.trim(),
+          roomLabel,
           duration,
-          durationLabel: durationInput?.selectedOptions?.[0]?.textContent?.trim(),
+          durationLabel,
           amount,
           reference: response.reference
         });

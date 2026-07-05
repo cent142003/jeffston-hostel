@@ -11,7 +11,6 @@
   <link rel="preload" href="Assets/images/HERO.png" as="image" type="image/png" />
   
   <!-- DNS prefetch for external resources -->
-  <link rel="dns-prefetch" href="//unpkg.com" />
   <link rel="dns-prefetch" href="//js.paystack.co" />
   <link rel="dns-prefetch" href="//www.youtube.com" />
   <link rel="dns-prefetch" href="//www.google.com" />
@@ -19,17 +18,10 @@
   
   <link rel="stylesheet" href="style.css" />
 
-  <!-- AOS CSS for animations - loaded asynchronously -->
-  <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" /></noscript>
-
   <!-- Paystack inline SDK - loaded asynchronously -->
   <script src="https://js.paystack.co/v1/inline.js" defer></script>
 
   <script defer src="scripts.js"></script>
-
-  <!-- AOS script - loaded asynchronously -->
-  <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -78,7 +70,7 @@
   <div class="hero-content" data-aos="fade-up">
     <h1 id="hero-heading">Jeffston Court Hostel</h1>
     <p class="hero-subtitle">Now Accepting Bookings for the 2025/2026 Academic Year!</p>
-    <p>Experience comfort and convenience with competitive rates in Adenta</p>
+    <p>Updated room availability with semester rates from ₵5,500 in Adenta</p>
     <div class="hero-actions">
       <a href="#booking" class="btn btn-primary" role="button">Book a Room</a>
       <a href="https://wa.me/233201349321?text=Hello%2C%20I%27m%20interested%20in%20Jeffston%20Court%20Hostel.%20Can%20you%20please%20provide%20more%20information%3F" 
@@ -103,9 +95,9 @@
       <h2>About Jeffston Court Hostel</h2>
       <p>Jeffston Court Hostel offers a comprehensive student living experience here in Accra, Ghana. Located in the tranquil Adenta Court Complex, our facility is optimized for students looking for safety, discipline, and a quality living environment.</p>
 
-      <p>Understanding the demands of student life, we aim to offer everything within arm's reach under one roof. Experience comfort and convenience with our competitive rates for the 2025/2026 Academic Year.</p>
+      <p>Understanding the demands of student life, we aim to offer everything within arm's reach under one roof. Current room availability is listed by room code, occupancy, and semester rent for the 2025/2026 Academic Year.</p>
 
-      <p><strong>Special Discount:</strong> Book for the first semester and enjoy bigger discounted rates for the second semester!</p>
+      <p><strong>Updated rates:</strong> Available rooms currently range from ₵5,500 to ₵6,800 per semester, with full rooms shown for waitlist enquiries.</p>
 
       <p>Our comprehensive amenities include:</p>
       <ul>
@@ -156,49 +148,127 @@
 
 <!-- ROOMS SECTION -->
 <section id="rooms" class="rooms-section" aria-labelledby="rooms-heading">
-  <h2 id="rooms-heading" data-aos="fade-up">Room Options</h2>
-  <div class="rooms-grid">
-    <article class="room-card" role="region" aria-labelledby="room-budget" data-aos="fade-up" data-aos-delay="100">
-      <figure>
-        <img src="Assets/images/bedroom1.jpg" alt="Two students sharing a budget room" loading="lazy">
-        <figcaption><h3 id="room-budget">2-in-a-Room</h3>
-          <p class="room-price">GHS 5,500 - GHS 9,000 per semester</p></figcaption>
-      </figure>
-      <div class="room-actions">
-        <a href="https://wa.me/233201349321?text=Hi%2C%20I%27m%20interested%20in%20the%202-in-a-Room%20(Budget)%20option.%20Can%20you%20provide%20more%20details%20about%20availability%20and%20pricing%3F" 
-           target="_blank" 
-           rel="noopener noreferrer"
-           class="btn btn-whatsapp-small">Ask about this room</a>
-      </div>
-    </article>
+  <div class="section-intro" data-aos="fade-up">
+    <p class="section-kicker">Rooms Overview</p>
+    <h2 id="rooms-heading">Live Room Availability</h2>
+    <p>Choose a room by code, compare occupancy at a glance, and reserve an available space instantly.</p>
+  </div>
 
-    <article class="room-card" role="region" aria-labelledby="room-premium" data-aos="fade-up" data-aos-delay="200">
-      <figure>
-        <img src="Assets/images/bedroom2.jpg" alt="Three students sharing a premium room" loading="lazy">
-        <figcaption><h3 id="room-premium">3-in-a-Room</h3>
-          <p class="room-price">GHS 5,100 - GHS 6,500 per semester</p></figcaption>
-      </figure>
-      <div class="room-actions">
-        <a href="https://wa.me/233201349321?text=Hi%2C%20I%27m%20interested%20in%20the%203-in-a-Room%20(Premium)%20option.%20Can%20you%20provide%20more%20details%20about%20availability%20and%20pricing%3F" 
-           target="_blank" 
-           rel="noopener noreferrer"
-           class="btn btn-whatsapp-small">Ask about this room</a>
-      </div>
-    </article>
+  <div class="availability-summary" aria-label="Availability summary" data-aos="fade-up" data-aos-delay="100">
+    <div class="summary-tile">
+      <span>8</span>
+      <small>Total rooms</small>
+    </div>
+    <div class="summary-tile available">
+      <span>6</span>
+      <small>Available now</small>
+    </div>
+    <div class="summary-tile">
+      <span>₵5,500</span>
+      <small>Starting rent</small>
+    </div>
+    <div class="summary-tile full">
+      <span>2</span>
+      <small>Currently full</small>
+    </div>
+  </div>
 
-    <article class="room-card" role="region" aria-labelledby="room-standard" data-aos="fade-up" data-aos-delay="300">
-      <figure>
-        <img src="Assets/images/NEW4.jpg" alt="Standard 4-in-a-room setup" loading="lazy">
-        <figcaption><h3 id="room-standard">4-in-a-Room</h3>
-          <p class="room-price">GHS 4,750 - GHS 5,750 per semester</p></figcaption>
-      </figure>
-      <div class="room-actions">
-        <a href="https://wa.me/233201349321?text=Hi%2C%20I%27m%20interested%20in%20the%204-in-a-Room%20(Standard)%20option.%20Can%20you%20provide%20more%20details%20about%20availability%20and%20pricing%3F" 
-           target="_blank" 
-           rel="noopener noreferrer"
-           class="btn btn-whatsapp-small">Ask about this room</a>
+  <div class="rooms-showcase" data-aos="fade-up" data-aos-delay="150">
+    <figure class="rooms-showcase-image">
+      <img src="Assets/images/bedroom2.jpg" alt="Jeffston Court Hostel furnished shared room" loading="lazy">
+    </figure>
+    <div class="rooms-showcase-copy">
+      <h3>Updated 2025/2026 room list</h3>
+      <p>Rates now reflect the current room-by-room availability. Available rooms can be selected from this table or directly in the booking form.</p>
+      <div class="room-badges" aria-label="Room types">
+        <span>Standard</span>
+        <span>Standard Big</span>
+        <span>General</span>
+        <span>Premium</span>
       </div>
-    </article>
+    </div>
+  </div>
+
+  <div class="availability-board" data-aos="fade-up" data-aos-delay="200">
+    <table class="rooms-table">
+      <caption class="visually-hidden">Rooms overview with type, occupancy, rent, status, and booking action</caption>
+      <thead>
+        <tr>
+          <th scope="col">Room</th>
+          <th scope="col">Type</th>
+          <th scope="col">Occupancy</th>
+          <th scope="col">Rent</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">A101</th>
+          <td>Standard</td>
+          <td><span class="occupancy-meter" style="--filled: 50%;"></span>2/4</td>
+          <td>₵5,500</td>
+          <td><span class="status-pill status-available">Available</span></td>
+          <td><button type="button" class="btn room-select-btn" data-room-value="room-a101">Book</button></td>
+        </tr>
+        <tr>
+          <th scope="row">A102</th>
+          <td>Standard Big</td>
+          <td><span class="occupancy-meter" style="--filled: 0%;"></span>0/4</td>
+          <td>₵6,700</td>
+          <td><span class="status-pill status-available">Available</span></td>
+          <td><button type="button" class="btn room-select-btn" data-room-value="room-a102">Book</button></td>
+        </tr>
+        <tr>
+          <th scope="row">B201</th>
+          <td>General</td>
+          <td><span class="occupancy-meter is-full" style="--filled: 100%;"></span>2/2</td>
+          <td>₵7,800</td>
+          <td><span class="status-pill status-full">Full</span></td>
+          <td><a class="btn room-waitlist-btn" href="https://wa.me/233201349321?text=Hi%2C%20I%27d%20like%20to%20join%20the%20waitlist%20for%20Room%20B201%20at%20Jeffston%20Court%20Hostel." target="_blank" rel="noopener noreferrer">Waitlist</a></td>
+        </tr>
+        <tr>
+          <th scope="row">B202</th>
+          <td>General</td>
+          <td><span class="occupancy-meter" style="--filled: 67%;"></span>2/3</td>
+          <td>₵6,700</td>
+          <td><span class="status-pill status-available">Available</span></td>
+          <td><button type="button" class="btn room-select-btn" data-room-value="room-b202">Book</button></td>
+        </tr>
+        <tr>
+          <th scope="row">B203</th>
+          <td>General</td>
+          <td><span class="occupancy-meter" style="--filled: 0%;"></span>0/4</td>
+          <td>₵6,800</td>
+          <td><span class="status-pill status-available">Available</span></td>
+          <td><button type="button" class="btn room-select-btn" data-room-value="room-b203">Book</button></td>
+        </tr>
+        <tr>
+          <th scope="row">C301</th>
+          <td>General</td>
+          <td><span class="occupancy-meter is-full" style="--filled: 100%;"></span>2/2</td>
+          <td>₵8,000</td>
+          <td><span class="status-pill status-full">Full</span></td>
+          <td><a class="btn room-waitlist-btn" href="https://wa.me/233201349321?text=Hi%2C%20I%27d%20like%20to%20join%20the%20waitlist%20for%20Room%20C301%20at%20Jeffston%20Court%20Hostel." target="_blank" rel="noopener noreferrer">Waitlist</a></td>
+        </tr>
+        <tr>
+          <th scope="row">C302</th>
+          <td>Premium</td>
+          <td><span class="occupancy-meter" style="--filled: 50%;"></span>1/2</td>
+          <td>₵6,000</td>
+          <td><span class="status-pill status-available">Available</span></td>
+          <td><button type="button" class="btn room-select-btn" data-room-value="room-c302">Book</button></td>
+        </tr>
+        <tr>
+          <th scope="row">C303</th>
+          <td>Premium</td>
+          <td><span class="occupancy-meter" style="--filled: 33%;"></span>1/3</td>
+          <td>₵5,500</td>
+          <td><span class="status-pill status-available">Available</span></td>
+          <td><button type="button" class="btn room-select-btn" data-room-value="room-c303">Book</button></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -229,16 +299,17 @@
     <fieldset>
       <!-- Booking details -->
       <legend>Booking Details</legend>
-      <label for="roomType">Room Type</label>
+      <label for="roomType">Room</label>
       <select id="roomType" name="roomType" required aria-describedby="error-roomType">
-        <option value="" disabled selected>Select Room Type</option>
-        <option value="4-in-room-4750">4-in-a-Room (Budget) – GHS 4,750 per semester</option>
-        <option value="4-in-room-5750">4-in-a-Room (Premium) – GHS 5,750 per semester</option>
-        <option value="3-in-room-5100">3-in-a-Room (Budget) – GHS 5,100 per semester</option>
-        <option value="3-in-room-6500">3-in-a-Room (Premium) – GHS 6,500 per semester</option>
-        <option value="2-in-room-5500">2-in-a-Room (Budget) – GHS 5,500 per semester</option>
-        <option value="2-in-room-8000">2-in-a-Room (Standard) – GHS 8,000 per semester</option>
-        <option value="2-in-room-9000">2-in-a-Room (Premium) – GHS 9,000 per semester</option>
+        <option value="" disabled selected>Select available room</option>
+        <option value="room-a101">A101 - Standard - 2/4 occupied - GHS 5,500 per semester</option>
+        <option value="room-a102">A102 - Standard Big - 0/4 occupied - GHS 6,700 per semester</option>
+        <option value="room-b201" disabled>B201 - General - Full - GHS 7,800 per semester</option>
+        <option value="room-b202">B202 - General - 2/3 occupied - GHS 6,700 per semester</option>
+        <option value="room-b203">B203 - General - 0/4 occupied - GHS 6,800 per semester</option>
+        <option value="room-c301" disabled>C301 - General - Full - GHS 8,000 per semester</option>
+        <option value="room-c302">C302 - Premium - 1/2 occupied - GHS 6,000 per semester</option>
+        <option value="room-c303">C303 - Premium - 1/3 occupied - GHS 5,500 per semester</option>
       </select>
       <span id="error-roomType" class="error-message" role="alert"></span>
 
@@ -246,8 +317,8 @@
       <select id="duration" name="duration" required aria-describedby="error-duration">
         <option value="" disabled selected>Select Duration</option>
         <option value="first-semester">First Semester (2025/2026)</option>
-        <option value="second-semester">Second Semester (2025/2026) - Discounted!</option>
-        <option value="full-academic-year">Full Academic Year (2025/2026)</option>
+        <option value="second-semester">Second Semester (2025/2026)</option>
+        <option value="full-academic-year">Full Academic Year (2 semesters)</option>
       </select>
       <span id="error-duration" class="error-message" role="alert"></span>
     </fieldset>
