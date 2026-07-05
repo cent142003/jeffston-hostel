@@ -207,6 +207,9 @@
   <h2 id="booking-heading" data-aos="fade-up">Book a Room</h2>
   <form id="booking-form" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="booking-form">
   <input type="hidden" name="form-name" value="booking" />
+  <p hidden>
+    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+  </p>
     <fieldset>
       <!-- Personal info fields -->
       <legend>Personal Information</legend>

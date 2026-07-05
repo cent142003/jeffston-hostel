@@ -164,14 +164,22 @@ const menuLinks = document.querySelector('#primary-navigation');
 const navAnchors = Array.from(document.querySelectorAll('.nav-links a'));
 
 if (menuBtn && menuLinks) {
-  menuBtn.setAttribute('aria-expanded', 'false');
-  menuLinks.setAttribute('aria-hidden', 'true');
+  const mobileNavQuery = window.matchMedia('(max-width: 768px)');
 
-  function toggleMenu() {
-    const isOpen = menuBtn.classList.toggle('toggle-active');
-    menuLinks.classList.toggle('nav-open');
+  function isMobileNav() {
+    return mobileNavQuery.matches;
+  }
+
+  function setMenuState(isOpen) {
+    menuBtn.classList.toggle('toggle-active', isOpen);
+    menuLinks.classList.toggle('nav-open', isOpen);
     menuBtn.setAttribute('aria-expanded', String(isOpen));
-    menuLinks.setAttribute('aria-hidden', String(!isOpen));
+
+    if (isMobileNav()) {
+      menuLinks.setAttribute('aria-hidden', String(!isOpen));
+    } else {
+      menuLinks.removeAttribute('aria-hidden');
+    }
 
     if (isOpen) {
       navAnchors[0]?.focus();
@@ -179,6 +187,15 @@ if (menuBtn && menuLinks) {
     } else {
       document.removeEventListener('keydown', handleKeydown);
     }
+  }
+
+  function syncMenuState() {
+    setMenuState(isMobileNav() && menuLinks.classList.contains('nav-open'));
+  }
+
+  function toggleMenu() {
+    if (!isMobileNav()) return;
+    setMenuState(!menuLinks.classList.contains('nav-open'));
   }
 
   function handleKeydown(e) {
@@ -216,10 +233,19 @@ if (menuBtn && menuLinks) {
   menuBtn.addEventListener('click', toggleMenu);
   navAnchors.forEach(link => {
     link.addEventListener('click', () => {
-      if (menuLinks.classList.contains('nav-open')) toggleMenu();
+      if (isMobileNav() && menuLinks.classList.contains('nav-open')) {
+        setMenuState(false);
+      }
     });
   });
+
+  if (typeof mobileNavQuery.addEventListener === 'function') {
+    mobileNavQuery.addEventListener('change', syncMenuState);
+  } else {
+    mobileNavQuery.addListener(syncMenuState);
+  }
   
+  syncMenuState();
   window.addEventListener('scroll', onScroll, { passive: true });
   document.addEventListener('DOMContentLoaded', onScroll);
 }
@@ -298,6 +324,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }).format(amount / 100);
   }
 
+  function escapeHTML(value) {
+    const htmlEscapes = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    };
+
+    return String(value ?? '').replace(/[&<>"']/g, char => htmlEscapes[char]);
+  }
+
+  function formatSelectionLabel(value) {
+    return String(value ?? '').replace(/-/g, ' ');
+  }
+
   function updateAmount() {
     const roomType = roomTypeInput?.value;
     const duration = durationInput?.value;
@@ -315,6 +357,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function showThankYouMessage(response, bookingDetails) {
+    const reference = String(response.reference ?? '');
+    const safeDetails = {
+      fullName: escapeHTML(bookingDetails.fullName),
+      email: escapeHTML(bookingDetails.email),
+      room: escapeHTML(bookingDetails.roomLabel || formatSelectionLabel(bookingDetails.roomType)),
+      duration: escapeHTML(bookingDetails.durationLabel || formatSelectionLabel(bookingDetails.duration)),
+      amount: escapeHTML(formatCurrency(bookingDetails.amount)),
+      reference: escapeHTML(reference)
+    };
+    const whatsappUrl = `https://wa.me/233201349321?text=Hi%2C%20I%20just%20completed%20my%20payment%20for%20Jeffston%20Court%20Hostel.%20Reference%3A%20${encodeURIComponent(reference)}`;
+
     // Create thank you modal
     const modal = document.createElement('div');
     modal.style.cssText = `
@@ -348,12 +401,12 @@ document.addEventListener('DOMContentLoaded', function () {
       
       <div style="background: #f8f9fa; padding: 1rem; border-radius: 5px; margin: 1rem 0; text-align: left;">
         <h3 style="color: #2c3e50; margin-bottom: 0.5rem;">Booking Details:</h3>
-        <p><strong>Name:</strong> ${bookingDetails.fullName}</p>
-        <p><strong>Email:</strong> ${bookingDetails.email}</p>
-                          <p><strong>Room:</strong> ${bookingDetails.roomType.replace(/-/g, ' ').replace(/(\d+)/g, '$1 ')}</p>
-         <p><strong>Duration:</strong> ${bookingDetails.duration.replace(/-/g, ' ')}</p>
-        <p><strong>Amount:</strong> ${formatCurrency(bookingDetails.amount)}</p>
-        <p><strong>Reference:</strong> ${response.reference}</p>
+        <p><strong>Name:</strong> ${safeDetails.fullName}</p>
+        <p><strong>Email:</strong> ${safeDetails.email}</p>
+        <p><strong>Room:</strong> ${safeDetails.room}</p>
+        <p><strong>Duration:</strong> ${safeDetails.duration}</p>
+        <p><strong>Amount:</strong> ${safeDetails.amount}</p>
+        <p><strong>Reference:</strong> ${safeDetails.reference}</p>
       </div>
       
       <div style="background: #e8f5e8; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
@@ -370,7 +423,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 style="background: #25d366; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer; margin-right: 0.5rem;">
           Close
         </button>
-        <a href="https://wa.me/233201349321?text=Hi%2C%20I%20just%20completed%20my%20payment%20for%20Jeffston%20Court%20Hostel.%20Reference%3A%20${response.reference}" 
+        <a href="${escapeHTML(whatsappUrl)}" 
            target="_blank" rel="noopener noreferrer"
            style="background: #128c7e; color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; display: inline-block;">
           Contact on WhatsApp
@@ -461,7 +514,9 @@ document.addEventListener('DOMContentLoaded', function () {
           email,
           phone,
           roomType,
+          roomLabel: roomTypeInput?.selectedOptions?.[0]?.textContent?.trim(),
           duration,
+          durationLabel: durationInput?.selectedOptions?.[0]?.textContent?.trim(),
           amount,
           reference: response.reference
         });
