@@ -3,366 +3,176 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jeffston Court Hostel</title>
-  
-  <!-- Preload critical resources for faster loading -->
+  <meta name="description" content="Jeffston Court Hostel offers spacious, secure student accommodation in Adenta Court, Accra with Wi-Fi, water, backup power, kitchen, lounge, CCTV and student transport support." />
+  <title>Jeffston Court Hostel | Student Accommodation in Adenta</title>
   <link rel="preload" href="style.css" as="style" />
-  <link rel="preload" href="scripts.js" as="script" />
-  <link rel="preload" href="Assets/images/HERO.png" as="image" type="image/png" />
-  
-  <!-- DNS prefetch for external resources -->
-  <link rel="dns-prefetch" href="//unpkg.com" />
+  <link rel="preload" href="Assets/images/site/jeffston-flyer.jpg" as="image" />
   <link rel="dns-prefetch" href="//js.paystack.co" />
-  <link rel="dns-prefetch" href="//www.youtube.com" />
-  <link rel="dns-prefetch" href="//www.google.com" />
   <link rel="dns-prefetch" href="//wa.me" />
-  
   <link rel="stylesheet" href="style.css" />
-
-  <!-- AOS CSS for animations - loaded asynchronously -->
-  <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" /></noscript>
-
-  <!-- Paystack inline SDK - loaded asynchronously -->
   <script src="https://js.paystack.co/v1/inline.js" defer></script>
-
   <script defer src="scripts.js"></script>
-
-  <!-- AOS script - loaded asynchronously -->
-  <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <!-- WhatsApp Floating Button -->
-  <div class="whatsapp-float" id="whatsapp-float">
-    <a href="https://wa.me/233201349321?text=Hello%2C%20I%27m%20interested%20in%20Jeffston%20Court%20Hostel%20accommodation.%20Can%20you%20please%20provide%20more%20information%3F" 
-       target="_blank" 
-       rel="noopener noreferrer"
-       class="whatsapp-btn"
-       aria-label="Contact us on WhatsApp">
-      <svg class="whatsapp-icon" viewBox="0 0 24 24" width="24" height="24">
-        <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
-      </svg>
-      <span class="whatsapp-text">Chat with us</span>
+  <header class="navbar">
+    <a class="logo" href="#home" aria-label="Jeffston Court Hostel home">
+      <img src="Assets/images/logo2.jpg" alt="Jeffston Court Hostel logo" width="48" height="48" />
+      <span>Jeffston Court Hostel</span>
     </a>
-  </div>
-
-  <header role="banner" class="navbar">
-    <div class="navbar-inner">
-      <a href="#home" class="logo" aria-label="Go to Home">
-        <img src="Assets/images/logo2.jpg" alt="Jeffston Court Hostel Logo" width="40" height="40" loading="lazy">
-        <span class="logo-text">JCH</span>
-      </a>
-
-      <button id="mobile-menu" class="nav-toggle" aria-label="Toggle navigation" aria-controls="primary-navigation" aria-expanded="false">
-        <span class="hamburger"></span>
-      </button>
-
-      <nav id="primary-navigation" class="nav-links" role="navigation" aria-label="Primary">
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#facilities">Facilities</a></li>
-          <li><a href="#rooms">Rooms</a></li>
-          <li><a href="#booking">Booking</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
+    <button id="mobile-menu" class="nav-toggle" aria-label="Open menu" aria-controls="primary-navigation" aria-expanded="false"><span></span></button>
+    <nav id="primary-navigation" class="nav-links" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#facilities">Facilities</a>
+      <a href="#rooms">Rooms</a>
+      <a href="#booking">Booking</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
-  <main id="main" role="main">
-    <!-- HERO SECTION -->
-<section id="home" class="hero" aria-labelledby="hero-heading">
-  <div class="hero-content" data-aos="fade-up">
-    <h1 id="hero-heading">Jeffston Court Hostel</h1>
-    <p class="hero-subtitle">Now Accepting Bookings for the 2025/2026 Academic Year!</p>
-    <p>Experience comfort and convenience with competitive rates in Adenta</p>
-    <div class="hero-actions">
-      <a href="#booking" class="btn btn-primary" role="button">Book a Room</a>
-      <a href="https://wa.me/233201349321?text=Hello%2C%20I%27m%20interested%20in%20Jeffston%20Court%20Hostel.%20Can%20you%20please%20provide%20more%20information%3F" 
-         target="_blank" 
-         rel="noopener noreferrer"
-         class="btn btn-whatsapp" 
-         role="button">
-        <svg class="btn-icon" viewBox="0 0 24 24" width="20" height="20">
-          <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
-        </svg>
-        WhatsApp Us
-      </a>
-    </div>
-  </div>
-</section>
-
- <!-- ABOUT SECTION -->
-<section id="about" class="about-section" aria-labelledby="about-heading">
-  <h2 id="about-heading" class="visually-hidden">About Jeffston Court Hostel</h2>
-  <div class="about-container" data-aos="fade-up">
-    <div class="about-text">
-      <h2>About Jeffston Court Hostel</h2>
-      <p>Jeffston Court Hostel offers a comprehensive student living experience here in Accra, Ghana. Located in the tranquil Adenta Court Complex, our facility is optimized for students looking for safety, discipline, and a quality living environment.</p>
-
-      <p>Understanding the demands of student life, we aim to offer everything within arm's reach under one roof. Experience comfort and convenience with our competitive rates for the 2025/2026 Academic Year.</p>
-
-      <p><strong>Special Discount:</strong> Book for the first semester and enjoy bigger discounted rates for the second semester!</p>
-
-      <p>Our comprehensive amenities include:</p>
-      <ul>
-         <li>Free Wi-Fi throughout the facility</li>
-         <li>Uninterrupted water and power supply</li>
-         <li>State-of-the-art generator for backup power</li>
-         <li>Convenient transport services to campus and beyond</li>
-         <li>Smart TV with Netflix and DStv in all rooms</li>
-         <li>Air conditioning and fridges in all rooms</li>
-         <li>Shared common areas and laundry facilities at discounted rates</li>
-         <li>On-site convenience shop and food unit</li>
-      </ul>
-
-      <p>With constant surveillance and staff dedicated to providing support, we help ensure a comfortable and smart living environment.</p>
-
-      <p>Discover modern student living at Jeffston Court. Here, you can live better, learn focused, and move freely.</p>
-
-      <!-- Embedded YouTube Video with improved loading -->
-      <div class="video-container">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/UtvsEelOd2w" 
-          title="Jeffston Court Hostel Ads 1" frameborder="0" loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-        </iframe>
+  <main id="main">
+    <section id="home" class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Adenta Court, near major campuses</p>
+        <h1>More than a hostel. A place you can call home.</h1>
+        <p>Spacious rooms, 24/7 security focus, CCTV, reliable water, backup generator, high-speed Wi-Fi, student transport support and a clean shared kitchen.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#booking">Book a Room</a>
+          <a class="btn btn-secondary" href="https://wa.me/233201349321?text=Hello%2C%20I%20am%20interested%20in%20Jeffston%20Court%20Hostel.%20Can%20you%20send%20me%20current%20availability%20and%20prices%3F" target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
+        </div>
       </div>
-    </div>
-    <div class="about-image" aria-hidden="true"></div>
-  </div>
-</section>
-    <!-- FACILITIES SECTION -->
-    <section id="facilities" class="facilities-section" aria-labelledby="facilities-heading">
-      <h2 id="facilities-heading" data-aos="fade-up">Our Facilities</h2>
-      <div class="facilities-grid">
-        <article class="facility-box facility-modern" role="region" aria-labelledby="fac-modern" data-aos="fade-up" data-aos-delay="100">
-          <h3 id="fac-modern">Modern Living Spaces</h3>
-          <p>Air-conditioned rooms and Smart TVs with Netflix & DSTV for your comfort.</p>
+      <picture class="hero-media">
+        <img src="Assets/images/site/jeffston-flyer.jpg" onerror="this.src='Assets/images/HERO.png'" alt="Jeffston Court Hostel flyer showing facilities and contact information" />
+      </picture>
+    </section>
+
+    <section class="trust-bar" aria-label="Hostel highlights">
+      <span>Spacious & well-furnished rooms</span>
+      <span>24/7 security & CCTV</span>
+      <span>Reliable water supply</span>
+      <span>Backup power</span>
+      <span>High-speed Wi-Fi</span>
+      <span>Student transport service</span>
+      <span>Clean kitchen</span>
+    </section>
+
+    <section id="about" class="section two-col">
+      <div>
+        <p class="eyebrow">Live comfortably. Study peacefully.</p>
+        <h2>Your comfort is our priority.</h2>
+        <p>Jeffston Court Hostel is designed for students and parents who want a safer, cleaner and more comfortable accommodation option around Adenta Court, near Frafrapha Senior High School.</p>
+        <ul class="check-list">
+          <li>Well-furnished student rooms</li>
+          <li>Air conditioning, ceiling fans, Smart TV and fridge support</li>
+          <li>Shared lounge and common areas</li>
+          <li>Clean kitchen and reliable water supply</li>
+          <li>Quick support by phone or WhatsApp</li>
+        </ul>
+      </div>
+      <div class="card image-card">
+        <img src="Assets/images/site/lounge-1.jpg" onerror="this.src='Assets/images/liv3.jpg'" alt="Jeffston Court Hostel lounge with sofas and television" />
+      </div>
+    </section>
+
+    <section id="facilities" class="section">
+      <p class="eyebrow center">Facilities</p>
+      <h2 class="center">Everything students need day to day</h2>
+      <div class="facility-grid">
+        <article class="card"><strong>🛏️ Spacious rooms</strong><p>Well-furnished spaces with beds, desks, storage, curtains and practical layouts.</p></article>
+        <article class="card"><strong>🛡️ Security & CCTV</strong><p>Security-focused environment built to give students and parents peace of mind.</p></article>
+        <article class="card"><strong>💧 Reliable water</strong><p>Water availability is treated as a core hostel service, not an afterthought.</p></article>
+        <article class="card"><strong>⚡ Backup power</strong><p>Generator support helps reduce disruption when the power goes off.</p></article>
+        <article class="card"><strong>📶 Wi-Fi</strong><p>High-speed internet support for study, research and communication.</p></article>
+        <article class="card"><strong>🍽️ Kitchen</strong><p>Clean shared kitchen space for convenient student living.</p></article>
+      </div>
+      <div class="gallery-strip">
+        <img src="Assets/images/site/shared-kitchen.jpg" onerror="this.style.display='none'" alt="Shared kitchen at Jeffston Court Hostel" />
+        <img src="Assets/images/site/lounge-2.jpg" onerror="this.style.display='none'" alt="Second lounge view at Jeffston Court Hostel" />
+      </div>
+    </section>
+
+    <section id="rooms" class="section rooms-section">
+      <p class="eyebrow center">Rooms</p>
+      <h2 class="center">Choose the room style that fits your budget</h2>
+      <div class="rooms-grid">
+        <article class="room-card">
+          <img src="Assets/images/site/room-2in.jpg" onerror="this.src='Assets/images/bedroom1.jpg'" alt="Two in a room at Jeffston Court Hostel" />
+          <div><span class="badge">Most private</span><h3>2-in-a-Room</h3><p>Current rate to be confirmed before publishing.</p><a href="#booking" class="btn btn-small">Select room</a></div>
         </article>
-        <article class="facility-box facility-common" role="region" aria-labelledby="fac-common" data-aos="fade-up" data-aos-delay="200">
-          <h3 id="fac-common">Spacious Common Area</h3>
-          <p>Comfortable lounge where residents can relax, study, or socialize.</p>
+        <article class="room-card">
+          <img src="Assets/images/bedroom2.jpg" alt="Three in a room at Jeffston Court Hostel" />
+          <div><span class="badge">Balanced value</span><h3>3-in-a-Room</h3><p>Current rate to be confirmed before publishing.</p><a href="#booking" class="btn btn-small">Select room</a></div>
         </article>
-        <article class="facility-box facility-exec" role="region" aria-labelledby="fac-exec" data-aos="fade-up" data-aos-delay="300">
-          <h3 id="fac-exec">Dining & Kitchen Facilities</h3>
-          <p>Fully equipped kitchen and dining area with fridge, microwave, and more.</p>
+        <article class="room-card">
+          <img src="Assets/images/site/room-4in.jpg" onerror="this.src='Assets/images/NEW4.jpg'" alt="Four in a room at Jeffston Court Hostel" />
+          <div><span class="badge">Budget friendly</span><h3>4-in-a-Room</h3><p>Current rate to be confirmed before publishing.</p><a href="#booking" class="btn btn-small">Select room</a></div>
         </article>
       </div>
     </section>
 
-<!-- ROOMS SECTION -->
-<section id="rooms" class="rooms-section" aria-labelledby="rooms-heading">
-  <h2 id="rooms-heading" data-aos="fade-up">Room Options</h2>
-  <div class="rooms-grid">
-    <article class="room-card" role="region" aria-labelledby="room-budget" data-aos="fade-up" data-aos-delay="100">
-      <figure>
-        <img src="Assets/images/bedroom1.jpg" alt="Two students sharing a budget room" loading="lazy">
-        <figcaption><h3 id="room-budget">2-in-a-Room</h3>
-          <p class="room-price">GHS 5,500 - GHS 9,000 per semester</p></figcaption>
-      </figure>
-      <div class="room-actions">
-        <a href="https://wa.me/233201349321?text=Hi%2C%20I%27m%20interested%20in%20the%202-in-a-Room%20(Budget)%20option.%20Can%20you%20provide%20more%20details%20about%20availability%20and%20pricing%3F" 
-           target="_blank" 
-           rel="noopener noreferrer"
-           class="btn btn-whatsapp-small">Ask about this room</a>
+    <section id="booking" class="section booking-section">
+      <p class="eyebrow center">Secure your space</p>
+      <h2 class="center">Book a Room</h2>
+      <p class="center narrow">The payment amounts below are locked until you send the confirmed current price list. Do not merge this branch until the final rates are entered.</p>
+      <form id="booking-form" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="booking-form" novalidate>
+        <input type="hidden" name="form-name" value="booking" />
+        <p hidden><label>Do not fill this out: <input name="bot-field" /></label></p>
+        <label for="fullName">Full Name</label>
+        <input id="fullName" name="fullName" type="text" autocomplete="name" required />
+        <span id="error-fullName" class="error-message"></span>
+        <label for="email">Email Address</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+        <span id="error-email" class="error-message"></span>
+        <label for="phone">Phone Number</label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+        <span id="error-phone" class="error-message"></span>
+        <label for="roomType">Room Type</label>
+        <select id="roomType" name="roomType" required>
+          <option value="" disabled selected>Select Room Type</option>
+          <option value="4-in-room-4750">4-in-a-Room - GHS 4,750 per semester</option>
+          <option value="4-in-room-5750">4-in-a-Room Premium - GHS 5,750 per semester</option>
+          <option value="3-in-room-5100">3-in-a-Room - GHS 5,100 per semester</option>
+          <option value="3-in-room-6500">3-in-a-Room Premium - GHS 6,500 per semester</option>
+          <option value="2-in-room-5500">2-in-a-Room - GHS 5,500 per semester</option>
+          <option value="2-in-room-8000">2-in-a-Room Standard - GHS 8,000 per semester</option>
+          <option value="2-in-room-9000">2-in-a-Room Premium - GHS 9,000 per semester</option>
+        </select>
+        <span id="error-roomType" class="error-message"></span>
+        <label for="duration">Duration</label>
+        <select id="duration" name="duration" required>
+          <option value="" disabled selected>Select Duration</option>
+          <option value="first-semester">First Semester</option>
+          <option value="second-semester">Second Semester</option>
+          <option value="full-academic-year">Full Academic Year</option>
+        </select>
+        <span id="error-duration" class="error-message"></span>
+        <input type="hidden" id="amountInKobo" name="amountInKobo" />
+        <input type="hidden" id="bookingRef" name="bookingReference" />
+        <div class="price-summary"><span>Selected amount</span><strong id="price-preview">Choose room and duration</strong></div>
+        <button type="button" id="paystack-trigger" class="btn btn-primary" disabled>Proceed to Payment</button>
+      </form>
+    </section>
+
+    <section id="contact" class="section contact-section">
+      <p class="eyebrow center">Contact</p>
+      <h2 class="center">Call us today</h2>
+      <div class="contact-grid">
+        <a class="card contact-card" href="tel:+233554671081"><strong>0554 671 081</strong><span>Call line 1</span></a>
+        <a class="card contact-card" href="tel:+233201349321"><strong>0201 349 321</strong><span>Call line 2</span></a>
+        <a class="card contact-card" href="https://wa.me/233201349321?text=Hello%2C%20I%20want%20to%20ask%20about%20Jeffston%20Court%20Hostel." target="_blank" rel="noopener noreferrer"><strong>WhatsApp</strong><span>Fast response</span></a>
+        <a class="card contact-card" href="https://maps.app.goo.gl/hcb8EMkCtQ6vAygy8?g_st=ic" target="_blank" rel="noopener noreferrer"><strong>Adenta Court</strong><span>Open in Google Maps</span></a>
       </div>
-    </article>
-
-    <article class="room-card" role="region" aria-labelledby="room-premium" data-aos="fade-up" data-aos-delay="200">
-      <figure>
-        <img src="Assets/images/bedroom2.jpg" alt="Three students sharing a premium room" loading="lazy">
-        <figcaption><h3 id="room-premium">3-in-a-Room</h3>
-          <p class="room-price">GHS 5,100 - GHS 6,500 per semester</p></figcaption>
-      </figure>
-      <div class="room-actions">
-        <a href="https://wa.me/233201349321?text=Hi%2C%20I%27m%20interested%20in%20the%203-in-a-Room%20(Premium)%20option.%20Can%20you%20provide%20more%20details%20about%20availability%20and%20pricing%3F" 
-           target="_blank" 
-           rel="noopener noreferrer"
-           class="btn btn-whatsapp-small">Ask about this room</a>
-      </div>
-    </article>
-
-    <article class="room-card" role="region" aria-labelledby="room-standard" data-aos="fade-up" data-aos-delay="300">
-      <figure>
-        <img src="Assets/images/NEW4.jpg" alt="Standard 4-in-a-room setup" loading="lazy">
-        <figcaption><h3 id="room-standard">4-in-a-Room</h3>
-          <p class="room-price">GHS 4,750 - GHS 5,750 per semester</p></figcaption>
-      </figure>
-      <div class="room-actions">
-        <a href="https://wa.me/233201349321?text=Hi%2C%20I%27m%20interested%20in%20the%204-in-a-Room%20(Standard)%20option.%20Can%20you%20provide%20more%20details%20about%20availability%20and%20pricing%3F" 
-           target="_blank" 
-           rel="noopener noreferrer"
-           class="btn btn-whatsapp-small">Ask about this room</a>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- BOOKING SECTION -->
-<section id="booking" class="booking-section" aria-labelledby="booking-heading">
-  <h2 id="booking-heading" data-aos="fade-up">Book a Room</h2>
-  <form id="booking-form" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="booking-form">
-  <input type="hidden" name="form-name" value="booking" />
-    <fieldset>
-      <!-- Personal info fields -->
-      <legend>Personal Information</legend>
-      <label for="fullName">Full Name</label>
-      <input id="fullName" type="text" name="fullName" placeholder="John Doe" required aria-describedby="error-fullName">
-      <span id="error-fullName" class="error-message" role="alert"></span>
-
-      <label for="email">Email Address</label>
-      <input id="email" type="email" name="email" placeholder="you@example.com" required aria-describedby="error-email">
-      <span id="error-email" class="error-message" role="alert"></span>
-
-      <label for="phone">Phone Number</label>
-      <input id="phone" type="tel" name="phone" placeholder="+233 123 456 789" required aria-describedby="error-phone">
-      <span id="error-phone" class="error-message" role="alert"></span>
-    </fieldset>
-
-    <fieldset>
-      <!-- Booking details -->
-      <legend>Booking Details</legend>
-      <label for="roomType">Room Type</label>
-      <select id="roomType" name="roomType" required aria-describedby="error-roomType">
-        <option value="" disabled selected>Select Room Type</option>
-        <option value="4-in-room-4750">4-in-a-Room (Budget) – GHS 4,750 per semester</option>
-        <option value="4-in-room-5750">4-in-a-Room (Premium) – GHS 5,750 per semester</option>
-        <option value="3-in-room-5100">3-in-a-Room (Budget) – GHS 5,100 per semester</option>
-        <option value="3-in-room-6500">3-in-a-Room (Premium) – GHS 6,500 per semester</option>
-        <option value="2-in-room-5500">2-in-a-Room (Budget) – GHS 5,500 per semester</option>
-        <option value="2-in-room-8000">2-in-a-Room (Standard) – GHS 8,000 per semester</option>
-        <option value="2-in-room-9000">2-in-a-Room (Premium) – GHS 9,000 per semester</option>
-      </select>
-      <span id="error-roomType" class="error-message" role="alert"></span>
-
-      <label for="duration">Duration</label>
-      <select id="duration" name="duration" required aria-describedby="error-duration">
-        <option value="" disabled selected>Select Duration</option>
-        <option value="first-semester">First Semester (2025/2026)</option>
-        <option value="second-semester">Second Semester (2025/2026) - Discounted!</option>
-        <option value="full-academic-year">Full Academic Year (2025/2026)</option>
-      </select>
-      <span id="error-duration" class="error-message" role="alert"></span>
-    </fieldset>
-
-    <input type="hidden" name="paystackKey" value="pk_live_9302b8356f0551937a496101908e2eb772328962">
-    <input type="hidden" name="amountInKobo" id="amountInKobo" value="">
-    <input type="hidden" name="bookingReference" id="bookingRef" value="">
-
-    <div class="booking-actions">
-      <button type="button" class="btn btn-primary" id="paystack-trigger">Proceed to Payment</button>
-      <p class="booking-help">Need help with booking? <a href="https://wa.me/233201349321?text=Hi%2C%20I%20need%20help%20with%20booking%20a%20room%20at%20Jeffston%20Court%20Hostel.%20Can%20you%20assist%20me%3F" target="_blank" rel="noopener noreferrer" class="whatsapp-link">Chat with us on WhatsApp</a></p>
-    </div>
-  </form>
-</section>
-
-   <!-- CONTACT SECTION -->
-<section id="contact" class="contact-section" aria-labelledby="contact-heading">
-  <h2 id="contact-heading" data-aos="fade-up">Contact Us</h2>
-  <div class="contact-container">
-    
-    <!-- Contact Options -->
-    <div class="contact-options" data-aos="fade-up" data-aos-delay="100">
-      <h3>Get in Touch</h3>
-      <div class="contact-methods">
-        <div class="contact-method">
-          <div class="contact-icon">📞</div>
-          <div class="contact-details">
-            <h4>Call Us</h4>
-            <p><a href="tel:+233201349321">+233 201 349 321</a></p>
-          </div>
-        </div>
-        
-        <div class="contact-method whatsapp-contact">
-          <div class="contact-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24">
-              <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
-            </svg>
-          </div>
-          <div class="contact-details">
-            <h4>WhatsApp</h4>
-            <p>
-              <a href="https://wa.me/233201349321?text=Hello%2C%20I%27m%20interested%20in%20Jeffston%20Court%20Hostel.%20Can%20you%20please%20provide%20more%20information%3F" 
-                 target="_blank" 
-                 rel="noopener noreferrer">
-                Chat with us instantly
-              </a>
-            </p>
-          </div>
-        </div>
-        
-        <div class="contact-method">
-          <div class="contact-icon">✉️</div>
-          <div class="contact-details">
-            <h4>Email</h4>
-            <p><a href="mailto:jeffstoncourthostel@gmail.com">jeffstoncourthostel@gmail.com</a></p>
-          </div>
-        </div>
-        
-        <div class="contact-method">
-          <div class="contact-icon">📍</div>
-          <div class="contact-details">
-            <h4>Location</h4>
-            <p>Adenta Court Complex, Accra, Ghana</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Netlify Contact Form -->
-    <form 
-      class="contact-form" 
-      name="contact" 
-      method="POST" 
-      data-netlify="true" 
-      netlify-honeypot="bot-field"
-      data-aos="fade-up" 
-      data-aos-delay="200"
-    >
-      <!-- Hidden input for Netlify: identifies the form -->
-      <input type="hidden" name="form-name" value="contact" />
-
-      <!-- Honeypot field for spam prevention (hidden from users) -->
-      <p hidden>
-        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-      </p>
-
-      <fieldset>
-        <legend>Send us a Message</legend>
-
-        <label for="contactName">Name</label>
-        <input id="contactName" type="text" name="name" placeholder="Jane Smith" required />
-
-        <label for="contactEmail">Email</label>
-        <input id="contactEmail" type="email" name="email" placeholder="you@example.com" required />
-
-        <label for="contactPhone">Phone</label>
-        <input id="contactPhone" type="tel" name="phone" placeholder="+233 987 654 321" />
-
-        <label for="contactMessage">Message</label>
-        <textarea id="contactMessage" name="message" rows="5" placeholder="How can we help you?" required></textarea>
-      </fieldset>
-      
-      <button type="submit" class="btn btn-primary">Send Message</button>
-    </form>
-
-    <aside class="map-container" role="complementary" aria-label="Location map" data-aos="fade-up" data-aos-delay="300">
-      <iframe
-        title="Map of Jeffston Court Hostel"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3969.9659927402618!2d-0.161464!3d5.7180379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9d6fb7bd4b43%3A0xc48d1a5c5f6f085a!2sJeffston%20Court%20Hostel!5e0!3m2!1sen!2suk!4v1748303937640!5m2!1sen!2suk"
-        allowfullscreen loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
-    </aside>
-  </div>
-</section>
-
+      <p class="center address">Adenta Court, near Frafrapha Snr. High School. Near major campuses.</p>
+    </section>
   </main>
 
-  <!-- Footer could be added here for additional content -->
+  <a class="whatsapp-float" href="https://wa.me/233201349321?text=Hello%2C%20I%20am%20interested%20in%20Jeffston%20Court%20Hostel.%20Please%20send%20me%20the%20current%20availability%20and%20prices." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">💬</a>
+
+  <footer class="site-footer">
+    <strong>Jeffston Court Hostel</strong>
+    <span>Live comfortably. Study peacefully. Succeed confidently.</span>
+  </footer>
 </body>
 </html>
