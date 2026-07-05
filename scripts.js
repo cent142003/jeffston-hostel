@@ -321,7 +321,13 @@ if (menuBtn && menuLinks) {
   const onScroll = window.throttle(() => {
     const offsetY = window.pageYOffset;
     navAnchors.forEach(link => {
-      const target = document.querySelector(link.getAttribute('href'));
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) {
+        link.classList.remove('active');
+        return;
+      }
+
+      const target = document.querySelector(href);
       if (!target) return;
 
       const top = target.offsetTop - 100;
@@ -442,6 +448,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function updateAmount() {
+    if (!payBtn) return;
+
     const roomType = roomTypeInput?.value;
     const duration = durationInput?.value;
     const amount = calculateAmount(roomType, duration);

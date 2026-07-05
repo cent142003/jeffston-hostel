@@ -294,6 +294,16 @@ li {
   background: var(--green-light);
 }
 
+.btn-secondary {
+  background: var(--purple);
+  color: var(--white);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background: #4b485f;
+}
+
 /* ==========================================================================
 8. Section Basics
 ========================================================================== */
@@ -341,6 +351,67 @@ section h2 {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
+}
+
+/* ==========================================================================
+10. Campus Access
+========================================================================== */
+.campus-access-section {
+  background: #f6f8fb;
+}
+
+.campus-card-grid {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 1100px;
+  margin: auto;
+}
+
+.campus-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  min-height: 100%;
+  background: var(--white);
+  border: 1px solid rgba(49, 47, 62, 0.12);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 28px rgba(49, 47, 62, 0.08);
+  padding: var(--spacing-lg);
+}
+
+.campus-card-kicker {
+  color: var(--green);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.campus-card h3 {
+  color: var(--purple);
+  font-size: 1.45rem;
+}
+
+.campus-card h3 a:focus,
+.campus-card h3 a:hover {
+  color: var(--green);
+}
+
+.campus-card p {
+  color: #4b5563;
+  margin: 0;
+}
+
+.campus-points {
+  color: #344054;
+  margin: 0;
+}
+
+.campus-card .btn {
+  align-self: flex-start;
+  margin-top: auto;
 }
 
 /* ==========================================================================
@@ -846,6 +917,216 @@ textarea:focus {
   display: none;
 }
 
+.faq-section {
+  background: #f6f8fb;
+}
+
+.faq-list {
+  display: grid;
+  gap: var(--spacing-md);
+  max-width: 880px;
+  margin: auto;
+}
+
+.faq-list details {
+  background: var(--white);
+  border: 1px solid rgba(49, 47, 62, 0.12);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 22px rgba(49, 47, 62, 0.07);
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.faq-list summary {
+  color: var(--purple);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.faq-list details p {
+  color: #4b5563;
+  margin-top: var(--spacing-sm);
+}
+
+.campus-landing-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 68vh;
+  overflow: hidden;
+  padding: 110px var(--spacing-md) 64px;
+  color: var(--white);
+}
+
+.campus-landing-hero::before,
+.campus-landing-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.campus-landing-hero::before {
+  background-image: url("Assets/images/bedroom1.jpg");
+  background-position: center;
+  background-size: cover;
+  transform: scale(1.02);
+  z-index: -2;
+}
+
+.upsa-page .campus-landing-hero::before {
+  background-image: url("Assets/images/bedroom2.jpg");
+}
+
+.campus-landing-hero::after {
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.22), rgba(17, 24, 39, 0.82));
+  z-index: -1;
+}
+
+.campus-landing-content {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.campus-landing-content .section-kicker {
+  color: var(--white);
+  margin-bottom: var(--spacing-sm);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.campus-landing-content h1 {
+  font-size: clamp(2.2rem, 6vw, 4.4rem);
+  margin-bottom: var(--spacing-md);
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.58);
+}
+
+.campus-landing-content p {
+  font-size: 1.18rem;
+  margin: 0 auto var(--spacing-lg);
+  max-width: 62ch;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
+}
+
+.campus-landing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  justify-content: center;
+}
+
+.campus-landing-actions .btn {
+  min-height: 46px;
+}
+
+.campus-quick-strip {
+  background: var(--white);
+  border-bottom: 1px solid rgba(49, 47, 62, 0.1);
+  padding: var(--spacing-md);
+}
+
+.campus-quick-strip-inner {
+  display: grid;
+  gap: var(--spacing-sm);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 1100px;
+  margin: auto;
+}
+
+.campus-quick-strip span {
+  color: var(--purple);
+  font-weight: 800;
+  text-align: center;
+}
+
+.campus-page-section {
+  background: #f6f8fb;
+}
+
+.campus-page-inner {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  max-width: 1100px;
+  margin: auto;
+}
+
+.campus-page-copy h2,
+.campus-page-copy h3 {
+  color: var(--purple);
+  margin-bottom: var(--spacing-md);
+}
+
+.campus-page-copy h2 {
+  font-size: 2rem;
+}
+
+.campus-page-copy p,
+.campus-page-copy li {
+  color: #4b5563;
+}
+
+.campus-page-copy ul {
+  margin: var(--spacing-md) 0;
+}
+
+.campus-room-panel {
+  align-self: start;
+  background: var(--white);
+  border: 1px solid rgba(49, 47, 62, 0.12);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 28px rgba(49, 47, 62, 0.08);
+  overflow: hidden;
+}
+
+.campus-room-panel img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.campus-room-panel-content {
+  padding: var(--spacing-lg);
+}
+
+.campus-room-panel-content h3 {
+  color: var(--purple);
+  margin-bottom: var(--spacing-sm);
+}
+
+.campus-room-list {
+  display: grid;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-md) 0;
+}
+
+.campus-room-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #edf0f5;
+  list-style: none;
+}
+
+.campus-room-list li:last-child {
+  border-bottom: 0;
+}
+
+.campus-room-list strong {
+  color: var(--purple);
+}
+
+.campus-room-list span {
+  color: var(--green);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.campus-faq-section {
+  background: var(--white);
+}
+
 /* ==========================================================================
 13. Contact Map
 ========================================================================== */
@@ -1071,6 +1352,66 @@ textarea:focus {
 
   .section-kicker {
     font-size: 0.82rem;
+  }
+
+  .campus-card-grid,
+  .campus-page-inner,
+  .campus-quick-strip-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .campus-card,
+  .faq-list details,
+  .campus-room-panel-content {
+    padding: var(--spacing-lg);
+  }
+
+  .campus-card .btn {
+    align-self: stretch;
+    text-align: center;
+  }
+
+  .campus-landing-hero {
+    min-height: calc(100svh - 64px);
+    padding: 104px var(--spacing-md) 118px;
+  }
+
+  .campus-landing-content {
+    text-align: left;
+  }
+
+  .campus-landing-content h1 {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .campus-landing-content p {
+    font-size: 1rem;
+    max-width: 34ch;
+    margin-left: 0;
+  }
+
+  .campus-landing-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .campus-landing-actions .btn {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .campus-quick-strip span {
+    text-align: left;
+  }
+
+  .campus-page-copy h2 {
+    font-size: 1.7rem;
+  }
+
+  .campus-room-list li {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .availability-summary {
