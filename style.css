@@ -1279,7 +1279,7 @@ textarea:focus {
   }
 
   .hero::before {
-    background-image: url('Assets/images/jch-gallery/jeffston-court-hostel-two-bed-room.jpg');
+    background-image: url('Assets/images/jch-gallery/jeffston-court-hostel-adenta-exterior-mobile.webp');
     background-position: center;
   }
 
@@ -1459,8 +1459,8 @@ textarea:focus {
   }
 
   .slideshow-control {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
   }
   .slideshow-prev {
     left: var(--spacing-sm);
