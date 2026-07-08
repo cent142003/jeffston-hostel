@@ -138,6 +138,16 @@
         }
       },
       {
+        "@type": "VideoObject",
+        "@id": "https://jeffstoncourthostel.com/#hostel-video",
+        "name": "Jeffston Court Hostel 2025/2026 room availability video",
+        "description": "A current Jeffston Court Hostel video showing student rooms, facilities, campus access, 2025/2026 prices, and booking details.",
+        "thumbnailUrl": "https://jeffstoncourthostel.com/Assets/videos/jeffston-court-hostel-poster.png",
+        "uploadDate": "2026-07-08T00:00:00-05:00",
+        "duration": "PT36S",
+        "contentUrl": "https://jeffstoncourthostel.com/Assets/videos/jeffston-court-hostel-2026.mp4"
+      },
+      {
         "@type": "FAQPage",
         "@id": "https://jeffstoncourthostel.com/#faq-schema",
         "mainEntity": [
@@ -271,13 +281,16 @@
 
       <p>Discover modern student living at Jeffston Court. Here, you can live better, learn focused, and move freely.</p>
 
-      <!-- Embedded YouTube Video with improved loading -->
+      <!-- Current hostel video rendered with Remotion -->
       <div class="video-container">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/UtvsEelOd2w" 
-          title="Jeffston Court Hostel Ads 1" frameborder="0" loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-        </iframe>
+        <video
+          controls
+          preload="metadata"
+          poster="Assets/videos/jeffston-court-hostel-poster.png"
+          aria-label="Jeffston Court Hostel 2025/2026 room availability and facilities video">
+          <source src="Assets/videos/jeffston-court-hostel-2026.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
     <div class="about-image" aria-hidden="true"></div>
