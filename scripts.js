@@ -3,19 +3,25 @@
 // ============================================================================
 document.addEventListener('DOMContentLoaded', function() {
   const whatsappFloat = document.getElementById('whatsapp-float');
+  const mobileBookingBar = document.querySelector('.mobile-booking-bar');
   const whatsappLinks = document.querySelectorAll('a[href^="https://wa.me/"]');
   
   // Show/hide floating WhatsApp button based on scroll
   let lastScrollTop = 0;
   const toggleWhatsAppButton = window.throttle(() => {
-    if (!whatsappFloat) return;
-    
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const heroSection = document.querySelector('.hero');
     const heroHeight = heroSection ? heroSection.offsetHeight : 0;
+    const pastHero = scrollTop > heroHeight * 0.72;
     
+    if (mobileBookingBar) {
+      mobileBookingBar.classList.toggle('is-visible', pastHero);
+    }
+
+    if (!whatsappFloat) return;
+
     // Show button after hero section
-    if (scrollTop > heroHeight * 0.7) {
+    if (pastHero) {
       whatsappFloat.style.opacity = '1';
       whatsappFloat.style.visibility = 'visible';
       whatsappFloat.style.transform = 'scale(1)';
@@ -27,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }, 16);
   
   window.addEventListener('scroll', toggleWhatsAppButton, { passive: true });
+  toggleWhatsAppButton();
   
   // Track WhatsApp link clicks for analytics (optional)
   whatsappLinks.forEach(link => {
