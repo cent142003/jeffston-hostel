@@ -613,10 +613,16 @@ section h2 {
   z-index: 1;
 }
 
+.slideshow-slide picture,
 .slideshow-slide img {
+  display: block;
   width: 100%;
   height: 100%;
+}
+
+.slideshow-slide img {
   object-fit: cover;
+  object-position: center;
 }
 
 .slide-label {
@@ -691,8 +697,11 @@ section h2 {
 
 .slideshow-dots {
   display: flex;
+  flex-wrap: wrap;
   gap: 7px;
+  justify-content: flex-end;
   flex-shrink: 0;
+  max-width: 220px;
 }
 
 .slideshow-dots button {
@@ -971,7 +980,7 @@ textarea:focus {
 }
 
 .campus-landing-hero::before {
-  background-image: url("Assets/images/bedroom1.jpg");
+  background-image: url("Assets/images/jch-gallery/jeffston-court-hostel-two-bed-room.jpg");
   background-position: center;
   background-size: cover;
   transform: scale(1.02);
@@ -979,7 +988,7 @@ textarea:focus {
 }
 
 .upsa-page .campus-landing-hero::before {
-  background-image: url("Assets/images/bedroom2.jpg");
+  background-image: url("Assets/images/jch-gallery/jeffston-court-hostel-four-bed-bunk-room.jpg");
 }
 
 .campus-landing-hero::after {
@@ -1083,8 +1092,13 @@ textarea:focus {
   overflow: hidden;
 }
 
+.campus-room-panel picture,
 .campus-room-panel img {
+  display: block;
   width: 100%;
+}
+
+.campus-room-panel img {
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
@@ -1265,7 +1279,7 @@ textarea:focus {
   }
 
   .hero::before {
-    background-image: url('Assets/images/bedroom1.jpg');
+    background-image: url('Assets/images/jch-gallery/jeffston-court-hostel-two-bed-room.jpg');
     background-position: center;
   }
 
@@ -1440,7 +1454,7 @@ textarea:focus {
   }
 
   .slideshow-viewport {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 4;
     border-radius: var(--radius-md);
   }
 
@@ -1458,6 +1472,11 @@ textarea:focus {
     align-items: flex-start;
     flex-direction: column;
     gap: var(--spacing-sm);
+  }
+
+  .slideshow-dots {
+    justify-content: flex-start;
+    max-width: 100%;
   }
 
   .slideshow-caption {

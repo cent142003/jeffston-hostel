@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://jeffstoncourthostel.com/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://jeffstoncourthostel.com/Assets/images/jch-gallery/jeffston-court-hostel-four-bed-bunk-room.jpg</image:loc>
+      <image:caption>Four-bed student room with wooden bunk beds and study desks at Jeffston Court Hostel.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://jeffstoncourthostel.com/Assets/images/jch-gallery/jeffston-court-hostel-two-bed-room.jpg</image:loc>
+      <image:caption>Two-bed room with wardrobe, TV, desk, and air conditioning.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://jeffstoncourthostel.com/Assets/images/jch-gallery/jeffston-court-hostel-shared-kitchen-cabinets.jpg</image:loc>
+      <image:caption>Shared kitchen with fitted cabinets, sink, microwave, and worktops.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://jeffstoncourthostel.com/Assets/images/jch-gallery/jeffston-court-hostel-common-lounge.jpg</image:loc>
+      <image:caption>Common lounge with sofas, television, and air conditioning.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://jeffstoncourthostel.com/hostel-near-legon/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://jeffstoncourthostel.com/Assets/images/jch-gallery/jeffston-court-hostel-two-bed-room.jpg</image:loc>
+      <image:caption>Two-bed furnished room at Jeffston Court Hostel near Legon.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://jeffstoncourthostel.com/hostel-near-upsa/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://jeffstoncourthostel.com/Assets/images/jch-gallery/jeffston-court-hostel-four-bed-bunk-room.jpg</image:loc>
+      <image:caption>Shared furnished room with bunk beds and desks at Jeffston Court Hostel near UPSA.</image:caption>
+    </image:image>
   </url>
 </urlset>
