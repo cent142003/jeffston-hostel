@@ -2,6 +2,8 @@ import React from 'react';
 import {
   AbsoluteFill,
   Img,
+  OffthreadVideo,
+  Sequence,
   interpolate,
   staticFile,
   useCurrentFrame,
@@ -11,33 +13,34 @@ import {
 const green = '#07c160';
 const purple = '#312f3e';
 const white = '#ffffff';
-
-const photos = [
-  'images/bedroom2.jpg',
-  'images/bedroom1.jpg',
-  'images/bedroom3.jpg',
-  'images/kit2.jpg',
-  'images/liv3.jpg',
-  'images/laundryroom.jpg',
-];
+const sourceVideo = 'videos/jch-source-room-tour.mp4';
 
 const rooms = [
-  ['A101', 'Standard', '2/4', 'GHS 5,500'],
-  ['A102', 'Standard Big', '0/4', 'GHS 6,700'],
-  ['B202', 'General', '2/3', 'GHS 6,700'],
-  ['B203', 'General', '0/4', 'GHS 6,800'],
-  ['C302', 'Premium', '1/2', 'GHS 6,000'],
-  ['C303', 'Premium', '1/3', 'GHS 5,500'],
+  ['A101', 'Standard', 'GHS 5,500'],
+  ['A102', 'Standard Big', 'GHS 6,700'],
+  ['B202', 'General', 'GHS 6,700'],
+  ['B203', 'General', 'GHS 6,800'],
+  ['C302', 'Premium', 'GHS 6,000'],
+  ['C303', 'Premium', 'GHS 5,500'],
 ];
 
-const facilities = [
-  'Wi-Fi for study and streaming',
-  'Air-conditioned rooms',
-  'Study desks and storage',
-  'Shared kitchen and laundry',
-  'Smart TV and common lounge',
-  'Water, power, and support',
+const amenities = [
+  'Secured gated access',
+  'Adenta Court Complex',
+  'Rooms near Legon and UPSA',
+  'Wi-Fi, study desks, kitchen, laundry',
 ];
+
+const appear = (frame, start, distance = 24) => ({
+  opacity: interpolate(frame, [start, start + 18], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  }),
+  transform: `translateY(${interpolate(frame, [start, start + 18], [distance, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  })}px)`,
+});
 
 const fade = (frame, start, end) =>
   interpolate(frame, [start, start + 18, end - 18, end], [0, 1, 1, 0], {
@@ -45,48 +48,20 @@ const fade = (frame, start, end) =>
     extrapolateRight: 'clamp',
   });
 
-const Scene = ({children, start, end}) => {
-  const frame = useCurrentFrame();
-  return (
-    <AbsoluteFill style={{opacity: fade(frame, start, end)}}>
-      {children}
-    </AbsoluteFill>
-  );
-};
-
-const Background = ({src, dim = 0.56}) => {
-  const frame = useCurrentFrame();
-  const scale = interpolate(frame % 180, [0, 180], [1.02, 1.1]);
-
-  return (
-    <AbsoluteFill>
-      <Img
-        src={staticFile(src)}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          transform: `scale(${scale})`,
-        }}
-      />
-      <AbsoluteFill style={{background: `rgba(17, 24, 39, ${dim})`}} />
-    </AbsoluteFill>
-  );
-};
-
 const Brand = () => (
   <div
     style={{
       position: 'absolute',
       top: 34,
       left: 48,
+      zIndex: 10,
       display: 'flex',
       alignItems: 'center',
       gap: 14,
       color: white,
-      fontWeight: 800,
-      letterSpacing: 0,
+      fontWeight: 900,
       fontSize: 24,
+      letterSpacing: 0,
     }}
   >
     <Img
@@ -97,226 +72,255 @@ const Brand = () => (
   </div>
 );
 
-const Tag = ({children}) => (
+const Tag = ({children, dark = false}) => (
   <div
     style={{
       display: 'inline-flex',
       alignItems: 'center',
       border: `2px solid ${green}`,
       borderRadius: 999,
-      color: white,
-      fontSize: 23,
-      fontWeight: 800,
+      color: dark ? purple : white,
+      fontSize: 22,
+      fontWeight: 900,
       padding: '10px 18px',
-      background: 'rgba(7, 193, 96, 0.18)',
+      background: dark ? 'rgba(255,255,255,0.9)' : 'rgba(7, 193, 96, 0.2)',
     }}
   >
     {children}
   </div>
 );
 
-const HeroScene = () => (
-  <>
-    <Background src="images/bedroom2.jpg" dim={0.6} />
-    <Brand />
-    <div style={{position: 'absolute', left: 70, bottom: 92, width: 850}}>
-      <Tag>Now booking 2025/2026</Tag>
-      <h1
-        style={{
-          color: white,
-          fontSize: 78,
-          lineHeight: 0.96,
-          margin: '28px 0 20px',
-          fontWeight: 900,
-          letterSpacing: 0,
-        }}
-      >
-        Student living near Legon and UPSA
-      </h1>
-      <p style={{color: white, fontSize: 30, lineHeight: 1.35, margin: 0}}>
-        Secure rooms in Adenta Court Complex with Wi-Fi, study desks, kitchen,
-        laundry, and reliable utilities.
-      </p>
+const SourceVideoLayer = () => (
+  <AbsoluteFill style={{background: '#111827'}}>
+    <OffthreadVideo
+      src={staticFile(sourceVideo)}
+      muted
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        filter: 'blur(18px) brightness(0.58) saturate(1.08)',
+        transform: 'scale(1.15)',
+      }}
+    />
+    <AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(17,24,39,0.78), rgba(17,24,39,0.34), rgba(17,24,39,0.86))'}} />
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 424,
+        width: 432,
+        background: '#000',
+        boxShadow: '0 24px 80px rgba(0,0,0,0.58)',
+      }}
+    >
+      <OffthreadVideo
+        src={staticFile(sourceVideo)}
+        muted
+        style={{width: '100%', height: '100%', objectFit: 'cover'}}
+      />
     </div>
-  </>
+  </AbsoluteFill>
 );
 
-const RoomsScene = () => {
+const Intro = () => {
   const frame = useCurrentFrame();
-  const photoIndex = Math.floor((frame - 150) / 40) % 3;
-
   return (
-    <>
-      <Background src={photos[Math.max(0, photoIndex)]} dim={0.48} />
-      <Brand />
-      <div style={{position: 'absolute', left: 60, top: 130}}>
-        <Tag>Rooms from GHS 5,500</Tag>
-        <h2 style={{color: white, fontSize: 56, margin: '24px 0 0'}}>
-          Compare by room code, occupancy, and rent
+    <AbsoluteFill style={{opacity: fade(frame, 0, 165)}}>
+      <div style={{position: 'absolute', left: 62, top: 150, width: 430}}>
+        <div style={appear(frame, 12)}>
+          <Tag>Updated hostel tour</Tag>
+        </div>
+        <h1
+          style={{
+            ...appear(frame, 28),
+            color: white,
+            fontSize: 64,
+            lineHeight: 0.98,
+            margin: '26px 0 20px',
+            fontWeight: 950,
+            letterSpacing: 0,
+          }}
+        >
+          Secure student living in Adenta
+        </h1>
+        <p style={{...appear(frame, 46), color: white, fontSize: 27, lineHeight: 1.35, margin: 0}}>
+          A gated hostel base for students near Legon and UPSA.
+        </p>
+      </div>
+      <div
+        style={{
+          ...appear(frame, 64),
+          position: 'absolute',
+          right: 54,
+          bottom: 58,
+          width: 330,
+          background: 'rgba(255,255,255,0.92)',
+          borderRadius: 18,
+          padding: 24,
+          color: purple,
+          fontSize: 25,
+          fontWeight: 900,
+          boxShadow: '0 20px 48px rgba(0,0,0,0.32)',
+        }}
+      >
+        Now booking 2025/2026 rooms from GHS 5,500
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const Amenities = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, 150, 390)}}>
+      <div style={{position: 'absolute', right: 54, top: 135, width: 360}}>
+        <div style={appear(frame, 160)}>
+          <Tag>Why students choose JCH</Tag>
+        </div>
+        <div style={{display: 'grid', gap: 14, marginTop: 28}}>
+          {amenities.map((item, index) => (
+            <div
+              key={item}
+              style={{
+                ...appear(frame, 178 + index * 10),
+                background: 'rgba(255,255,255,0.92)',
+                borderLeft: `8px solid ${green}`,
+                borderRadius: 14,
+                padding: '18px 20px',
+                color: purple,
+                fontSize: 24,
+                lineHeight: 1.18,
+                fontWeight: 900,
+              }}
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const Pricing = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, 365, 660)}}>
+      <div style={{position: 'absolute', left: 52, top: 112, width: 360}}>
+        <div style={appear(frame, 378)}>
+          <Tag>Live room pricing</Tag>
+        </div>
+        <h2 style={{...appear(frame, 394), color: white, fontSize: 47, lineHeight: 1, margin: '24px 0'}}>
+          Current available rooms
         </h2>
       </div>
       <div
         style={{
           position: 'absolute',
-          left: 60,
-          right: 60,
-          bottom: 58,
+          right: 52,
+          bottom: 54,
+          width: 385,
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 16,
+          gap: 10,
         }}
       >
-        {rooms.map(([code, type, occ, price], index) => (
+        {rooms.map(([code, type, price], index) => (
           <div
             key={code}
             style={{
-              background: 'rgba(255,255,255,0.92)',
-              borderRadius: 16,
-              padding: 20,
-              boxShadow: '0 18px 42px rgba(0,0,0,0.22)',
-              transform: `translateY(${interpolate(frame, [150 + index * 5, 178 + index * 5], [24, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}px)`,
-              opacity: interpolate(frame, [150 + index * 5, 178 + index * 5], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}),
+              ...appear(frame, 410 + index * 7, 16),
+              display: 'grid',
+              gridTemplateColumns: '82px 1fr auto',
+              gap: 10,
+              alignItems: 'center',
+              background: 'rgba(255,255,255,0.94)',
+              borderRadius: 12,
+              padding: '13px 15px',
+              boxShadow: '0 12px 28px rgba(0,0,0,0.2)',
             }}
           >
-            <div style={{color: purple, fontSize: 34, fontWeight: 900}}>
-              {code}
-            </div>
-            <div style={{color: '#4b5563', fontSize: 20}}>{type}</div>
-            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: 18}}>
-              <strong style={{color: '#111827', fontSize: 22}}>{occ}</strong>
-              <strong style={{color: green, fontSize: 24}}>{price}</strong>
-            </div>
+            <strong style={{color: purple, fontSize: 25}}>{code}</strong>
+            <span style={{color: '#475467', fontSize: 19, fontWeight: 800}}>{type}</span>
+            <strong style={{color: green, fontSize: 20}}>{price}</strong>
           </div>
         ))}
       </div>
-    </>
+    </AbsoluteFill>
   );
 };
 
-const FacilitiesScene = () => (
-  <>
-    <Background src="images/kit2.jpg" dim={0.5} />
-    <Brand />
-    <div style={{position: 'absolute', left: 70, top: 120, right: 70}}>
-      <Tag>Built for daily student life</Tag>
-      <h2 style={{color: white, fontSize: 62, margin: '24px 0 30px'}}>
-        Facilities that support study, comfort, and routine
-      </h2>
+const FinalCta = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{opacity: fade(frame, 640, 900)}}>
+      <AbsoluteFill style={{background: 'rgba(17,24,39,0.42)'}} />
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 18,
+          position: 'absolute',
+          left: 70,
+          right: 70,
+          top: 126,
+          textAlign: 'center',
         }}
       >
-        {facilities.map((item) => (
-          <div
-            key={item}
-            style={{
-              background: 'rgba(255,255,255,0.9)',
-              borderLeft: `8px solid ${green}`,
-              borderRadius: 14,
-              color: purple,
-              fontSize: 25,
-              fontWeight: 800,
-              padding: '22px 24px',
-            }}
-          >
-            {item}
-          </div>
-        ))}
-      </div>
-    </div>
-  </>
-);
-
-const CampusScene = () => (
-  <>
-    <Background src="images/liv3.jpg" dim={0.58} />
-    <Brand />
-    <div style={{position: 'absolute', left: 70, top: 124, right: 70}}>
-      <Tag>Campus access</Tag>
-      <h2 style={{color: white, fontSize: 66, margin: '22px 0 22px'}}>
-        A practical base for Legon and UPSA students
-      </h2>
-      <p style={{color: white, fontSize: 31, width: 790, lineHeight: 1.35}}>
-        Use the website to compare rooms, check availability, and book directly
-        for the academic year.
-      </p>
-      <div style={{display: 'flex', gap: 22, marginTop: 40}}>
-        {['Hostel near University of Ghana Legon', 'Hostel near UPSA'].map((text) => (
-          <div
-            key={text}
-            style={{
-              background: 'rgba(255,255,255,0.92)',
-              borderRadius: 16,
-              color: purple,
-              fontSize: 30,
-              fontWeight: 900,
-              padding: '28px 34px',
-              width: 510,
-            }}
-          >
-            {text}
-          </div>
-        ))}
-      </div>
-    </div>
-  </>
-);
-
-const CtaScene = () => (
-  <>
-    <Background src="images/bedroom1.jpg" dim={0.62} />
-    <Brand />
-    <div style={{position: 'absolute', left: 70, right: 70, top: 132, textAlign: 'center'}}>
-      <Tag>Book your room</Tag>
-      <h2 style={{color: white, fontSize: 76, margin: '28px 0 22px', lineHeight: 1}}>
-        Jeffston Court Hostel
-      </h2>
-      <p style={{color: white, fontSize: 34, lineHeight: 1.35, margin: '0 auto', width: 850}}>
-        View current room availability, choose your space, and contact us for
-        booking support.
-      </p>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: 18,
-          marginTop: 44,
-        }}
-      >
-        <div style={{background: green, color: white, borderRadius: 999, padding: '18px 32px', fontSize: 30, fontWeight: 900}}>
-          jeffstoncourthostel.com
+        <div style={appear(frame, 662)}>
+          <Tag>Book directly</Tag>
         </div>
-        <div style={{background: white, color: purple, borderRadius: 999, padding: '18px 32px', fontSize: 30, fontWeight: 900}}>
-          WhatsApp: +233 201 349 321
+        <h2
+          style={{
+            ...appear(frame, 680),
+            color: white,
+            fontSize: 76,
+            lineHeight: 1,
+            margin: '28px 0 22px',
+            fontWeight: 950,
+          }}
+        >
+          Jeffston Court Hostel
+        </h2>
+        <p style={{...appear(frame, 698), color: white, fontSize: 32, lineHeight: 1.3, margin: '0 auto', width: 820}}>
+          Compare rooms, choose your space, and message us for booking support.
+        </p>
+        <div style={{...appear(frame, 724), display: 'flex', justifyContent: 'center', gap: 18, marginTop: 42}}>
+          <div style={{background: green, color: white, borderRadius: 999, padding: '18px 30px', fontSize: 29, fontWeight: 950}}>
+            jeffstoncourthostel.com
+          </div>
+          <div style={{background: white, color: purple, borderRadius: 999, padding: '18px 30px', fontSize: 29, fontWeight: 950}}>
+            +233 201 349 321
+          </div>
         </div>
       </div>
-    </div>
-  </>
-);
+    </AbsoluteFill>
+  );
+};
 
 export const JeffstonHostelVideo = () => {
   const {width, height} = useVideoConfig();
 
   return (
     <AbsoluteFill style={{width, height, background: '#111827', fontFamily: 'Segoe UI, Arial, sans-serif'}}>
-      <Scene start={0} end={170}>
-        <HeroScene />
-      </Scene>
-      <Scene start={150} end={410}>
-        <RoomsScene />
-      </Scene>
-      <Scene start={390} end={630}>
-        <FacilitiesScene />
-      </Scene>
-      <Scene start={610} end={850}>
-        <CampusScene />
-      </Scene>
-      <Scene start={830} end={1080}>
-        <CtaScene />
-      </Scene>
+      <SourceVideoLayer />
+      <Brand />
+      <Intro />
+      <Amenities />
+      <Pricing />
+      <FinalCta />
+      <Sequence from={0} durationInFrames={900}>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 26,
+            left: 48,
+            color: 'rgba(255,255,255,0.72)',
+            fontSize: 17,
+            fontWeight: 700,
+          }}
+        >
+          Adenta Court Complex • Near Legon and UPSA
+        </div>
+      </Sequence>
     </AbsoluteFill>
   );
 };

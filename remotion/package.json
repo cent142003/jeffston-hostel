@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "render": "remotion render src/index.jsx JeffstonHostel ../Assets/videos/jeffston-court-hostel-2026.mp4 --codec=h264 --crf=23 --log=info",
-    "still": "remotion still src/index.jsx JeffstonHostel ../Assets/videos/jeffston-court-hostel-poster.png --frame=30"
+    "still": "remotion still src/index.jsx JeffstonHostel ../Assets/videos/jeffston-court-hostel-poster.png --frame=90"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.424",
