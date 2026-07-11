@@ -1066,6 +1066,60 @@ textarea:focus {
   background: #f6f8fb;
 }
 
+.campus-search-section {
+  background: var(--white);
+  border-top: 1px solid rgba(49, 47, 62, 0.08);
+  border-bottom: 1px solid rgba(49, 47, 62, 0.08);
+}
+
+.campus-search-inner {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+  max-width: 1100px;
+  margin: auto;
+}
+
+.campus-search-inner h2 {
+  color: var(--purple);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: var(--spacing-md);
+  text-align: left;
+}
+
+.campus-search-inner p {
+  color: #4b5563;
+  max-width: 68ch;
+}
+
+.campus-updated {
+  color: #136f3a;
+  font-size: 0.92rem;
+  font-weight: 800;
+  margin-bottom: var(--spacing-sm);
+}
+
+.campus-search-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.campus-search-list li {
+  background: #f8fafc;
+  border: 1px solid rgba(49, 47, 62, 0.1);
+  border-radius: var(--radius-md);
+  color: #4b5563;
+  list-style: none;
+  margin: 0;
+  padding: 14px 16px;
+}
+
+.campus-search-list strong {
+  color: var(--purple);
+}
+
 .campus-page-inner {
   display: grid;
   gap: var(--spacing-lg);
@@ -1406,6 +1460,7 @@ textarea:focus {
   }
 
   .campus-card-grid,
+  .campus-search-inner,
   .campus-page-inner,
   .campus-quick-strip-inner {
     grid-template-columns: 1fr;
