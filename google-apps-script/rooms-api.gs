@@ -10,11 +10,11 @@
  *
  * If your admin script already has doGet(e), copy only the helper functions
  * below and add this route at the top of your existing doGet:
- *   if ((e.parameter.action || "").toLowerCase() === "rooms") return roomsApiResponse_();
+ *   if ((e.parameter.action || "").toLowerCase() === "rooms") return roomsApiResponse_(e);
  */
 function doGet(e) {
   if ((e.parameter.action || "").toLowerCase() === "rooms") {
-    return roomsApiResponse_();
+    return roomsApiResponse_(e);
   }
 
   return ContentService
@@ -22,10 +22,18 @@ function doGet(e) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-function roomsApiResponse_() {
-  const rooms = getPublicRooms_();
+function roomsApiResponse_(e) {
+  const payload = { ok: true, updatedAt: new Date().toISOString(), rooms: getPublicRooms_() };
+  const callback = e && e.parameter && e.parameter.callback;
+
+  if (callback && /^[A-Za-z_$][0-9A-Za-z_$]*$/.test(callback)) {
+    return ContentService
+      .createTextOutput(`${callback}(${JSON.stringify(payload)});`)
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+
   return ContentService
-    .createTextOutput(JSON.stringify({ ok: true, updatedAt: new Date().toISOString(), rooms }))
+    .createTextOutput(JSON.stringify(payload))
     .setMimeType(ContentService.MimeType.JSON);
 }
 

@@ -222,6 +222,40 @@ function openWhatsApp(messageType, roomTitle = '') {
     document.dispatchEvent(new CustomEvent('jch:rooms-updated', { detail: { rooms } }));
   }
 
+  function loadRoomsWithJsonp(apiUrl) {
+    return new Promise((resolve, reject) => {
+      const callbackName = `jchRoomsCallback_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+      const script = document.createElement('script');
+      const url = new URL(apiUrl, window.location.href);
+      url.searchParams.set('callback', callbackName);
+
+      const timeoutId = window.setTimeout(() => {
+        cleanup();
+        reject(new Error('Room API JSONP request timed out'));
+      }, 12000);
+
+      function cleanup() {
+        window.clearTimeout(timeoutId);
+        delete window[callbackName];
+        script.remove();
+      }
+
+      window[callbackName] = payload => {
+        cleanup();
+        resolve(payload);
+      };
+
+      script.src = url.toString();
+      script.async = true;
+      script.onerror = () => {
+        cleanup();
+        reject(new Error('Room API JSONP request failed'));
+      };
+
+      document.head.appendChild(script);
+    });
+  }
+
   async function syncRoomsFromSheet() {
     const roomsSection = document.querySelector('#rooms');
     const apiUrl = window.JCH_ROOMS_API_URL || roomsSection?.dataset.roomsApi;
@@ -233,7 +267,12 @@ function openWhatsApp(messageType, roomTitle = '') {
       const rooms = normalizePayload(await response.json());
       renderRooms(rooms);
     } catch (error) {
-      console.warn('Using static room list because room sync failed:', error);
+      try {
+        const rooms = normalizePayload(await loadRoomsWithJsonp(apiUrl));
+        renderRooms(rooms);
+      } catch (jsonpError) {
+        console.warn('Using static room list because room sync failed:', error, jsonpError);
+      }
     }
   }
 
