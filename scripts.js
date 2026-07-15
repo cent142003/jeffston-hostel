@@ -106,6 +106,140 @@ function openWhatsApp(messageType, roomTitle = '') {
   window.open(url, '_blank', 'noopener,noreferrer');
 }
 
+// ============================================================================
+// 6a. Google Sheet Room Sync
+// ============================================================================
+(function () {
+  const fallbackPricing = {
+    'room-a101': { 'first-semester': 550000, 'second-semester': 550000, 'full-academic-year': 1100000 },
+    'room-a102': { 'first-semester': 670000, 'second-semester': 670000, 'full-academic-year': 1340000 },
+    'room-b201': { 'first-semester': 780000, 'second-semester': 780000, 'full-academic-year': 1560000 },
+    'room-b202': { 'first-semester': 670000, 'second-semester': 670000, 'full-academic-year': 1340000 },
+    'room-b203': { 'first-semester': 680000, 'second-semester': 680000, 'full-academic-year': 1360000 },
+    'room-c301': { 'first-semester': 800000, 'second-semester': 800000, 'full-academic-year': 1600000 },
+    'room-c302': { 'first-semester': 600000, 'second-semester': 600000, 'full-academic-year': 1200000 },
+    'room-c303': { 'first-semester': 550000, 'second-semester': 550000, 'full-academic-year': 1100000 }
+  };
+
+  window.JCH_ROOM_PRICING = window.JCH_ROOM_PRICING || fallbackPricing;
+
+  function roomValue(roomCode) {
+    return `room-${String(roomCode || '').trim().toLowerCase()}`;
+  }
+
+  function parseMoney(value) {
+    const amount = Number(String(value || '').replace(/[^\d.]/g, ''));
+    return Number.isFinite(amount) ? amount : 0;
+  }
+
+  function formatCedi(value) {
+    return new Intl.NumberFormat('en-GH', {
+      style: 'currency',
+      currency: 'GHS',
+      maximumFractionDigits: 0
+    }).format(value).replace('GH₵', '₵');
+  }
+
+  function normalizeRoom(raw) {
+    const code = raw.room || raw.Room || raw.code || raw.Code || raw.roomCode || raw.RoomCode;
+    const type = raw.type || raw.Type || raw.roomType || raw.RoomType;
+    const occupancy = raw.occupancy || raw.Occupancy || `${raw.occupied ?? raw.Occupied ?? 0}/${raw.capacity ?? raw.Capacity ?? 0}`;
+    const rent = parseMoney(raw.rent || raw.Rent || raw.price || raw.Price);
+    const status = raw.status || raw.Status || '';
+    const [occupied, capacity] = String(occupancy).split('/').map(part => Number(part.trim()));
+    const safeCapacity = Number.isFinite(capacity) && capacity > 0 ? capacity : 0;
+    const safeOccupied = Number.isFinite(occupied) ? occupied : 0;
+    const computedStatus = status || (safeCapacity && safeOccupied >= safeCapacity ? 'Full' : 'Available');
+
+    if (!code || !type || !rent) return null;
+
+    return {
+      code: String(code).trim().toUpperCase(),
+      type: String(type).trim(),
+      occupancy: safeCapacity ? `${safeOccupied}/${safeCapacity}` : String(occupancy).trim(),
+      occupied: safeOccupied,
+      capacity: safeCapacity,
+      rent,
+      status: String(computedStatus).trim()
+    };
+  }
+
+  function normalizePayload(payload) {
+    const rows = Array.isArray(payload) ? payload : payload?.rooms || payload?.data || [];
+    return rows.map(normalizeRoom).filter(Boolean);
+  }
+
+  function waitlistUrl(roomCode) {
+    const text = `Hi, I'd like to join the waitlist for Room ${roomCode} at Jeffston Court Hostel.`;
+    return `https://wa.me/233201349321?text=${encodeURIComponent(text)}`;
+  }
+
+  function pricingForRent(rent) {
+    const semester = Math.round(rent * 100);
+    return {
+      'first-semester': semester,
+      'second-semester': semester,
+      'full-academic-year': semester * 2
+    };
+  }
+
+  function renderRooms(rooms) {
+    const tableBody = document.querySelector('.rooms-table tbody');
+    const roomSelect = document.querySelector('#roomType');
+    if (!tableBody || !roomSelect || !rooms.length) return;
+
+    tableBody.innerHTML = rooms.map(room => {
+      const isFull = room.status.toLowerCase() === 'full';
+      const filled = room.capacity ? Math.min(100, Math.round((room.occupied / room.capacity) * 100)) : 0;
+      const action = isFull
+        ? `<a class="btn room-waitlist-btn" href="${waitlistUrl(room.code)}" target="_blank" rel="noopener noreferrer">Waitlist</a>`
+        : `<button type="button" class="btn room-select-btn" data-room-value="${roomValue(room.code)}">Book</button>`;
+
+      return `
+        <tr>
+          <th scope="row">${room.code}</th>
+          <td>${room.type}</td>
+          <td><span class="occupancy-meter ${isFull ? 'is-full' : ''}" style="--filled: ${filled}%;"></span>${room.occupancy}</td>
+          <td>${formatCedi(room.rent)}</td>
+          <td><span class="status-pill ${isFull ? 'status-full' : 'status-available'}">${isFull ? 'Full' : 'Available'}</span></td>
+          <td>${action}</td>
+        </tr>
+      `;
+    }).join('');
+
+    roomSelect.innerHTML = '<option value="" disabled selected>Select available room</option>' + rooms.map(room => {
+      const isFull = room.status.toLowerCase() === 'full';
+      const disabled = isFull ? ' disabled' : '';
+      const state = isFull ? 'Full' : `${room.occupancy} occupied`;
+      return `<option value="${roomValue(room.code)}"${disabled}>${room.code} - ${room.type} - ${state} - GHS ${room.rent.toLocaleString('en-US')} per semester</option>`;
+    }).join('');
+
+    window.JCH_ROOM_PRICING = rooms.reduce((pricing, room) => {
+      pricing[roomValue(room.code)] = pricingForRent(room.rent);
+      return pricing;
+    }, {});
+
+    document.dispatchEvent(new CustomEvent('jch:rooms-updated', { detail: { rooms } }));
+  }
+
+  async function syncRoomsFromSheet() {
+    const roomsSection = document.querySelector('#rooms');
+    const apiUrl = window.JCH_ROOMS_API_URL || roomsSection?.dataset.roomsApi;
+    if (!apiUrl || apiUrl.includes('PASTE_')) return;
+
+    try {
+      const response = await fetch(apiUrl, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Room API returned ${response.status}`);
+      const rooms = normalizePayload(await response.json());
+      renderRooms(rooms);
+    } catch (error) {
+      console.warn('Using static room list because room sync failed:', error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', syncRoomsFromSheet);
+})();
+
 // Enhanced contact form integration
 document.addEventListener('DOMContentLoaded', function() {
   const contactForm = document.querySelector('.contact-form');
@@ -374,7 +508,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const amountField = document.querySelector('#amountInKobo');
 
   // Updated pricing structure (amounts in pesewas for Paystack)
-  const pricing = {
+  let pricing = window.JCH_ROOM_PRICING || {
     'room-a101': { 'first-semester': 550000, 'second-semester': 550000, 'full-academic-year': 1100000 },
     'room-a102': { 'first-semester': 670000, 'second-semester': 670000, 'full-academic-year': 1340000 },
     'room-b201': { 'first-semester': 780000, 'second-semester': 780000, 'full-academic-year': 1560000 },
@@ -586,8 +720,15 @@ document.addEventListener('DOMContentLoaded', function () {
     durationInput?.focus();
   }
 
-  document.querySelectorAll('[data-room-value]').forEach(button => {
-    button.addEventListener('click', () => selectRoom(button.dataset.roomValue));
+  document.addEventListener('click', event => {
+    const button = event.target.closest('[data-room-value]');
+    if (!button) return;
+    selectRoom(button.dataset.roomValue);
+  });
+
+  document.addEventListener('jch:rooms-updated', () => {
+    pricing = window.JCH_ROOM_PRICING || pricing;
+    updateAmount();
   });
 
   // Your original event listeners
