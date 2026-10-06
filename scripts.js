@@ -144,12 +144,15 @@ function openWhatsApp(messageType, roomTitle = '') {
     const code = raw.room || raw.Room || raw.code || raw.Code || raw.roomCode || raw.RoomCode;
     const type = raw.type || raw.Type || raw.roomType || raw.RoomType;
     const occupancy = raw.occupancy || raw.Occupancy || `${raw.occupied ?? raw.Occupied ?? 0}/${raw.capacity ?? raw.Capacity ?? 0}`;
-    const rent = parseMoney(raw.rent || raw.Rent || raw.price || raw.Price);
-    const status = raw.status || raw.Status || '';
+    const rent = parseMoney(raw.rentAmount ?? raw.rent ?? raw.Rent ?? raw.price ?? raw.Price);
     const [occupied, capacity] = String(occupancy).split('/').map(part => Number(part.trim()));
     const safeCapacity = Number.isFinite(capacity) && capacity > 0 ? capacity : 0;
-    const safeOccupied = Number.isFinite(occupied) ? occupied : 0;
-    const computedStatus = status || (safeCapacity && safeOccupied >= safeCapacity ? 'Full' : 'Available');
+    const safeOccupied = Number.isFinite(occupied) ? Math.max(0, occupied) : 0;
+    const rawAvailable = Number(raw.availableBeds ?? raw.AvailableBeds);
+    const availableBeds = Number.isFinite(rawAvailable)
+      ? Math.max(0, rawAvailable)
+      : Math.max(0, safeCapacity - safeOccupied);
+    const computedStatus = safeCapacity > 0 && availableBeds <= 0 ? 'Full' : 'Available';
 
     if (!code || !type || !rent) return null;
 
@@ -159,8 +162,9 @@ function openWhatsApp(messageType, roomTitle = '') {
       occupancy: safeCapacity ? `${safeOccupied}/${safeCapacity}` : String(occupancy).trim(),
       occupied: safeOccupied,
       capacity: safeCapacity,
+      availableBeds,
       rent,
-      status: String(computedStatus).trim()
+      status: computedStatus
     };
   }
 
@@ -188,12 +192,26 @@ function openWhatsApp(messageType, roomTitle = '') {
     const roomSelect = document.querySelector('#roomType');
     if (!tableBody || !roomSelect || !rooms.length) return;
 
+    const totalAvailableBeds = rooms.reduce((sum, room) => sum + Math.max(0, Number(room.availableBeds) || 0), 0);
+    const fullRooms = rooms.filter(room => room.status.toLowerCase() === 'full').length;
+    const availableRooms = rooms.filter(room => room.status.toLowerCase() !== 'full');
+    const startingRent = availableRooms.length ? Math.min(...availableRooms.map(room => room.rent)) : 0;
+    const setText = (selector, value) => {
+      const el = document.querySelector(selector);
+      if (el) el.textContent = value;
+    };
+    setText('#hero-live-availability', totalAvailableBeds + ' bed' + (totalAvailableBeds === 1 ? '' : 's') + ' available');
+    setText('#live-total-rooms', String(rooms.length));
+    setText('#live-available-beds', String(totalAvailableBeds));
+    setText('#live-starting-rent', startingRent ? formatCedi(startingRent) : 'Waitlist only');
+    setText('#live-full-rooms', String(fullRooms));
+
     tableBody.innerHTML = rooms.map(room => {
       const isFull = room.status.toLowerCase() === 'full';
       const filled = room.capacity ? Math.min(100, Math.round((room.occupied / room.capacity) * 100)) : 0;
       const action = isFull
         ? `<a class="btn room-waitlist-btn" href="${waitlistUrl(room.code)}" target="_blank" rel="noopener noreferrer">Waitlist</a>`
-        : `<button type="button" class="btn room-select-btn" data-room-value="${roomValue(room.code)}">Book</button>`;
+        : `<button type="button" class="btn room-select-btn" data-room-value="${roomValue(room.code)}">Book ${room.availableBeds} space${room.availableBeds === 1 ? '' : 's'}</button>`;
 
       return `
         <tr>
@@ -201,7 +219,7 @@ function openWhatsApp(messageType, roomTitle = '') {
           <td>${room.type}</td>
           <td><span class="occupancy-meter ${isFull ? 'is-full' : ''}" style="--filled: ${filled}%;"></span>${room.occupancy}</td>
           <td>${formatCedi(room.rent)}</td>
-          <td><span class="status-pill ${isFull ? 'status-full' : 'status-available'}">${isFull ? 'Full' : 'Available'}</span></td>
+          <td><span class="status-pill ${isFull ? 'status-full' : 'status-available'}">${isFull ? 'Full' : `${room.availableBeds} bed${room.availableBeds === 1 ? '' : 's'} available`}</span></td>
           <td>${action}</td>
         </tr>
       `;
@@ -210,7 +228,7 @@ function openWhatsApp(messageType, roomTitle = '') {
     roomSelect.innerHTML = '<option value="" disabled selected>Select available room</option>' + rooms.map(room => {
       const isFull = room.status.toLowerCase() === 'full';
       const disabled = isFull ? ' disabled' : '';
-      const state = isFull ? 'Full' : `${room.occupancy} occupied`;
+      const state = isFull ? 'Full' : `${room.availableBeds} bed${room.availableBeds === 1 ? '' : 's'} available (${room.occupancy} occupied)`;
       return `<option value="${roomValue(room.code)}"${disabled}>${room.code} - ${room.type} - ${state} - GHS ${room.rent.toLocaleString('en-US')} per semester</option>`;
     }).join('');
 
