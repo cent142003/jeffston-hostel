@@ -121,7 +121,8 @@ function openWhatsApp(messageType, roomTitle = '') {
     'room-c303': { 'first-semester': 550000, 'second-semester': 550000, 'full-academic-year': 1100000 }
   };
 
-  window.JCH_ROOM_PRICING = window.JCH_ROOM_PRICING || fallbackPricing;
+  window.JCH_ROOM_PRICING = {};
+  window.JCH_ROOM_FEED_READY = false;
 
   function roomValue(roomCode) {
     return `room-${String(roomCode || '').trim().toLowerCase()}`;
@@ -204,6 +205,7 @@ function openWhatsApp(messageType, roomTitle = '') {
     setText('#live-total-rooms', String(rooms.length));
     setText('#live-available-beds', String(totalAvailableBeds));
     setText('#live-starting-rent', startingRent ? formatCedi(startingRent) : 'Waitlist only');
+    setText('#hero-live-price', startingRent ? 'From ' + formatCedi(startingRent) : 'Waitlist only');
     setText('#live-full-rooms', String(fullRooms));
 
     tableBody.innerHTML = rooms.map(room => {
@@ -236,6 +238,7 @@ function openWhatsApp(messageType, roomTitle = '') {
       pricing[roomValue(room.code)] = pricingForRent(room.rent);
       return pricing;
     }, {});
+    window.JCH_ROOM_FEED_READY = true;
 
     document.dispatchEvent(new CustomEvent('jch:rooms-updated', { detail: { rooms } }));
   }
@@ -289,12 +292,34 @@ function openWhatsApp(messageType, roomTitle = '') {
         const rooms = normalizePayload(await loadRoomsWithJsonp(apiUrl));
         renderRooms(rooms);
       } catch (jsonpError) {
-        console.warn('Using static room list because room sync failed:', error, jsonpError);
+        window.JCH_ROOM_FEED_READY = false;
+        window.JCH_ROOM_PRICING = {};
+        const roomSelect = document.querySelector('#roomType');
+        const payButton = document.querySelector('#paystack-trigger');
+        const heroAvailability = document.querySelector('#hero-live-availability');
+        const heroPrice = document.querySelector('#hero-live-price');
+        if (roomSelect) {
+          roomSelect.innerHTML = '<option value="" disabled selected>Live availability temporarily unavailable</option>';
+          roomSelect.disabled = true;
+        }
+        if (payButton) {
+          payButton.disabled = true;
+          payButton.textContent = 'Live price unavailable — contact us';
+        }
+        if (heroAvailability) heroAvailability.textContent = 'Call or WhatsApp for live availability';
+        if (heroPrice) heroPrice.textContent = 'Live price temporarily unavailable';
+        console.warn('Live room sync failed; online payment disabled to prevent stale pricing:', error, jsonpError);
       }
     }
   }
 
-  document.addEventListener('DOMContentLoaded', syncRoomsFromSheet);
+  document.addEventListener('DOMContentLoaded', function() {
+    syncRoomsFromSheet();
+    window.setInterval(syncRoomsFromSheet, 60000);
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'visible') syncRoomsFromSheet();
+    });
+  });
 })();
 
 // Enhanced contact form integration
@@ -565,16 +590,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const amountField = document.querySelector('#amountInKobo');
 
   // Updated pricing structure (amounts in pesewas for Paystack)
-  let pricing = window.JCH_ROOM_PRICING || {
-    'room-a101': { 'first-semester': 550000, 'second-semester': 550000, 'full-academic-year': 1100000 },
-    'room-a102': { 'first-semester': 670000, 'second-semester': 670000, 'full-academic-year': 1340000 },
-    'room-b201': { 'first-semester': 780000, 'second-semester': 780000, 'full-academic-year': 1560000 },
-    'room-b202': { 'first-semester': 670000, 'second-semester': 670000, 'full-academic-year': 1340000 },
-    'room-b203': { 'first-semester': 680000, 'second-semester': 680000, 'full-academic-year': 1360000 },
-    'room-c301': { 'first-semester': 800000, 'second-semester': 800000, 'full-academic-year': 1600000 },
-    'room-c302': { 'first-semester': 600000, 'second-semester': 600000, 'full-academic-year': 1200000 },
-    'room-c303': { 'first-semester': 550000, 'second-semester': 550000, 'full-academic-year': 1100000 }
-  };
+  let pricing = window.JCH_ROOM_PRICING || {};
 
   // Enhanced validation function
   function validateBookingForm() {
@@ -647,6 +663,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function updateAmount() {
     if (!payBtn) return;
+
+    if (!window.JCH_ROOM_FEED_READY) {
+      if (amountField) amountField.value = '';
+      payBtn.textContent = 'Loading live price…';
+      payBtn.disabled = true;
+      return;
+    }
 
     const roomType = roomTypeInput?.value;
     const duration = durationInput?.value;
@@ -807,6 +830,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log('Form data:', { fullName, email, phone, roomType, duration, amount });
     console.log('Paystack available:', typeof PaystackPop !== 'undefined');
+
+    if (!window.JCH_ROOM_FEED_READY) {
+      alert('Live room price is temporarily unavailable. Please wait or contact us on WhatsApp before paying.');
+      return;
+    }
 
     if (![fullName, email, phone, roomType, duration].every(Boolean) || amount === 0) {
       alert('Please complete all booking fields correctly before payment.');
