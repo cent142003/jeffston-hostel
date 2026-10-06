@@ -258,7 +258,7 @@
     <p class="hero-subtitle">Now Accepting Bookings for the 2025/2026 Academic Year!</p>
     <p>Updated room availability with semester rates from ₵5,500 in Adenta</p>
     <div class="hero-quick-facts" aria-label="Availability highlights">
-      <span>6 rooms available</span>
+      <span id="hero-live-availability">Checking live space…</span>
       <span>From ₵5,500</span>
       <span>Adenta Court</span>
     </div>
@@ -288,7 +288,7 @@
 
       <p>Understanding the demands of student life, we aim to offer everything within arm's reach under one roof. Current room availability is listed by room code, occupancy, and semester rent for the 2025/2026 Academic Year.</p>
 
-      <p><strong>Updated rates:</strong> Available rooms currently range from ₵5,500 to ₵6,800 per semester, with full rooms shown for waitlist enquiries.</p>
+      <p><strong>Live availability:</strong> Room prices and available bed spaces below are pulled from the hostel management system, so a new live booking reduces the public availability automatically.</p>
 
       <p>Our comprehensive amenities include:</p>
       <ul>
@@ -375,7 +375,7 @@
     </section>
 
 <!-- ROOMS SECTION -->
-<section id="rooms" class="rooms-section" aria-labelledby="rooms-heading" data-rooms-api="">
+<section id="rooms" class="rooms-section" aria-labelledby="rooms-heading" data-rooms-api="https://script.google.com/macros/s/AKfycbzjBfEHdqU2pgfLJD3P5dNkMB888WYuY77VKvepAqcw4nGdfncFHuQ_KYD7piwbBCvH/exec?action=rooms">
   <div class="section-intro" data-aos="fade-up">
     <p class="section-kicker">Rooms Overview</p>
     <h2 id="rooms-heading">Live Room Availability</h2>
@@ -384,19 +384,19 @@
 
   <div class="availability-summary" aria-label="Availability summary" data-aos="fade-up" data-aos-delay="100">
     <div class="summary-tile">
-      <span>8</span>
+      <span id="live-total-rooms">—</span>
       <small>Total rooms</small>
     </div>
     <div class="summary-tile available">
-      <span>6</span>
-      <small>Available now</small>
+      <span id="live-available-beds">—</span>
+      <small>Beds available now</small>
     </div>
     <div class="summary-tile">
-      <span>₵5,500</span>
+      <span id="live-starting-rent">—</span>
       <small>Starting rent</small>
     </div>
     <div class="summary-tile full">
-      <span>2</span>
+      <span id="live-full-rooms">—</span>
       <small>Currently full</small>
     </div>
   </div>
@@ -515,8 +515,8 @@
       </div>
     </div>
     <div class="rooms-showcase-copy">
-      <h3>Updated 2025/2026 room list</h3>
-      <p>Rates now reflect the current room-by-room availability. B201 and C301 are shown as full rooms for waitlist enquiries, while available rooms can be selected from this table or directly in the booking form.</p>
+      <h3>Live room list</h3>
+      <p>This list is connected to the hostel management system. Only rooms with remaining bed space can be selected for booking; full rooms switch to waitlist automatically.</p>
       <div class="room-badges" aria-label="Room types">
         <span>Standard</span>
         <span>Standard Big</span>
@@ -623,7 +623,7 @@
     </details>
     <details>
       <summary>What rooms are available for the 2025/2026 academic year?</summary>
-      <p>The live room table currently lists six available rooms from GHS 5,500 per semester, with full rooms available for waitlist enquiries.</p>
+      <p>The live room table above is connected to the hostel management system and shows the current room capacity, occupied beds, remaining spaces, and price. Full rooms are available for waitlist enquiries.</p>
     </details>
     <details>
       <summary>How do I book or ask a question?</summary>
