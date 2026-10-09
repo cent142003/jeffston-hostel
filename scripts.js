@@ -110,17 +110,6 @@ function openWhatsApp(messageType, roomTitle = '') {
 // 6a. Google Sheet Room Sync
 // ============================================================================
 (function () {
-  const fallbackPricing = {
-    'room-a101': { 'first-semester': 550000, 'second-semester': 550000, 'full-academic-year': 1100000 },
-    'room-a102': { 'first-semester': 670000, 'second-semester': 670000, 'full-academic-year': 1340000 },
-    'room-b201': { 'first-semester': 780000, 'second-semester': 780000, 'full-academic-year': 1560000 },
-    'room-b202': { 'first-semester': 670000, 'second-semester': 670000, 'full-academic-year': 1340000 },
-    'room-b203': { 'first-semester': 680000, 'second-semester': 680000, 'full-academic-year': 1360000 },
-    'room-c301': { 'first-semester': 800000, 'second-semester': 800000, 'full-academic-year': 1600000 },
-    'room-c302': { 'first-semester': 600000, 'second-semester': 600000, 'full-academic-year': 1200000 },
-    'room-c303': { 'first-semester': 550000, 'second-semester': 550000, 'full-academic-year': 1100000 }
-  };
-
   window.JCH_ROOM_PRICING = {};
   window.JCH_ROOM_FEED_READY = false;
 
