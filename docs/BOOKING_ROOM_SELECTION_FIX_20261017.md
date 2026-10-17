@@ -27,6 +27,7 @@ Pricing must always originate from the current hostel manager room feed, never f
 - C: sold-out room cancels the previous selection and payment.
 - D: bridge handles valid and invalid upstream responses.
 - E: tapping the actual room-table Book button selects room and displays amount.
+- F: an interrupted live feed clears any previously displayed price confirmation and blocks payment.
 
 ## Deployment verification
 Confirm on an authenticated Vercel preview before releasing: GET /api/rooms, room booking after slow/blocked feed, no missing assets or JS exceptions. Verify production without submitting a real Paystack payment.

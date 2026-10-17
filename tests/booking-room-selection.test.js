@@ -147,3 +147,24 @@ test('E: student can tap Book from the room table and see the chosen room',{time
   assert.match(feedback,/Second Semester/);
  } finally {await p.close()}
 });
+
+test('F: after an established selection, losing the feed clears old price text and blocks checkout',{timeout:35000},async()=>{
+ state.mode='online';state.a101Price=5500;state.a101Beds=3;
+ const p=await newPage();
+ try{
+  await p.waitForFunction(()=>window.JCH_ROOM_FEED_READY,{timeout:17000});
+  await selectRoom(p);
+  assert.equal((await snapshot(p)).amount,'550000');
+  state.mode='offline';
+  await p.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));
+  await p.waitForFunction(()=>document.querySelector('#roomType')?.disabled===true,{timeout:17000});
+  const snap=await snapshot(p);
+  assert.equal(snap.ready,false);
+  assert.equal(snap.payDisabled,true);
+  assert.equal(snap.amount,'');
+  assert.equal(snap.status.includes('Cannot load'),true);
+  const stale=await p.$eval('#selected-room-summary',el=>({hidden:el.hidden,text:el.textContent}));
+  assert.equal(stale.hidden,true);
+  assert.equal(stale.text,'','stale amount must never remain visible during a feed outage');
+ }finally{await p.close()}
+});

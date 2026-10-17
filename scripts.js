@@ -346,6 +346,11 @@ function openWhatsApp(messageType, roomTitle = '') {
           roomSelect.disabled = true;
         }
         if (amountField) amountField.value = '';
+        const selectionSummary = document.querySelector('#selected-room-summary');
+        if (selectionSummary) {
+          selectionSummary.textContent = '';
+          selectionSummary.hidden = true;
+        }
         if (payButton) {
           payButton.disabled = true;
           payButton.textContent = 'Live price unavailable — contact us';
