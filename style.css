@@ -2130,3 +2130,49 @@ textarea:focus {
     transition: none;
   }
 }
+
+
+/* Live room selection: readable native iOS controls + visible confirmation. */
+#roomType, #duration {
+  color: #182b24;
+  background-color: #ffffff;
+  -webkit-text-fill-color: #182b24;
+  font-size: 16px;
+}
+#roomType:disabled {
+  color: #6b7280;
+  -webkit-text-fill-color: #6b7280;
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+}
+.room-feed-status {
+  margin: -12px 0 14px;
+  color: #39584b;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.room-feed-status[data-state="error"] {
+  color: #9f2518;
+}
+.room-feed-retry {
+  margin: 0 0 18px;
+  padding: 10px 15px;
+  min-height: 44px;
+  border: 1px solid #126b4c;
+  border-radius: 8px;
+  background: #edf9f2;
+  color: #105338;
+  font-weight: 700;
+  cursor: pointer;
+}
+.selected-room-summary {
+  margin: 0 0 18px;
+  padding: 13px 14px;
+  border-left: 4px solid #07c160;
+  border-radius: 8px;
+  background: #e9f8ee;
+  color: #173b2a;
+  font-weight: 600;
+  line-height: 1.5;
+}
+[hidden].room-feed-retry, [hidden].selected-room-summary { display: none !important; }

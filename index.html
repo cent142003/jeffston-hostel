@@ -346,7 +346,7 @@
     </section>
 
 <!-- ROOMS SECTION -->
-<section id="rooms" class="rooms-section" aria-labelledby="rooms-heading" data-rooms-api="https://script.google.com/macros/s/AKfycbzjBfEHdqU2pgfLJD3P5dNkMB888WYuY77VKvepAqcw4nGdfncFHuQ_KYD7piwbBCvH/exec?action=rooms">
+<section id="rooms" class="rooms-section" aria-labelledby="rooms-heading" data-rooms-api="/api/rooms" data-rooms-fallback-api="https://script.google.com/macros/s/AKfycbzjBfEHdqU2pgfLJD3P5dNkMB888WYuY77VKvepAqcw4nGdfncFHuQ_KYD7piwbBCvH/exec?action=rooms">
   <div class="section-intro" data-aos="fade-up">
     <p class="section-kicker">Rooms Overview</p>
     <h2 id="rooms-heading">Live Room Availability</h2>
@@ -572,6 +572,9 @@
         <option value="" disabled selected>Checking live room availability…</option>
       </select>
       <span id="error-roomType" class="error-message" role="alert"></span>
+      <p id="room-feed-status" class="room-feed-status" role="status" aria-live="polite">Checking live room prices and available spaces…</p>
+      <button id="retry-room-feed" class="room-feed-retry" type="button" hidden>Reload room options</button>
+      <p id="selected-room-summary" class="selected-room-summary" role="status" aria-live="polite" hidden></p>
 
       <label for="duration">Duration</label>
       <select id="duration" name="duration" required aria-describedby="error-duration">

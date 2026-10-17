@@ -113,6 +113,25 @@ function openWhatsApp(messageType, roomTitle = '') {
   window.JCH_ROOM_PRICING = {};
   window.JCH_ROOM_FEED_READY = false;
 
+  // Keep the customer's intent across 60-second refreshes and temporary outages.
+  let preferredRoomValue = '';
+  let newestRoomRequest = 0;
+  function setRoomFeedStatus(message, showRetry) {
+    const messageEl = document.querySelector('#room-feed-status');
+    const retryButton = document.querySelector('#retry-room-feed');
+    if (messageEl) {
+      messageEl.textContent = message;
+      messageEl.dataset.state = showRetry ? 'error' : 'ready';
+    }
+    if (retryButton) retryButton.hidden = !showRetry;
+  }
+
+  document.addEventListener('change', function(event) {
+    if (event.target?.id === 'roomType') {
+      preferredRoomValue = event.target.value || '';
+    }
+  });
+
   function roomValue(roomCode) {
     return `room-${String(roomCode || '').trim().toLowerCase()}`;
   }
@@ -159,7 +178,9 @@ function openWhatsApp(messageType, roomTitle = '') {
   }
 
   function normalizePayload(payload) {
-    const rows = Array.isArray(payload) ? payload : payload?.rooms || payload?.data || [];
+    if (payload?.ok === false) throw new Error('Live room service returned an error');
+    const rows = Array.isArray(payload) ? payload : payload?.rooms ?? payload?.data;
+    if (!Array.isArray(rows)) throw new Error('Live room response contains no rooms array');
     return rows.map(normalizeRoom).filter(Boolean);
   }
 
@@ -180,8 +201,9 @@ function openWhatsApp(messageType, roomTitle = '') {
   function renderRooms(rooms) {
     const tableBody = document.querySelector('.rooms-table tbody');
     const roomSelect = document.querySelector('#roomType');
-    if (!tableBody || !roomSelect || !rooms.length) return;
+    if (!tableBody || !roomSelect) return;
 
+    const requestedRoom = roomSelect.value || preferredRoomValue;
     const totalAvailableBeds = rooms.reduce((sum, room) => sum + Math.max(0, Number(room.availableBeds) || 0), 0);
     const fullRooms = rooms.filter(room => room.status.toLowerCase() === 'full').length;
     const availableRooms = rooms.filter(room => room.status.toLowerCase() !== 'full');
@@ -197,7 +219,7 @@ function openWhatsApp(messageType, roomTitle = '') {
     setText('#hero-live-price', startingRent ? 'From ' + formatCedi(startingRent) : 'Waitlist only');
     setText('#live-full-rooms', String(fullRooms));
 
-    tableBody.innerHTML = rooms.map(room => {
+    tableBody.innerHTML = rooms.length ? rooms.map(room => {
       const isFull = room.status.toLowerCase() === 'full';
       const filled = room.capacity ? Math.min(100, Math.round((room.occupied / room.capacity) * 100)) : 0;
       const action = isFull
@@ -214,20 +236,43 @@ function openWhatsApp(messageType, roomTitle = '') {
           <td>${action}</td>
         </tr>
       `;
-    }).join('');
+    }).join('') : '<tr><td colspan="6">No current rooms listed. Please contact the hostel to confirm availability.</td></tr>';
 
-    roomSelect.innerHTML = '<option value="" disabled selected>Select available room</option>' + rooms.map(room => {
+    const roomOptions = '<option value="" disabled selected>Select available room</option>' + rooms.map(room => {
       const isFull = room.status.toLowerCase() === 'full';
       const disabled = isFull ? ' disabled' : '';
       const state = isFull ? 'Full' : `${room.availableBeds} bed${room.availableBeds === 1 ? '' : 's'} available (${room.occupancy} occupied)`;
       return `<option value="${roomValue(room.code)}"${disabled}>${room.code} - ${room.type} - ${state} - GHS ${room.rent.toLocaleString('en-US')} per semester</option>`;
     }).join('');
 
-    window.JCH_ROOM_PRICING = rooms.reduce((pricing, room) => {
+    // Avoid closing the iPhone's native room picker when nothing has changed.
+    if (roomSelect.dataset.optionsFingerprint !== roomOptions) {
+      roomSelect.innerHTML = roomOptions;
+      roomSelect.dataset.optionsFingerprint = roomOptions;
+    }
+    const availableChoice = requestedRoom && [...roomSelect.options].some(option =>
+      option.value === requestedRoom && !option.disabled
+    );
+    roomSelect.disabled = availableRooms.length === 0;
+    if (availableChoice) {
+      roomSelect.value = requestedRoom;
+      preferredRoomValue = requestedRoom;
+    } else {
+      roomSelect.value = '';
+      preferredRoomValue = '';
+    }
+
+    window.JCH_ROOM_PRICING = availableRooms.reduce((pricing, room) => {
       pricing[roomValue(room.code)] = pricingForRent(room.rent);
       return pricing;
     }, {});
     window.JCH_ROOM_FEED_READY = true;
+    const status = requestedRoom && !availableChoice
+      ? 'Your previously selected room is no longer available. Please choose another.'
+      : availableRooms.length
+        ? 'Live room availability loaded. Choose an available bed space.'
+        : 'No room spaces are currently available online. Ask management about the waitlist.';
+    setRoomFeedStatus(status, false);
 
     document.dispatchEvent(new CustomEvent('jch:rooms-updated', { detail: { rooms } }));
   }
@@ -269,27 +314,42 @@ function openWhatsApp(messageType, roomTitle = '') {
   async function syncRoomsFromSheet() {
     const roomsSection = document.querySelector('#rooms');
     const apiUrl = window.JCH_ROOMS_API_URL || roomsSection?.dataset.roomsApi;
+    const fallbackUrl = roomsSection?.dataset.roomsFallbackApi;
     if (!apiUrl || apiUrl.includes('PASTE_')) return;
+    const requestNumber = ++newestRoomRequest;
 
     try {
       const response = await fetch(apiUrl, { cache: 'no-store' });
       if (!response.ok) throw new Error(`Room API returned ${response.status}`);
       const rooms = normalizePayload(await response.json());
+      if (requestNumber !== newestRoomRequest) return;
       renderRooms(rooms);
     } catch (error) {
       try {
-        const rooms = normalizePayload(await loadRoomsWithJsonp(apiUrl));
+        if (!fallbackUrl) throw new Error('No live fallback feed configured');
+        const rooms = normalizePayload(await loadRoomsWithJsonp(fallbackUrl));
+        if (requestNumber !== newestRoomRequest) return;
         renderRooms(rooms);
-      } catch (jsonpError) {
+      } catch (fallbackError) {
+        if (requestNumber !== newestRoomRequest) return;
         window.JCH_ROOM_FEED_READY = false;
         window.JCH_ROOM_PRICING = {};
         const roomSelect = document.querySelector('#roomType');
         const payButton = document.querySelector('#paystack-trigger');
+        const amountField = document.querySelector('#amountInKobo');
         const heroAvailability = document.querySelector('#hero-live-availability');
         const heroPrice = document.querySelector('#hero-live-price');
         if (roomSelect) {
+          if (roomSelect.value) preferredRoomValue = roomSelect.value;
           roomSelect.innerHTML = '<option value="" disabled selected>Live availability temporarily unavailable</option>';
+          roomSelect.dataset.optionsFingerprint = '';
           roomSelect.disabled = true;
+        }
+        if (amountField) amountField.value = '';
+        const selectionSummary = document.querySelector('#selected-room-summary');
+        if (selectionSummary) {
+          selectionSummary.textContent = '';
+          selectionSummary.hidden = true;
         }
         if (payButton) {
           payButton.disabled = true;
@@ -297,13 +357,15 @@ function openWhatsApp(messageType, roomTitle = '') {
         }
         if (heroAvailability) heroAvailability.textContent = 'Call or WhatsApp for live availability';
         if (heroPrice) heroPrice.textContent = 'Live price temporarily unavailable';
-        console.warn('Live room sync failed; online payment disabled to prevent stale pricing:', error, jsonpError);
+        setRoomFeedStatus('Cannot load live room prices. Retry, or WhatsApp the hostel before paying.', true);
+        console.warn('Live room sync failed; online payment safely disabled:', error, fallbackError);
       }
     }
   }
 
   document.addEventListener('DOMContentLoaded', function() {
     syncRoomsFromSheet();
+    document.querySelector('#retry-room-feed')?.addEventListener('click', syncRoomsFromSheet);
     window.setInterval(syncRoomsFromSheet, 60000);
     document.addEventListener('visibilitychange', function() {
       if (document.visibilityState === 'visible') syncRoomsFromSheet();
@@ -655,6 +717,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!window.JCH_ROOM_FEED_READY) {
       if (amountField) amountField.value = '';
+      const selectedSummary = document.querySelector('#selected-room-summary');
+      if (selectedSummary) {
+        selectedSummary.textContent = '';
+        selectedSummary.hidden = true;
+      }
       payBtn.textContent = 'Loading live price…';
       payBtn.disabled = true;
       return;
@@ -664,7 +731,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const duration = durationInput?.value;
     const amount = calculateAmount(roomType, duration);
     if (amountField) amountField.value = amount;
-    
+
+    const selectedSummary = document.querySelector('#selected-room-summary');
+    if (selectedSummary) {
+      if (amount > 0 && roomTypeInput?.selectedOptions?.[0]) {
+        const roomCode = roomTypeInput.selectedOptions[0].textContent.split(' - ')[0];
+        const durationLabel = durationInput?.selectedOptions?.[0]?.textContent || 'selected duration';
+        selectedSummary.textContent = 'Selected: ' + roomCode + ' — ' + formatCurrency(amount) + ' for ' + durationLabel + '. Bed space is not held until booking is confirmed.';
+        selectedSummary.hidden = false;
+      } else {
+        selectedSummary.textContent = '';
+        selectedSummary.hidden = true;
+      }
+    }
+
     // Update payment button with amount (your style enhanced)
     if (payBtn && amount > 0) {
       payBtn.textContent = `Proceed to Payment - ${formatCurrency(amount)}`;
