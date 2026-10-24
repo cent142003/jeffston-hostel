@@ -49,7 +49,8 @@ test('the initial rendered booking options and room table never show outdated in
 
 test('the live room, booking and payment integration remains in place and fails closed',()=>{
   const h=main(), js=script();
-  assert.match(h,/id="rooms"[^>]*data-rooms-api="https:\/\/script.google.com/);
+  assert.match(h,/id="rooms"[^>]*data-rooms-api="\/api\/rooms"/);
+  assert.match(h,/id="rooms"[^>]*data-rooms-fallback-api="https:\/\/script.google.com/);
   assert.match(h,/id="booking-form"/);
   assert.match(h,/id="paystack-trigger"/);
   assert.match(h,/js.paystack.co\/v1\/inline.js/);
@@ -57,7 +58,7 @@ test('the live room, booking and payment integration remains in place and fails 
   assert.match(js,/syncRoomsFromSheet\(/);
   assert.match(js,/loadRoomsWithJsonp\(/);
   assert.match(js,/payButton\.disabled\s*=\s*true/);
-  assert.match(js,/window.JCH_ROOM_PRICING\s*=\s*rooms\.reduce/);
+  assert.match(js,/window.JCH_ROOM_PRICING\s*=\s*availableRooms\.reduce/);
   assert.doesNotMatch(js,/const fallbackPricing\s*=/);
 });
 

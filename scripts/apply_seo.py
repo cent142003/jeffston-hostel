@@ -38,7 +38,7 @@ def schema_patch(h,landing=None):
                         faq["acceptedAnswer"]["text"]="The live room table on our homepage shows current prices, occupancy and spaces supplied by the hostel management system. If the feed is unavailable, contact us on WhatsApp before booking."
                 if "available 2025/2026" in faq.get("acceptedAnswer",{}).get("text",""):
                     faq["acceptedAnswer"]["text"]="Check current room types, spaces and rates on our homepage using the live room availability table."
-    if landing:
+    if landing and not any(node.get("@type")=="BreadcrumbList" and node.get("@id")==BASE+"/"+landing+"/#breadcrumb" for node in graph):
         graph.append({
           "@type":"BreadcrumbList",
           "@id":BASE+"/"+landing+"/#breadcrumb",
