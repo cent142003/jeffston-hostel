@@ -1,0 +1,73 @@
+{
+  "checkedAt": "2026-10-31T17:02:27.672510+00:00",
+  "scope": "Static public HTML only; not indexation or field speed proof",
+  "pages": [
+    {
+      "path": "/",
+      "status": 200,
+      "finalUrl": "https://jeffston-court-hostel.vercel.app/",
+      "title": "Student Hostel in Adenta near Legon & UPSA | Jeffston Court Hostel",
+      "description": "Furnished student hostel in Adenta Court Complex for 2026/2027. Compare 2-, 3- and 4-person rooms, check live bed availability and verified rents, and enquire directly.",
+      "canonical": "https://jeffston-court-hostel.vercel.app/",
+      "h1": 1,
+      "staticJsonLdBlocks": 1,
+      "issues": []
+    },
+    {
+      "path": "/hostel-near-legon/",
+      "status": 200,
+      "finalUrl": "https://jeffston-court-hostel.vercel.app/hostel-near-legon/",
+      "title": "Student Hostel for Legon 2026/2027 | Jeffston Court Hostel",
+      "description": "Furnished student accommodation in Adenta Court Complex for students travelling to University of Ghana Legon. Check live 2026/2027 bed availability, room photos, verified rents and booking support.",
+      "canonical": "https://jeffston-court-hostel.vercel.app/hostel-near-legon/",
+      "h1": 1,
+      "staticJsonLdBlocks": 1,
+      "issues": []
+    },
+    {
+      "path": "/hostel-near-upsa/",
+      "status": 200,
+      "finalUrl": "https://jeffston-court-hostel.vercel.app/hostel-near-upsa/",
+      "title": "Student Hostel for UPSA 2026/2027 | Jeffston Court Hostel",
+      "description": "Furnished student accommodation in Adenta Court Complex for students travelling to UPSA Accra. Check live 2026/2027 bed availability, room photos, verified rents and booking support.",
+      "canonical": "https://jeffston-court-hostel.vercel.app/hostel-near-upsa/",
+      "h1": 1,
+      "staticJsonLdBlocks": 1,
+      "issues": []
+    },
+    {
+      "path": "/hostel-near-academic-city/",
+      "status": 200,
+      "finalUrl": "https://jeffston-court-hostel.vercel.app/hostel-near-academic-city/",
+      "title": "Student Accommodation for Academic City University Students 2026/2027 | Jeffston Court Hostel",
+      "description": "Academic City University students comparing off-campus accommodation can review furnished shared rooms at Jeffston Court Hostel, Adenta, and check verified rents and campus travel.",
+      "canonical": "https://jeffston-court-hostel.vercel.app/hostel-near-academic-city/",
+      "h1": 1,
+      "staticJsonLdBlocks": 1,
+      "issues": []
+    },
+    {
+      "path": "/student-hostel-adenta/",
+      "status": 200,
+      "finalUrl": "https://jeffston-court-hostel.vercel.app/student-hostel-adenta/",
+      "title": "Student Hostel in Adenta for 2026/2027 | Jeffston Court Hostel",
+      "description": "Compare furnished student accommodation in Adenta Court Complex, Fafraha, Accra for 2026/2027. See real room photos, facilities, Google Maps location and live rates.",
+      "canonical": "https://jeffston-court-hostel.vercel.app/student-hostel-adenta/",
+      "h1": 1,
+      "staticJsonLdBlocks": 1,
+      "issues": []
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "finalUrl": "https://jeffston-court-hostel.vercel.app/robots.txt",
+      "robots": "User-agent: *\nAllow: /\n\nSitemap: https://jeffston-court-hostel.vercel.app/sitemap.xml\n"
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "finalUrl": "https://jeffston-court-hostel.vercel.app/sitemap.xml",
+      "sitemapUrls": 11
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+name: Jeffston public SEO health
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * 1'
+permissions:
+  contents: read
+jobs:
+  public-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Test audit helper
+        run: python3 -m unittest discover -s tools/seo-aeo/scripts -p 'test_*.py'
+      - name: Audit fixed public website
+        run: python3 tools/seo-aeo/scripts/audit_public.py > public-seo-report.json
+      - name: Save evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: public-seo-report
+          path: public-seo-report.json
+          retention-days: 30
