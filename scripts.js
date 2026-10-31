@@ -933,7 +933,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ]
       },
       callback: function (response) {
-        console.log('Payment successful:', response);
+        if(window.jchTrack)window.jchTrack('Payment popup completed');
         // Show professional thank you message
         showThankYouMessage(response, {
           fullName,

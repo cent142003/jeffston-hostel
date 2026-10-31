@@ -10,7 +10,7 @@ form.addEventListener('submit',async event=>{
     const response=await fetch('/api/room-info',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,requestId})});
     const result=await response.json();
     status.textContent=result.message||'Please contact reception for help.';
-    if(response.ok&&result.ok){button.textContent='Request received';return;}
+    if(response.ok&&result.ok){if(window.jchTrack)window.jchTrack('Enquiry accepted');button.textContent='Request received';return;}
   }catch(_){status.textContent='We could not confirm your request. Check your inbox before retrying, or contact reception.';}
   button.disabled=false;
 });
