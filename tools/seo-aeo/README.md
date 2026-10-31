@@ -4,7 +4,7 @@ Reusable skills and a read-only website audit, stored alongside the website sour
 
 ## Use from ChatGPT, Codex or another compatible agent
 
-Ask: “Read tools/seo-aeo/README.md in cent142003/jeffston-hostel on the seo-aeo-toolkit branch. Use jch-seo-audit and jch-performance-maintenance to audit the live site; show evidence and proposed fixes.”
+Ask: “Read tools/seo-aeo/README.md in cent142003/jeffston-hostel on the main branch. Use jch-seo-audit and jch-performance-maintenance to audit the live site; show evidence and proposed fixes.”
 
 For AI search: “Use jch-aeo-content to draft accurate answers for students comparing accommodation near Legon and UPSA.”
 

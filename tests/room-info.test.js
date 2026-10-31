@@ -1,0 +1,4 @@
+const test=require('node:test'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const {validateRequest,publicAvailability}=require('../lib/room-info');
+test('requires a valid address and explicit optional marketing choice',()=>{const b={email:'person@example.invalid',marketing:false,requestId:crypto.randomUUID()};assert.equal(validateRequest(b).marketing,false);assert.throws(()=>validateRequest({...b,marketing:undefined}));assert.throws(()=>validateRequest({...b,email:'one@example.com\nBcc:two@example.com'}));});
+test('excludes invalid capacity and personal fields',()=>{const a={code:'A101',capacity:4,occupied:1,availableBeds:3,rentAmount:5500,status:'Available',email:'private@example.invalid'};assert.equal(publicAvailability({ok:true,rooms:[a]}).rooms[0].email,undefined);assert.equal(publicAvailability({ok:true,rooms:[{...a,occupied:5}]}).rooms.length,0);});
