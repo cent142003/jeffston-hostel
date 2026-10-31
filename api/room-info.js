@@ -16,7 +16,10 @@ module.exports=async function(req,res){
   const url=process.env.JCH_INFO_SCRIPT_URL,secret=process.env.JCH_INFO_SIGNING_SECRET;
   // Disabled until the isolated Apps Script backend is configured and verified.
   if(process.env.JCH_INFO_ENABLED!=='true'||!secret||secret.length<32||!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(url||''))return res.status(503).json({ok:false,message:'Email requests are not available yet. Please contact reception.'});
-  const payload=JSON.stringify({...b,action:'request',timestamp:Date.now()});
+  const clientIp=String(req.headers['x-vercel-forwarded-for']||req.headers['x-forwarded-for']||'').split(',')[0].trim();
+  if(!clientIp||clientIp.length>64)return res.status(503).json({ok:false,message:'Request verification is unavailable. Contact reception.'});
+  const clientTag=createHmac('sha256',secret).update('client:'+new Date().toISOString().slice(0,10)+':'+clientIp).digest('hex');
+  const payload=JSON.stringify({...b,clientTag,action:'request',timestamp:Date.now()});
   const signature=createHmac('sha256',secret).update(payload).digest('hex');
   try{
     const upstream=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payload,signature}),redirect:'follow',signal:AbortSignal.timeout(20000)});
