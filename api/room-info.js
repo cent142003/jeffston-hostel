@@ -6,7 +6,8 @@ module.exports=async function(req,res){
   res.setHeader('Content-Type','application/json; charset=utf-8');
   if(req.method!=='POST'){res.setHeader('Allow','POST');return res.status(405).json({ok:false});}
   const origin=process.env.JCH_SITE_ORIGIN;
-  if(!origin || req.headers.origin!==origin) return res.status(403).json({ok:false,message:'Open the form on our website.'});
+  const previewOrigin=process.env.VERCEL_ENV==='preview'&&process.env.VERCEL_URL?'https://'+process.env.VERCEL_URL:null;
+  if(!origin || (req.headers.origin!==origin&&req.headers.origin!==previewOrigin)) return res.status(403).json({ok:false,message:'Open the form on our website.'});
   if(!(req.headers['content-type']||'').startsWith('application/json'))return res.status(415).json({ok:false,message:'JSON required.'});
   let b;
   try{
