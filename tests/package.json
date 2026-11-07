@@ -1,0 +1,12 @@
+{
+  "name": "jeffston-public-site-checks",
+  "private": true,
+  "description": "Local browser and contract tests for the public hostel site",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "test": "node --test \"*.test.js\""
+  },
+  "devDependencies": {
+    "puppeteer-core": "25.16.0"
+  }
+}
