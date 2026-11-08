@@ -2,44 +2,102 @@
 const test=require('node:test');
 const assert=require('node:assert/strict');
 const http=require('node:http');
+const {once}=require('node:events');
 const fs=require('node:fs');
 const path=require('node:path');
-const puppeteer=require('/Users/blizzalmighty/.npm/_npx/4b4c857f6efdfb61/node_modules/puppeteer');
+const puppeteer=require('puppeteer-core');
 const root=path.resolve(__dirname,'..');
 const room=(code,price,beds,capacity=4,occupied=1)=>({
   room:code,code,type:'Standard',occupancy:occupied+'/'+capacity,occupied,capacity,
   availableBeds:beds,rentAmount:price,rent:'₵'+price.toLocaleString('en-US'),status:beds?'Available':'Full',
 });
 const state={mode:'online',a101Price:5500,a101Beds:3};
+const profileLanding='/?utm_source=google&utm_medium=organic&utm_campaign=business_profile&analytics_test=1#rooms';
 function rooms(){return [room('A101',state.a101Price,state.a101Beds),room('A102',6700,3),room('B201',7800,0,2,2)]}
 const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'application/javascript; charset=utf-8','.svg':'image/svg+xml'};
 let server,browser,base;
+// A named suite runs its teardown as soon as its children finish; open Chrome
+// and loopback sockets must not keep the root runner waiting for beforeExit.
+test.describe('Offline mobile booking and reception',()=>{
 test.before(async()=>{
  server=http.createServer((req,res)=>{
-  if(req.url.startsWith('/api/rooms')){
+  if(!['GET','HEAD'].includes(req.method)){res.writeHead(405).end();return;}
+  const pathname=new URL(req.url,'http://localhost').pathname;
+  if(pathname==='/api/rooms'){
    res.setHeader('Content-Type','application/json; charset=utf-8');
    res.setHeader('Cache-Control','no-store');
    res.statusCode=state.mode==='offline'?503:200;
    res.end(JSON.stringify(state.mode==='offline'?{ok:false,error:'upstream unavailable'}:{ok:true,updatedAt:new Date().toISOString(),rooms:rooms()}));
    return;
   }
-  const filename=path.join(root,decodeURIComponent(new URL(req.url,'http://localhost').pathname).replace(/^\/+/,''))||'index.html';
-  const target=filename.endsWith('/')||filename===root?path.join(filename,'index.html'):filename;
-  if(!target.startsWith(root)){res.writeHead(403).end();return;}
+  const target=path.resolve(root,'.'+decodeURIComponent(pathname==='/'?'/index.html':pathname));
+  const relative=path.relative(root,target);
+  if(relative.split(path.sep).some(part=>part.startsWith('.')||part==='node_modules')||path.isAbsolute(relative)){
+   res.writeHead(403).end();return;
+  }
   fs.readFile(target,(err,b)=>{if(err){res.writeHead(404).end();return;}res.setHeader('Content-Type',mime[path.extname(target)]||'application/octet-stream');res.writeHead(200).end(b);});
  });
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
  base='http://127.0.0.1:'+server.address().port;
- browser=await puppeteer.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',args:['--no-sandbox']});
+ const chrome=process.env.PUPPETEER_EXECUTABLE_PATH?{executablePath:process.env.PUPPETEER_EXECUTABLE_PATH}:{channel:'chrome'};
+ browser=await puppeteer.launch({...chrome,headless:true,args:['--disable-background-networking','--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1']});
 });
-test.after(async()=>{await browser?.close();await new Promise(resolve=>server?.close(resolve));});
-async function newPage(){
+test.after(async()=>{
+ const stopServer=server?.listening?new Promise((resolve,reject)=>{
+  server.close(error=>error?reject(error):resolve());
+  // Chrome can leave speculative/preconnected loopback sockets without a request.
+  server.closeAllConnections();
+ }):Promise.resolve();
+ const child=browser?.process();
+ const running=()=>child && child.exitCode===null && child.signalCode===null;
+ const closed=running()?once(child,'close'):Promise.resolve();
+ // Some Windows Chrome processes acknowledge Browser.close but never exit.
+ // This handle belongs only to this suite's isolated headless browser.
+ const grace=setTimeout(()=>{if(running())child.kill('SIGKILL');},5000);
+ grace.unref();
+ try{await Promise.all([stopServer,browser?.close(),closed]);}
+ finally{clearTimeout(grace);}
+});
+async function newPage(landing='/?analytics_test=1'){
  const p=await browser.newPage();
  await p.setViewport({width:390,height:844,isMobile:true,hasTouch:true,deviceScaleFactor:2});
+ await p.setBypassServiceWorker(true);
  await p.setRequestInterception(true);
- p.on('request',req=>{if(/script.google.com\/macros|script.googleusercontent.com\/macros/.test(req.url()))req.abort();else req.continue()});
- await p.goto(base+'/',{waitUntil:'domcontentloaded',timeout:30000});
+ p.on('request',req=>{
+  const safe=new URL(req.url()).origin===base && ['GET','HEAD'].includes(req.method());
+  return safe?req.continue():req.abort('blockedbyclient');
+ });
+ await p.goto(base+landing,{waitUntil:'domcontentloaded',timeout:30000});
  return p;
+}
+// A destination in the markup isn't useful if it's hidden or covered by a mobile toolbar.
+async function reachable(p,selector){
+ const el=await p.waitForSelector(selector,{visible:true,timeout:6000});
+ await el.evaluate(e=>e.scrollIntoView({block:'center',inline:'center',behavior:'instant'}));
+ await p.waitForFunction(e=>{
+  const r=e.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
+  return e.checkVisibility({opacityProperty:true,visibilityProperty:true}) && e.contains(document.elementFromPoint(x,y));
+ },{timeout:6000},el);
+ return el;
+}
+async function checkReception(p){
+ // Touch only same-page controls. Inspect the destinations; never launch a call or send a message.
+ await (await reachable(p,'#mobile-menu')).tap();
+ const contact=await reachable(p,'#primary-navigation a[href="#contact"]');
+ await contact.tap();
+ await p.waitForFunction(()=>location.hash==='#contact',{timeout:6000});
+ const phone=await reachable(p,'#contact a[href^="tel:"]');
+ assert.equal(await phone.evaluate(a=>a.href),'tel:+233201349321');
+ const chat=await reachable(p,'#contact a[href^="https://wa.me/"]');
+ const wa=new URL(await chat.evaluate(a=>a.href));
+ assert.equal(wa.origin+wa.pathname,'https://wa.me/233201349321');
+}
+async function checkRoomsLanding(p){
+ assert.equal(new URL(p.url()).hash,'#rooms');
+ await p.waitForFunction(()=>{
+  const r=document.querySelector('#rooms')?.getBoundingClientRect();
+  return r && r.top<innerHeight && r.bottom>0;
+ },{timeout:6000});
 }
 async function snapshot(p){return p.evaluate(()=>{
  const s=document.querySelector('#roomType'),b=document.querySelector('#paystack-trigger');
@@ -73,13 +131,18 @@ test('A: refreshed live prices preserve selected room, recalculate amount and ke
   assert.match(displayed.text,/5,600/);
  }finally{await p.close()}
 });
-test('B: failed room load disables payment; subsequent recovery reenables room selector',{timeout:50000},async()=>{
- state.mode='offline';const p=await newPage();
+test('B: a profile visitor can reach reception during an outage and retry when prices recover',{timeout:50000},async()=>{
+ state.mode='offline';const p=await newPage(profileLanding);
  try{
-  await p.waitForFunction(()=>document.querySelector('#roomType')?.disabled===true,{timeout:17000});
+  await checkRoomsLanding(p);
+  await p.waitForFunction(()=>window.JCH_ROOM_FEED_READY===false && document.querySelector('#retry-room-feed')?.hidden===false,{timeout:17000});
   let snap=await snapshot(p);assert.equal(snap.ready,false);assert.equal(snap.payDisabled,true);
+  assert.equal(snap.disabled,true);
+  const status=await reachable(p,'#room-feed-status');
+  assert.match(await status.evaluate(e=>e.innerText),/retry|contact|WhatsApp|call/i);
+  await checkReception(p);
   state.mode='online';state.a101Price=5500;
-  await p.click('#retry-room-feed');
+  await (await reachable(p,'#retry-room-feed')).tap();
   await p.waitForFunction(()=>window.JCH_ROOM_FEED_READY,{timeout:17000});
   snap=await snapshot(p);
   assert.equal(snap.disabled,false,'Recovered feed must enable room select');
@@ -128,12 +191,23 @@ test('D: serverless same-origin feed validates upstream payload and fails closed
  }finally{global.fetch=saved}
 });
 
-test('E: student can tap Book from the room table and see the chosen room',{timeout:35000},async()=>{
+test('E: a mobile Google profile visitor can compare a room and reach reception without a booking',{timeout:35000},async()=>{
  state.mode='online';state.a101Price=5500;state.a101Beds=3;
- const p=await newPage();
+ const p=await newPage(profileLanding);
  try {
+  await checkRoomsLanding(p);
   await p.waitForFunction(()=>window.JCH_ROOM_FEED_READY,{timeout:17000});
-  await p.click('.room-select-btn');
+  const button='#rooms .room-select-btn[data-room-value="room-a101"]';
+  const row='#rooms tr:has(.room-select-btn[data-room-value="room-a101"])';
+  const code=await reachable(p,row+' th[scope="row"]');
+  assert.equal(await code.evaluate(e=>e.innerText.trim()),'A101');
+  const price=await reachable(p,row+' td:nth-of-type(3)');
+  // formatCedi shortens the locale's GH₵ to ₵ (or preserves its ISO code).
+  assert.match(await price.evaluate(e=>e.innerText.replace(/\s+/g,'')),/^(?:₵|GHS)5,500$/u);
+  const availability=await reachable(p,row+' .status-available');
+  assert.equal(await availability.evaluate(e=>e.innerText.trim().toLowerCase().replace(/\s+/g,' ')),'3 beds available');
+  await checkReception(p);
+  await (await reachable(p,button)).tap();
   const snap=await snapshot(p);
   assert.equal(snap.selected,'room-a101');
   assert.equal(snap.disabled,false);
@@ -167,4 +241,5 @@ test('F: after an established selection, losing the feed clears old price text a
   assert.equal(stale.hidden,true);
   assert.equal(stale.text,'','stale amount must never remain visible during a feed outage');
  }finally{await p.close()}
+});
 });
