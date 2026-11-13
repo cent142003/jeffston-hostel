@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; form-action 'none'">
   <title>OpenBSP trial | Jeffston Court Hostel</title>
   <style>
     :root { color-scheme: light; --ink:#13233c; --green:#087a54; --bg:#f4f8f7; --muted:#516577; }
@@ -44,6 +44,14 @@
         <li>Choose <strong>Integrations → WhatsApp</strong> and connect a test WhatsApp Business number you control through the official Meta option, if eligible.</li>
         <li>Keep the OpenBSP inbox open. Do not connect the live hostel number for this experiment.</li>
       </ol>
+    </section>
+    <section class="panel" aria-labelledby="live-heading">
+      <h2 id="live-heading">Check what the assistant would say</h2>
+      <p>This reads the same <strong>Google Apps Script room feed</strong> used by the hostel website, through its existing read-only <code>/api/rooms</code> endpoint.</p>
+      <button type="button" id="check-live-rooms">Build a reply from live room data</button>
+      <p id="live-rooms-status" role="status" aria-live="polite">Nothing has been checked yet.</p>
+      <p id="preview-reply" style="white-space:pre-line;overflow-wrap:anywhere"></p>
+      <p class="help">This is a local preview. No WhatsApp reply is sent, no guest details are collected and no booking is made.</p>
     </section>
     <section class="panel" aria-labelledby="send-heading">
       <h2 id="send-heading">2. Open a test conversation</h2>
@@ -96,6 +104,53 @@
       document.body.appendChild(link);
       link.click();
       link.remove();
+    });
+
+    // Preview a business reply from the existing read-only Google room feed.
+    // Nothing is sent to OpenBSP or WhatsApp by this button.
+    document.getElementById('check-live-rooms').addEventListener('click', async function () {
+      const status = document.getElementById('live-rooms-status');
+      const reply = document.getElementById('preview-reply');
+      const btn = this;
+      btn.disabled = true;
+      status.textContent = 'Checking the current room list…';
+      reply.textContent = '';
+      const safety = 'Please come and view the room first. We do not take room deposits or payments online, over WhatsApp, through bank transfer or by mobile money. Reception will confirm the price and availability when you visit. Pay at the property after viewing and ask for an official receipt.';
+      try {
+        const response = await fetch('/api/rooms', { method: 'GET', cache: 'no-store', headers: { Accept: 'application/json' } });
+        if (!response.ok) throw new Error('Room feed unavailable');
+        const payload = await response.json();
+        if (payload?.ok !== true || !Array.isArray(payload.rooms)) throw new Error('Invalid room feed');
+        const available = payload.rooms.filter(room => {
+          const code = String(room.code || room.room || '').trim();
+          const beds = Number(room.availableBeds);
+          const price = Number(room.rentAmount);
+          const capacity = Number(room.capacity);
+          const occupied = Number(room.occupied);
+          return /^[A-Za-z0-9 -]{1,24}$/.test(code) &&
+            Number.isInteger(beds) && beds > 0 &&
+            Number.isInteger(capacity) && capacity > 0 &&
+            Number.isInteger(occupied) && occupied >= 0 &&
+            occupied + beds === capacity &&
+            Number.isFinite(price) && price > 0 &&
+            String(room.status).toLowerCase() === 'available';
+        });
+        const lines = available.slice(0, 15).map(room =>
+          String(room.code || room.room).trim().toUpperCase() +
+          ': ' + room.availableBeds + ' available bed(s), GHS ' +
+          Number(room.rentAmount).toLocaleString('en-GH') + ' per resident per semester.'
+        );
+        const intro = lines.length
+          ? 'Hello. Here are the rooms currently showing available on our website:\n' + lines.join('\n') + '\n\n'
+          : 'Hello. There are no available rooms I can confidently confirm from the live list right now. Please contact reception.\n\n';
+        reply.textContent = intro + safety;
+        status.textContent = 'Reply built from the current room feed. Not sent.';
+      } catch (_) {
+        status.textContent = 'The live feed could not be verified. No room price or available space will be guessed.';
+        reply.textContent = 'Hello. I cannot confirm the current room price or availability right now. Please contact reception to arrange a viewing. ' + safety;
+      } finally {
+        btn.disabled = false;
+      }
     });
   </script>
 </body>
