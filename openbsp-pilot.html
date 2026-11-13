@@ -115,7 +115,7 @@
       btn.disabled = true;
       status.textContent = 'Checking the current room list…';
       reply.textContent = '';
-      const safety = 'Please come and view the room first. We do not take room deposits or payments online, over WhatsApp, through bank transfer or by mobile money. Reception will confirm the price and availability when you visit. Pay at the property after viewing and ask for an official receipt.';
+      const safety = 'To protect our guests and uphold the integrity of Jeffston Court Hostel, please view the room in person before making any payment. We do not request or accept payments before a viewing. Confirm the room, price and terms with reception, then pay only at the hostel and collect an official receipt. Never send a deposit through WhatsApp, mobile money, bank transfer or an online link. If anyone asks you to pay before a viewing, contact reception through the number shown on our official website.';
       try {
         const response = await fetch('/api/rooms', { method: 'GET', cache: 'no-store', headers: { Accept: 'application/json' } });
         if (!response.ok) throw new Error('Room feed unavailable');
