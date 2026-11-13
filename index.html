@@ -28,15 +28,12 @@
   <link rel="preload" href="Assets/images/HERO.png" as="image" type="image/png" />
   
   <!-- DNS prefetch for external resources -->
-  <link rel="dns-prefetch" href="//js.paystack.co" />
   <link rel="dns-prefetch" href="//www.youtube.com" />
   <link rel="dns-prefetch" href="//www.google.com" />
   <link rel="dns-prefetch" href="//wa.me" />
   
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Paystack inline SDK - loaded asynchronously -->
-  <script src="https://js.paystack.co/v1/inline.js" defer></script>
 
   <script type="application/ld+json">
 {
@@ -60,9 +57,9 @@
       "telephone": "+233201349321",
       "email": "jeffstoncourthostel@gmail.com",
       "potentialAction": {
-        "@type": "ReserveAction",
+        "@type": "CommunicateAction",
         "target": "https://jeffston-court-hostel.vercel.app/#booking",
-        "name": "Book a room at Jeffston Court Hostel"
+        "name": "Arrange a room viewing at Jeffston Court Hostel"
       },
       "address": {
         "@type": "PostalAddress",
@@ -147,7 +144,7 @@
           "name": "Can I book for a semester or a full academic year?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "You can request a semester or a full academic year. Reception will confirm your agreed academic period, total charge and what is included before booking. A semester payment does not automatically cover the full academic year."
+            "text": "You can request a semester or a full academic year. Reception will confirm your agreed academic period, total charge and what is included before booking. You can arrange to view the room first. Payments are made only at the property after viewing the room and confirming the agreed terms with reception. No online deposit or WhatsApp payment is required."
           }
         },
         {
@@ -155,7 +152,7 @@
           "name": "How do I check room prices and free beds?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Check the live room table for current availability and listed semester prices, or request room information by email. Availability can change. Reception will confirm your room, agreed period and total price before booking."
+            "text": "Check the live room table for current availability and semester prices, or request room information by email. Availability can change. Reception will confirm the room, viewing arrangements and total price before you pay at the property."
           }
         },
         {
@@ -233,7 +230,7 @@
           <li><a href="#campus-access">Campus</a></li>
           <li><a href="#facilities">Facilities</a></li>
           <li><a href="#rooms">Rooms</a></li>
-          <li><a href="#booking">Booking</a></li>
+          <li><a href="#booking">Viewings</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
@@ -253,7 +250,7 @@
       <span>Adenta Court</span>
     </div>
     <div class="hero-actions">
-      <a href="#booking" class="btn btn-primary" role="button">Book a Room</a>
+      <a href="#booking" class="btn btn-primary" role="button">Arrange a Viewing</a>
       <a href="https://wa.me/233201349321?text=JCH%20Website%20-%20Hello%2C%20I%27m%20interested%20in%20Jeffston%20Court%20Hostel.%20Can%20you%20please%20provide%20more%20information%3F"
          target="_blank" 
          rel="noopener noreferrer"
@@ -314,7 +311,7 @@
       <div class="section-intro" data-aos="fade-up">
         <p class="section-kicker">Campus access</p>
         <h2 id="campus-access-heading">Student hostel routes for Legon and UPSA</h2>
-        <p>Use the campus pages below to compare the most relevant Jeffston Court Hostel details for your school, then jump straight to rooms and booking.</p>
+        <p>Use the campus pages below to compare the most relevant Jeffston Court Hostel details for your school, then jump straight to live rooms and arrange a viewing before paying.</p>
       </div>
 
       <div class="campus-card-grid">
@@ -337,7 +334,7 @@
           <ul class="campus-points">
             <li>Standard, General, and Premium room options</li>
             <li>Air-conditioned rooms and Smart TVs in selected rooms</li>
-            <li>Book online or ask questions on WhatsApp</li>
+            <li>Arrange a room viewing on WhatsApp before paying at the property</li>
           </ul>
           <a class="btn btn-secondary" href="hostel-near-upsa/">View UPSA page</a>
         </article>
@@ -382,7 +379,8 @@
   <div class="section-intro" data-aos="fade-up">
     <p class="section-kicker">Rooms Overview</p>
     <h2 id="rooms-heading">Live Room Availability</h2>
-    <p>Compare current room prices and available beds. Reception will confirm your room and booking arrangements.</p>
+    <p>Compare current room prices and available beds. Reception will confirm the viewing time and actual room details.</p>
+  <p class="payment-safety-notice" role="note"><strong>View first. Pay at the hostel.</strong> Do not send deposits or room payments online, by WhatsApp, bank transfer or mobile money. Visit the property, inspect the room, confirm the amount with reception and collect an official receipt.</p>
   </div>
 
   <div class="availability-summary" aria-label="Availability summary" data-aos="fade-up" data-aos-delay="100">
@@ -519,7 +517,7 @@
     </div>
     <div class="rooms-showcase-copy">
       <h3>Live room list</h3>
-      <p>This list is connected to the hostel management system. Only rooms with remaining bed space can be selected for booking; full rooms switch to waitlist automatically.</p>
+      <p>This list is connected to the hostel management system. Available rooms can be selected for a viewing enquiry; full rooms switch to waitlist automatically. A viewing request is not a booking.</p>
       <div class="room-badges" aria-label="Room types">
         <span>Standard</span>
         <span>Standard Big</span>
@@ -559,8 +557,8 @@
 
   <div class="faq-list">
     <details open><summary>Where is Jeffston Court Hostel?</summary><p>Jeffston Court Hostel is in Adenta Court Complex, Greater Accra. Students can use our campus guides for University of Ghana Legon, UPSA and Academic City to plan their stay. Confirm your campus and transport needs with reception before booking.</p></details>
-    <details><summary>Can I book for a semester or a full academic year?</summary><p>You can request a semester or a full academic year. Reception will confirm your agreed academic period, total charge and what is included before booking. A semester payment does not automatically cover the full academic year.</p></details>
-    <details><summary>How do I check room prices and free beds?</summary><p>Check the live room table for current availability and listed semester prices, or request room information by email. Availability can change. Reception will confirm your room, agreed period and total price before booking.</p></details>
+    <details><summary>Can I book for a semester or a full academic year?</summary><p>You can request a semester or a full academic year. Reception will confirm your agreed academic period, total charge and what is included before booking. You can arrange to view the room first. Payments are made only at the property after viewing the room and confirming the agreed terms with reception. No online deposit or WhatsApp payment is required.</p></details>
+    <details><summary>How do I check room prices and free beds?</summary><p>Check the live room table for current availability and semester prices, or request room information by email. Availability can change. Reception will confirm the room, viewing arrangements and total price before you pay at the property.</p></details>
     <details><summary>Does requesting room information reserve a bed?</summary><p>No. An email enquiry does not reserve a bed or create a booking. Reception will help you confirm availability and complete the booking process.</p></details>
     <details><summary>How do I plan transport to campus?</summary><p>Tell reception which campus you attend and your lecture timetable. Ask about the current shuttle schedule, pickup points and any charges. Journey times vary with the day and traffic; confirm your journey before relying on a departure time.</p></details>
     <details><summary>What should I do when my exams finish?</summary><p>Let reception know when your exams for the booked academic period finish so staff can agree your checkout arrangements. If you have booked the full academic year, confirm your between-semester arrangements with reception.</p></details>
@@ -569,34 +567,15 @@
   <p><a href="#room-information">Get room information by email</a> · <a href="tel:+233201349321">Call reception</a></p>
 </section>
 
-<!-- BOOKING SECTION -->
+<!-- VIEWING ENQUIRY SECTION — no online booking or payment -->
 <section id="booking" class="booking-section" aria-labelledby="booking-heading">
-  <h2 id="booking-heading" data-aos="fade-up">Book a Room</h2>
-  <form id="booking-form" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="booking-form">
-  <input type="hidden" name="form-name" value="booking" />
-  <p hidden>
-    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-  </p>
+  <h2 id="booking-heading" data-aos="fade-up">Arrange a Room Viewing</h2>
+  <p class="payment-safety-notice" role="note"><strong>No payments before viewing.</strong> Come to Jeffston Court Hostel to inspect the room. Pay at the property only after you have viewed it and confirmed the agreed amount and terms with reception. Never send a deposit through a link, WhatsApp, bank transfer or mobile-money number. Ask for an official receipt.</p>
+  <p>Choose a room and the period you're interested in. Then message reception to arrange a viewing. This does not reserve a bed and does not request payment.</p>
+  <form id="booking-form" class="booking-form">
     <fieldset>
-      <!-- Personal info fields -->
-      <legend>Personal Information</legend>
-      <label for="fullName">Full Name</label>
-      <input id="fullName" type="text" name="fullName" placeholder="John Doe" required aria-describedby="error-fullName">
-      <span id="error-fullName" class="error-message" role="alert"></span>
-
-      <label for="email">Email Address</label>
-      <input id="email" type="email" name="email" placeholder="you@example.com" required aria-describedby="error-email">
-      <span id="error-email" class="error-message" role="alert"></span>
-
-      <label for="phone">Phone Number</label>
-      <input id="phone" type="tel" name="phone" placeholder="+233 123 456 789" required aria-describedby="error-phone">
-      <span id="error-phone" class="error-message" role="alert"></span>
-    </fieldset>
-
-    <fieldset>
-      <!-- Booking details -->
-      <legend>Booking Details</legend>
-      <label for="roomType">Room</label>
+      <legend>Viewing details</legend>
+      <label for="roomType">Room to view</label>
       <select id="roomType" name="roomType" required aria-describedby="error-roomType">
         <option value="" disabled selected>Checking live room availability…</option>
       </select>
@@ -604,8 +583,7 @@
       <p id="room-feed-status" class="room-feed-status" role="status" aria-live="polite">Checking live room prices and available spaces…</p>
       <button id="retry-room-feed" class="room-feed-retry" type="button" hidden>Reload room options</button>
       <p id="selected-room-summary" class="selected-room-summary" role="status" aria-live="polite" hidden></p>
-
-      <label for="duration">Duration</label>
+      <label for="duration">Period you're interested in</label>
       <select id="duration" name="duration" required aria-describedby="error-duration">
         <option value="" disabled selected>Select Duration</option>
         <option value="first-semester">First Semester (2026/2027)</option>
@@ -614,14 +592,10 @@
       </select>
       <span id="error-duration" class="error-message" role="alert"></span>
     </fieldset>
-
-    <input type="hidden" name="paystackKey" value="pk_live_9302b8356f0551937a496101908e2eb772328962">
-    <input type="hidden" name="amountInKobo" id="amountInKobo" value="">
-    <input type="hidden" name="bookingReference" id="bookingRef" value="">
-
+    <input type="hidden" name="quotedRentPesewas" id="quotedAmountPesewas" value="">
     <div class="booking-actions">
-      <button type="button" class="btn btn-primary" id="paystack-trigger">Proceed to Payment</button>
-      <p class="booking-help">Need help with booking? <a href="https://wa.me/233201349321?text=JCH%20Website%20-%20Hi%2C%20I%20need%20help%20with%20booking%20a%20room%20at%20Jeffston%20Court%20Hostel.%20Can%20you%20assist%20me%3F" target="_blank" rel="noopener noreferrer" class="whatsapp-link">Chat with us on WhatsApp</a></p>
+      <button type="button" class="btn btn-primary" id="viewing-trigger" disabled>Arrange a Viewing on WhatsApp</button>
+      <p class="booking-help">Or <a href="tel:+233201349321">call reception</a>. Please do not pay anyone online or over WhatsApp.</p>
     </div>
   </form>
 </section>
@@ -731,7 +705,7 @@
 
   <!-- Footer could be added here for additional content -->
   <div class="mobile-booking-bar" aria-label="Quick booking actions">
-    <a href="#booking" class="mobile-booking-primary">Book a Room</a>
+    <a href="#booking" class="mobile-booking-primary">Arrange a Viewing</a>
     <a href="https://wa.me/233201349321?text=JCH%20Website%20-%20Hello%2C%20I%27m%20interested%20in%20Jeffston%20Court%20Hostel.%20Can%20you%20please%20help%20me%20book%20a%20room%3F"
        target="_blank" 
        rel="noopener noreferrer"
