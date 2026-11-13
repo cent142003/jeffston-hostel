@@ -29,6 +29,8 @@ test('all indexable pages clearly state viewing first and payment on property on
  for(const file of pages){
    const html=read(file);
    assert.match(html,/payment-safety-notice/i,file);
+   assert.match(html,/protect our guests and uphold the integrity of Jeffston Court Hostel/i,file);
+   assert.match(html,/no payment should be made before|do not request or accept room payments before an in-person viewing/i,file);
    assert.match(html,/view\s*(?:the\s+room)?\s*(?:first|before)/i,file);
    assert.match(html,/pay(?:ments?)? (?:at|in) the (?:property|hostel)/i,file);
  }
