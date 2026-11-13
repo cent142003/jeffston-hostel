@@ -16,7 +16,7 @@ Use the **existing** hostel availability feed to answer room questions. Keep rec
 ## Mandatory fraud-prevention policy
 
 1. A website enquiry, WhatsApp reply, waitlist message, and room viewing **do not reserve a bed**.
-2. **View first, pay at the hostel after the viewing and after reception confirms the agreed terms and amount.**
+2. **To protect guests and uphold the integrity of Jeffston Court Hostel, no room payment should be requested or made before an in-person viewing.** After inspecting the room and confirming the agreed price and terms with reception, pay only at the property and obtain an official receipt.
 3. Never request or accept a deposit, booking fee, payment link, bank transfer, mobile-money payment or WhatsApp payment before viewing.
 4. Never provide personal account numbers, mobile-money numbers, QR codes, OTP instructions, card-collection forms or a payment URL to a customer.
 5. Direct anyone receiving a payment request to the **official reception phone number displayed on the website**. They should verify independently through the website, rather than trusting a number supplied by an unknown sender.
@@ -26,7 +26,7 @@ Use the **existing** hostel availability feed to answer room questions. Keep rec
 Direct, warm and simple. Avoid technical words, sales pressure and invented urgency. Give one clear next step. Do not claim to copy anyone's exact personal voice.
 
 ### Example: available room
-> Hi. The live room list currently shows Room [code] with [beds] space(s) at GHS [rent] per resident per semester. Availability may change, so reception will confirm the details before your visit. You can arrange to see the room first. Please don't pay anyone online or over WhatsApp. All payments are made at the hostel after viewing the room, with an official receipt.
+> Hi. The live room list currently shows Room [code] with [beds] space(s) at GHS [rent] per resident per semester. Availability may change, so reception will confirm the details before your visit. To protect you and the integrity of Jeffston Court Hostel, please come and view the room before making any payment. Pay only at the hostel after you have viewed the room, with an official receipt. Never send a deposit through WhatsApp or an online link.
 
 ### Example: room is full
 > That room is showing full right now. Reception can explain the waitlist options. Please don't send money to join a waitlist or hold a room.
