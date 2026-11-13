@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en-GH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <title>OpenBSP trial | Jeffston Court Hostel</title>
+  <style>
+    :root { color-scheme: light; --ink:#13233c; --green:#087a54; --bg:#f4f8f7; --muted:#516577; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font: 17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    main { max-width:720px; margin:0 auto; padding:32px 18px 60px; }
+    h1 { line-height:1.16; font-size:clamp(28px,5vw,42px); margin:8px 0 12px; }
+    h2 { font-size:22px; margin:0 0 12px; }
+    .tag { display:inline-block; padding:5px 12px; border-radius:24px; background:#e2f4e8; font-weight:700; color:#145a39; font-size:14px; }
+    .panel { background:white; border:1px solid #d3e2dc; border-radius:16px; margin:24px 0; padding:24px; box-shadow:0 5px 20px #0c3f2810; }
+    p { margin:8px 0 15px; }
+    ol { padding-left:24px; }
+    li { margin:10px 0; }
+    label { display:block; font-weight:650; margin:18px 0 8px; }
+    input[type="tel"] { width:100%; padding:14px; border:2px solid #6a8291; border-radius:10px; font:inherit; }
+    input:focus-visible,button:focus-visible,a:focus-visible { outline:3px solid #0b65c4; outline-offset:3px; }
+    .check { display:flex; align-items:flex-start; gap:10px; font-weight:500; }
+    .check input { width:21px; height:21px; flex:none; margin-top:4px; }
+    button { margin-top:20px; background:var(--green); color:#fff; border:0; border-radius:10px; padding:15px 18px; width:100%; font:inherit; font-weight:700; cursor:pointer; }
+    .help { color:var(--muted); font-size:15px; }
+    .warning { border-left:4px solid #b88624; padding:10px 14px; background:#fff8e8; }
+    #status { min-height:26px; color:#9a1b22; font-weight:600; }
+    a { color:#075fb4; }
+    footer { font-size:14px; color:var(--muted); }
+    @media (max-width:480px) { .panel { padding:18px; } main { padding-top:22px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="tag">PRIVATE PILOT · NOT A BOOKING FORM</span>
+    <h1>Test WhatsApp with OpenBSP</h1>
+    <p>This page is an isolated trial for Jeffston Court Hostel. It does not connect accounts, store phone numbers, book rooms, collect payments, or send messages itself.</p>
+    <section class="panel" aria-labelledby="setup-heading">
+      <h2 id="setup-heading">1. Connect OpenBSP</h2>
+      <ol>
+        <li>Sign in to the <a href="https://web.openbsp.dev/" target="_blank" rel="noopener noreferrer">OpenBSP free dashboard</a> with Google or GitHub.</li>
+        <li>Choose <strong>Integrations → WhatsApp</strong> and connect a test WhatsApp Business number you control through the official Meta option, if eligible.</li>
+        <li>Keep the OpenBSP inbox open. Do not connect the live hostel number for this experiment.</li>
+      </ol>
+    </section>
+    <section class="panel" aria-labelledby="send-heading">
+      <h2 id="send-heading">2. Open a test conversation</h2>
+      <form id="test-form" novalidate>
+        <label for="test-number">Your connected test WhatsApp Business number</label>
+        <input id="test-number" type="tel" inputmode="tel" placeholder="233XXXXXXXXX" autocomplete="off" spellcheck="false" required aria-describedby="phone-help">
+        <p class="help" id="phone-help">International format. Digits only, or start with +. This number stays in your browser.</p>
+        <label class="check" for="ownership">
+          <input type="checkbox" id="ownership" required>
+          <span>I control this test number, it is connected to OpenBSP, and I authorize this test.</span>
+        </label>
+        <button type="submit">Open WhatsApp test chat</button>
+        <p role="alert" id="status" aria-live="polite"></p>
+      </form>
+      <p class="warning"><strong>Important:</strong> WhatsApp will open a prepared message. You must press Send there yourself. No message is sent automatically.</p>
+    </section>
+    <section class="panel" aria-labelledby="check-heading">
+      <h2 id="check-heading">3. Check that it arrived</h2>
+      <ol>
+        <li>Send the prepared message manually from a different phone/account you control, not the same number receiving it.</li>
+        <li>Confirm exactly one incoming message appears in the OpenBSP inbox.</li>
+        <li>Reply manually from OpenBSP, then confirm the reply arrives once on the test phone.</li>
+        <li>Do not enable AI auto-replies until the manual test passes.</li>
+      </ol>
+    </section>
+    <footer>No guest information, website analytics, webhook credentials or payments are used in this pilot. This page is not part of the live booking flow.</footer>
+  </main>
+  <script>
+    'use strict';
+    document.getElementById('test-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const status = document.getElementById('status');
+      const raw = document.getElementById('test-number').value.trim();
+      const number = raw.replace(/[\s()+-]/g, '');
+      if (!/^\d{10,15}$/.test(number)) {
+        status.textContent = 'Enter a valid international test number (10–15 digits).';
+        return;
+      }
+      if (!document.getElementById('ownership').checked) {
+        status.textContent = 'Confirm you control the connected test number first.';
+        return;
+      }
+      status.textContent = 'Opening WhatsApp. Nothing has been sent yet.';
+      const message = 'JCH OPENBSP TEST ONLY: Can you confirm this hostel enquiry arrived in the OpenBSP inbox? No booking or payment requested.';
+      const url = 'https://wa.me/' + number + '?text=' + encodeURIComponent(message);
+      const link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    });
+  </script>
+</body>
+</html>
