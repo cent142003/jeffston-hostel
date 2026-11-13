@@ -93,4 +93,45 @@ test.describe('OpenBSP preview-only trial (no real messages)', () => {
       assert.equal(p.url(), 'about:blank', 'No navigation to external service');
     } finally { await p.close(); }
   });
+
+  test('live room reply uses validated feed records and forbids online payment', async () => {
+    const { p, requested } = await page();
+    try {
+      await p.evaluate(() => {
+        window.fetch = async () => ({
+          ok: true,
+          json: async () => ({
+            ok: true,
+            rooms: [
+              { code:'A101', room:'A101', status:'Available', availableBeds:3, capacity:4, occupied:1, rentAmount:5500 },
+              { code:'B201', room:'B201', status:'Full', availableBeds:0, capacity:2, occupied:2, rentAmount:9900 }
+            ]
+          })
+        });
+      });
+      await p.click('#check-live-rooms');
+      await p.waitForFunction(() => document.querySelector('#live-rooms-status').textContent.includes('Not sent'));
+      const reply=await p.$eval('#preview-reply', el => el.textContent);
+      assert.match(reply,/A101.*3 available bed/);
+      assert.match(reply,/GHS 5,500/);
+      assert.doesNotMatch(reply,/B201|9,900/);
+      assert.match(reply,/Pay at the property after viewing/);
+      assert.match(reply,/do not take room deposits or payments online/);
+      assert.equal(requested.length,0,'Mock preview must not call external services');
+    } finally { await p.close(); }
+  });
+
+  test('room feed errors do not produce invented availability or prices', async () => {
+    const { p, requested } = await page();
+    try {
+      await p.evaluate(() => { window.fetch = async () => { throw Error('upstream down'); }; });
+      await p.click('#check-live-rooms');
+      await p.waitForFunction(() => document.querySelector('#live-rooms-status').textContent.includes('could not be verified'));
+      const reply=await p.$eval('#preview-reply', el => el.textContent);
+      assert.match(reply,/cannot confirm the current room price or availability/i);
+      assert.match(reply,/Pay at the property after viewing/);
+      assert.doesNotMatch(reply,/GHS [\d,]+/);
+      assert.equal(requested.length,0);
+    } finally { await p.close(); }
+  });
 });
