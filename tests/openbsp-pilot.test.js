@@ -117,7 +117,8 @@ test.describe('OpenBSP preview-only trial (no real messages)', () => {
       assert.doesNotMatch(reply,/B201|9,900/);
       assert.match(reply,/pay only at the hostel and collect an official receipt/i);
       assert.match(reply,/integrity of Jeffston Court Hostel/i);
-      assert.match(reply,/do not take room deposits or payments online/);
+      assert.match(reply,/do not request or accept payments before a viewing/i);
+      assert.match(reply,/Never send a deposit through WhatsApp, mobile money, bank transfer or an online link/);
       assert.equal(requested.length,0,'Mock preview must not call external services');
     } finally { await p.close(); }
   });
