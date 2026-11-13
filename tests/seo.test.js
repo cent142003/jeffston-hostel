@@ -53,7 +53,8 @@ test('the live Google room feed remains, while online payment is no longer offer
   assert.match(h,/id="rooms"[^>]*data-rooms-fallback-api="https:\/\/script.google.com/);
   assert.match(h,/id="booking-form"/);
   assert.match(h,/id="viewing-trigger"/);
-  assert.match(h,/View first\. Pay at the hostel/);
+  assert.match(h,/View the room first\. Pay only at the hostel/);
+  assert.match(h,/uphold the integrity of Jeffston Court Hostel/);
   assert.doesNotMatch(h,/js\.paystack\.co|paystack-trigger|pk_live_|Proceed to Payment/i);
   assert.doesNotMatch(js,/PaystackPop|pk_live_|paystack-trigger|\.openIframe\(/);
   assert.match(js,/window.JCH_ROOM_FEED_READY\s*=\s*false/);
