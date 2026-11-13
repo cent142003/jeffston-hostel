@@ -115,7 +115,8 @@ test.describe('OpenBSP preview-only trial (no real messages)', () => {
       assert.match(reply,/A101.*3 available bed/);
       assert.match(reply,/GHS 5,500/);
       assert.doesNotMatch(reply,/B201|9,900/);
-      assert.match(reply,/Pay at the property after viewing/);
+      assert.match(reply,/pay only at the hostel and collect an official receipt/i);
+      assert.match(reply,/integrity of Jeffston Court Hostel/i);
       assert.match(reply,/do not take room deposits or payments online/);
       assert.equal(requested.length,0,'Mock preview must not call external services');
     } finally { await p.close(); }
@@ -129,7 +130,8 @@ test.describe('OpenBSP preview-only trial (no real messages)', () => {
       await p.waitForFunction(() => document.querySelector('#live-rooms-status').textContent.includes('could not be verified'));
       const reply=await p.$eval('#preview-reply', el => el.textContent);
       assert.match(reply,/cannot confirm the current room price or availability/i);
-      assert.match(reply,/Pay at the property after viewing/);
+      assert.match(reply,/pay only at the hostel and collect an official receipt/i);
+      assert.match(reply,/integrity of Jeffston Court Hostel/i);
       assert.doesNotMatch(reply,/GHS [\d,]+/);
       assert.equal(requested.length,0);
     } finally { await p.close(); }
