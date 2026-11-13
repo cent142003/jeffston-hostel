@@ -164,7 +164,7 @@ test('C: sold-out room clears stale viewing selection while other rooms stay lis
   await p.waitForFunction(()=>document.querySelector('#roomType')?.querySelector('option[value="room-a101"]')?.disabled===true,{timeout:17000});
   const snap=await snapshot(p);
   assert.equal(snap.selected,'','A full room must not remain bookable');
-  assert.equal(snap.amount,'0');
+  assert.equal(snap.amount,'','A full room must not retain any quoted amount');
   assert.equal(snap.viewingDisabled,true);
   assert.equal(snap.options.find(o=>o.value==='room-a102').disabled,false);
  }finally{await p.close()}
