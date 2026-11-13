@@ -47,17 +47,20 @@ test('the initial rendered booking options and room table never show outdated in
   assert.match(table,/Live|live|Checking|checking/);
 });
 
-test('the live room, booking and payment integration remains in place and fails closed',()=>{
+test('the live Google room feed remains, while online payment is no longer offered',()=>{
   const h=main(), js=script();
   assert.match(h,/id="rooms"[^>]*data-rooms-api="\/api\/rooms"/);
   assert.match(h,/id="rooms"[^>]*data-rooms-fallback-api="https:\/\/script.google.com/);
   assert.match(h,/id="booking-form"/);
-  assert.match(h,/id="paystack-trigger"/);
-  assert.match(h,/js.paystack.co\/v1\/inline.js/);
+  assert.match(h,/id="viewing-trigger"/);
+  assert.match(h,/View the room first\. Pay only at the hostel/);
+  assert.match(h,/uphold the integrity of Jeffston Court Hostel/);
+  assert.doesNotMatch(h,/js\.paystack\.co|paystack-trigger|pk_live_|Proceed to Payment/i);
+  assert.doesNotMatch(js,/PaystackPop|pk_live_|paystack-trigger|\.openIframe\(/);
   assert.match(js,/window.JCH_ROOM_FEED_READY\s*=\s*false/);
   assert.match(js,/syncRoomsFromSheet\(/);
   assert.match(js,/loadRoomsWithJsonp\(/);
-  assert.match(js,/payButton\.disabled\s*=\s*true/);
+  assert.match(js,/viewingButton\.disabled\s*=\s*true/);
   assert.match(js,/window.JCH_ROOM_PRICING\s*=\s*availableRooms\.reduce/);
   assert.doesNotMatch(js,/const fallbackPricing\s*=/);
 });
@@ -90,6 +93,6 @@ test('public answers match structured answers and enquiry links are present on e
   assert.equal(faq.mainEntity.length,7);
   for(const q of faq.mainEntity){ assert.ok(h.includes('<summary>'+q.name+'</summary>')); assert.ok(h.includes('<p>'+q.acceptedAnswer.text+'</p>')); }
   for(const file of campus()){ assert.match(text(file),/href="\/room-updates\/"/); assert.match(text(file),/href="\/#faq"/); }
-  assert.match(h,/A semester payment does not automatically cover the full academic year/);
+  assert.match(h,/Payments are made only at the property after viewing/);
   assert.match(h,/An email enquiry does not reserve a bed/);
 });

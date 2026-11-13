@@ -100,15 +100,15 @@ async function checkRoomsLanding(p){
  },{timeout:6000});
 }
 async function snapshot(p){return p.evaluate(()=>{
- const s=document.querySelector('#roomType'),b=document.querySelector('#paystack-trigger');
- return {ready:window.JCH_ROOM_FEED_READY,selected:s?.value,disabled:s?.disabled,options:[...s.options].map(o=>({value:o.value,disabled:o.disabled})),amount:document.querySelector('#amountInKobo')?.value,payDisabled:b?.disabled,payText:b?.textContent,status:document.querySelector('#room-feed-status')?.textContent?.trim()};
+ const s=document.querySelector('#roomType'),b=document.querySelector('#viewing-trigger');
+ return {ready:window.JCH_ROOM_FEED_READY,selected:s?.value,disabled:s?.disabled,options:[...s.options].map(o=>({value:o.value,disabled:o.disabled})),amount:document.querySelector('#quotedAmountPesewas')?.value,viewingDisabled:b?.disabled,viewingText:b?.textContent,status:document.querySelector('#room-feed-status')?.textContent?.trim()};
 });}
 async function selectRoom(p,value='room-a101',duration='first-semester'){await p.evaluate(({value,duration})=>{
  const s=document.querySelector('#roomType'),d=document.querySelector('#duration');
  s.value=value;s.dispatchEvent(new Event('change',{bubbles:true}));
  d.value=duration;d.dispatchEvent(new Event('change',{bubbles:true}));
 },{value,duration});}
-test('A: refreshed live prices preserve selected room, recalculate amount and keep Paystack guarded',{timeout:45000},async()=>{
+test('A: refreshed live prices preserve viewing selection and recalculate quoted rent',{timeout:45000},async()=>{
  state.mode='online';state.a101Price=5500;state.a101Beds=3;
  const p=await newPage();
  try{
@@ -118,12 +118,12 @@ test('A: refreshed live prices preserve selected room, recalculate amount and ke
   assert.equal(before.selected,'room-a101');assert.equal(before.amount,'550000');
   state.a101Price=5600;
   await p.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));
-  await p.waitForFunction(()=>document.querySelector('#amountInKobo')?.value==='560000',{timeout:17000});
+  await p.waitForFunction(()=>document.querySelector('#quotedAmountPesewas')?.value==='560000',{timeout:17000});
   const after=await snapshot(p);
   assert.equal(after.selected,'room-a101','Refresh must not clear the student selection');
   assert.equal(after.amount,'560000','Must use latest live rent');
   assert.equal(after.disabled,false);
-  assert.equal(after.payDisabled,false);
+  assert.equal(after.viewingDisabled,false);
   assert.match(after.status,/Live room availability loaded/);
   const displayed=await p.$eval('#selected-room-summary',el=>({visible:!el.hidden,text:el.textContent}));
   assert.equal(displayed.visible,true);
@@ -136,7 +136,7 @@ test('B: a profile visitor can reach reception during an outage and retry when p
  try{
   await checkRoomsLanding(p);
   await p.waitForFunction(()=>window.JCH_ROOM_FEED_READY===false && document.querySelector('#retry-room-feed')?.hidden===false,{timeout:17000});
-  let snap=await snapshot(p);assert.equal(snap.ready,false);assert.equal(snap.payDisabled,true);
+  let snap=await snapshot(p);assert.equal(snap.ready,false);assert.equal(snap.viewingDisabled,true);
   assert.equal(snap.disabled,true);
   const status=await reachable(p,'#room-feed-status');
   assert.match(await status.evaluate(e=>e.innerText),/retry|contact|WhatsApp|call/i);
@@ -152,7 +152,7 @@ test('B: a profile visitor can reach reception during an outage and retry when p
   assert.equal(snap.amount,'550000');
  }finally{await p.close()}
 });
-test('C: sold-out room clears stale selection and disables payment while other rooms stay listed',{timeout:45000},async()=>{
+test('C: sold-out room clears stale viewing selection while other rooms stay listed',{timeout:45000},async()=>{
  state.mode='online';state.a101Price=5500;state.a101Beds=3;
  const p=await newPage();
  try{
@@ -164,8 +164,8 @@ test('C: sold-out room clears stale selection and disables payment while other r
   await p.waitForFunction(()=>document.querySelector('#roomType')?.querySelector('option[value="room-a101"]')?.disabled===true,{timeout:17000});
   const snap=await snapshot(p);
   assert.equal(snap.selected,'','A full room must not remain bookable');
-  assert.equal(snap.amount,'0');
-  assert.equal(snap.payDisabled,true);
+  assert.equal(snap.amount,'','A full room must not retain any quoted amount');
+  assert.equal(snap.viewingDisabled,true);
   assert.equal(snap.options.find(o=>o.value==='room-a102').disabled,false);
  }finally{await p.close()}
 });
@@ -211,18 +211,18 @@ test('E: a mobile Google profile visitor can compare a room and reach reception 
   const snap=await snapshot(p);
   assert.equal(snap.selected,'room-a101');
   assert.equal(snap.disabled,false);
-  assert.equal(snap.payDisabled,true,'Duration must be selected before payment is enabled');
+  assert.equal(snap.viewingDisabled,true,'Duration must be selected before viewing enquiry is enabled');
   await p.select('#duration','second-semester');
   const after=await snapshot(p);
   assert.equal(after.amount,'550000');
-  assert.match(after.payText,/5,500/);
+  assert.match(after.viewingText,/Arrange a Viewing/);
   const feedback=await p.$eval('#selected-room-summary',x=>x.textContent);
   assert.match(feedback,/A101/);
   assert.match(feedback,/Second Semester/);
  } finally {await p.close()}
 });
 
-test('F: after an established selection, losing the feed clears old price text and blocks checkout',{timeout:35000},async()=>{
+test('F: after selection, losing the feed clears old price text and blocks viewing quote',{timeout:35000},async()=>{
  state.mode='online';state.a101Price=5500;state.a101Beds=3;
  const p=await newPage();
  try{
@@ -234,12 +234,32 @@ test('F: after an established selection, losing the feed clears old price text a
   await p.waitForFunction(()=>document.querySelector('#roomType')?.disabled===true,{timeout:17000});
   const snap=await snapshot(p);
   assert.equal(snap.ready,false);
-  assert.equal(snap.payDisabled,true);
+  assert.equal(snap.viewingDisabled,true);
   assert.equal(snap.amount,'');
   assert.equal(snap.status.includes('Cannot load'),true);
   const stale=await p.$eval('#selected-room-summary',el=>({hidden:el.hidden,text:el.textContent}));
   assert.equal(stale.hidden,true);
   assert.equal(stale.text,'','stale amount must never remain visible during a feed outage');
+ }finally{await p.close()}
+});
+
+test('G: a viewing enquiry opens a manual WhatsApp draft that forbids online payment',{timeout:35000},async()=>{
+ state.mode='online';state.a101Price=5500;state.a101Beds=3;
+ const p=await newPage();
+ try{
+  await p.waitForFunction(()=>window.JCH_ROOM_FEED_READY,{timeout:17000});
+  await selectRoom(p);
+  await p.evaluate(()=>{window.__viewingUrl=null;window.open=(url)=>{window.__viewingUrl=url;return null;};});
+  await p.click('#viewing-trigger');
+  const draft=await p.evaluate(()=>window.__viewingUrl);
+  const uri=new URL(draft);
+  assert.equal(uri.origin+uri.pathname,'https://wa.me/233201349321');
+  const message=uri.searchParams.get('text');
+  assert.match(message,/Room A101/);
+  assert.match(message,/First Semester/);
+  assert.match(message,/payments are made at the hostel after viewing/);
+  assert.doesNotMatch(message,/deposit link|Paystack|bank account|mobile.money number/i);
+  assert.equal((await snapshot(p)).viewingDisabled,false);
  }finally{await p.close()}
 });
 });

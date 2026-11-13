@@ -2180,3 +2180,16 @@ textarea:focus {
 /* Optional room information request, separate from booking. */
 #room-information label{display:block;margin:16px 0 6px}#room-information input[type=email]{width:100%;padding:12px;border:1px solid #789399;border-radius:8px;font:inherit}#room-information .consent{display:flex;align-items:flex-start;gap:12px}#room-information .consent input{min-width:20px;min-height:20px;margin-top:5px}#room-information .trap{display:none}#room-information button{padding:14px 22px;background:#153846;color:white;border:0;border-radius:8px;font:inherit;cursor:pointer}#room-information button:disabled{opacity:.6}#room-information .note{font-size:14px}#room-information #jch-info-status{margin-top:12px}
 #room-information{scroll-margin-top:100px}#room-information .consent input{width:20px;flex:0 0 20px;padding:0}#room-information .consent span{flex:1;min-width:0}#room-information .consent{justify-content:flex-start;text-align:left}#room-information a{color:#18576b;text-decoration:underline}
+
+/* Clear fraud-prevention rule beside live room prices and viewing choices. */
+.payment-safety-notice {
+  background: #fffaf1;
+  border: 1px solid #e4c88e;
+  border-left: 5px solid #aa7130;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin: 18px 0;
+  color: #233343;
+  line-height: 1.6;
+}
+.payment-safety-notice strong { color: #20332a; }

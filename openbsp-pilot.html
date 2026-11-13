@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en-GH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <title>OpenBSP trial | Jeffston Court Hostel</title>
+  <style>
+    :root { color-scheme: light; --ink:#13233c; --green:#087a54; --bg:#f4f8f7; --muted:#516577; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font: 17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    main { max-width:720px; margin:0 auto; padding:32px 18px 60px; }
+    h1 { line-height:1.16; font-size:clamp(28px,5vw,42px); margin:8px 0 12px; }
+    h2 { font-size:22px; margin:0 0 12px; }
+    .tag { display:inline-block; padding:5px 12px; border-radius:24px; background:#e2f4e8; font-weight:700; color:#145a39; font-size:14px; }
+    .panel { background:white; border:1px solid #d3e2dc; border-radius:16px; margin:24px 0; padding:24px; box-shadow:0 5px 20px #0c3f2810; }
+    p { margin:8px 0 15px; }
+    ol { padding-left:24px; }
+    li { margin:10px 0; }
+    label { display:block; font-weight:650; margin:18px 0 8px; }
+    input[type="tel"] { width:100%; padding:14px; border:2px solid #6a8291; border-radius:10px; font:inherit; }
+    input:focus-visible,button:focus-visible,a:focus-visible { outline:3px solid #0b65c4; outline-offset:3px; }
+    .check { display:flex; align-items:flex-start; gap:10px; font-weight:500; }
+    .check input { width:21px; height:21px; flex:none; margin-top:4px; }
+    button { margin-top:20px; background:var(--green); color:#fff; border:0; border-radius:10px; padding:15px 18px; width:100%; font:inherit; font-weight:700; cursor:pointer; }
+    .help { color:var(--muted); font-size:15px; }
+    .warning { border-left:4px solid #b88624; padding:10px 14px; background:#fff8e8; }
+    #status { min-height:26px; color:#9a1b22; font-weight:600; }
+    a { color:#075fb4; }
+    footer { font-size:14px; color:var(--muted); }
+    @media (max-width:480px) { .panel { padding:18px; } main { padding-top:22px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="tag">PRIVATE PILOT · NOT A BOOKING FORM</span>
+    <h1>Test WhatsApp with OpenBSP</h1>
+    <p>This page is an isolated trial for Jeffston Court Hostel. It does not connect accounts, store phone numbers, book rooms, collect payments, or send messages itself.</p>
+    <section class="panel" aria-labelledby="setup-heading">
+      <h2 id="setup-heading">1. Connect OpenBSP</h2>
+      <ol>
+        <li>Sign in to the <a href="https://web.openbsp.dev/" target="_blank" rel="noopener noreferrer">OpenBSP free dashboard</a> with Google or GitHub.</li>
+        <li>Choose <strong>Integrations → WhatsApp</strong> and connect a test WhatsApp Business number you control through the official Meta option, if eligible.</li>
+        <li>Keep the OpenBSP inbox open. Do not connect the live hostel number for this experiment.</li>
+      </ol>
+    </section>
+    <section class="panel" aria-labelledby="live-heading">
+      <h2 id="live-heading">Check what the assistant would say</h2>
+      <p>This reads the same <strong>Google Apps Script room feed</strong> used by the hostel website, through its existing read-only <code>/api/rooms</code> endpoint.</p>
+      <button type="button" id="check-live-rooms">Build a reply from live room data</button>
+      <p id="live-rooms-status" role="status" aria-live="polite">Nothing has been checked yet.</p>
+      <p id="preview-reply" style="white-space:pre-line;overflow-wrap:anywhere"></p>
+      <p class="help">This is a local preview. No WhatsApp reply is sent, no guest details are collected and no booking is made.</p>
+    </section>
+    <section class="panel" aria-labelledby="send-heading">
+      <h2 id="send-heading">2. Open a test conversation</h2>
+      <form id="test-form" novalidate>
+        <label for="test-number">Your connected test WhatsApp Business number</label>
+        <input id="test-number" type="tel" inputmode="tel" placeholder="233XXXXXXXXX" autocomplete="off" spellcheck="false" required aria-describedby="phone-help">
+        <p class="help" id="phone-help">International format. Digits only, or start with +. This number stays in your browser.</p>
+        <label class="check" for="ownership">
+          <input type="checkbox" id="ownership" required>
+          <span>I control this test number, it is connected to OpenBSP, and I authorize this test.</span>
+        </label>
+        <button type="submit">Open WhatsApp test chat</button>
+        <p role="alert" id="status" aria-live="polite"></p>
+      </form>
+      <p class="warning"><strong>Important:</strong> WhatsApp will open a prepared message. You must press Send there yourself. No message is sent automatically.</p>
+    </section>
+    <section class="panel" aria-labelledby="check-heading">
+      <h2 id="check-heading">3. Check that it arrived</h2>
+      <ol>
+        <li>Send the prepared message manually from a different phone/account you control, not the same number receiving it.</li>
+        <li>Confirm exactly one incoming message appears in the OpenBSP inbox.</li>
+        <li>Reply manually from OpenBSP, then confirm the reply arrives once on the test phone.</li>
+        <li>Do not enable AI auto-replies until the manual test passes.</li>
+      </ol>
+    </section>
+    <footer>No guest information, website analytics, webhook credentials or payments are used in this pilot. This page is not part of the live booking flow.</footer>
+  </main>
+  <script>
+    'use strict';
+    document.getElementById('test-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const status = document.getElementById('status');
+      const raw = document.getElementById('test-number').value.trim();
+      const number = raw.replace(/[\s()+-]/g, '');
+      if (!/^\d{10,15}$/.test(number)) {
+        status.textContent = 'Enter a valid international test number (10–15 digits).';
+        return;
+      }
+      if (!document.getElementById('ownership').checked) {
+        status.textContent = 'Confirm you control the connected test number first.';
+        return;
+      }
+      status.textContent = 'Opening WhatsApp. Nothing has been sent yet.';
+      const message = 'JCH OPENBSP TEST ONLY: Can you confirm this hostel enquiry arrived in the OpenBSP inbox? No booking or payment requested.';
+      const url = 'https://wa.me/' + number + '?text=' + encodeURIComponent(message);
+      const link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    });
+
+    // Preview a business reply from the existing read-only Google room feed.
+    // Nothing is sent to OpenBSP or WhatsApp by this button.
+    document.getElementById('check-live-rooms').addEventListener('click', async function () {
+      const status = document.getElementById('live-rooms-status');
+      const reply = document.getElementById('preview-reply');
+      const btn = this;
+      btn.disabled = true;
+      status.textContent = 'Checking the current room list…';
+      reply.textContent = '';
+      const safety = 'To protect our guests and uphold the integrity of Jeffston Court Hostel, please view the room in person before making any payment. We do not request or accept payments before a viewing. Confirm the room, price and terms with reception, then pay only at the hostel and collect an official receipt. Never send a deposit through WhatsApp, mobile money, bank transfer or an online link. If anyone asks you to pay before a viewing, contact reception through the number shown on our official website.';
+      try {
+        const response = await fetch('/api/rooms', { method: 'GET', cache: 'no-store', headers: { Accept: 'application/json' } });
+        if (!response.ok) throw new Error('Room feed unavailable');
+        const payload = await response.json();
+        if (payload?.ok !== true || !Array.isArray(payload.rooms)) throw new Error('Invalid room feed');
+        const available = payload.rooms.filter(room => {
+          const code = String(room.code || room.room || '').trim();
+          const beds = Number(room.availableBeds);
+          const price = Number(room.rentAmount);
+          const capacity = Number(room.capacity);
+          const occupied = Number(room.occupied);
+          return /^[A-Za-z0-9 -]{1,24}$/.test(code) &&
+            Number.isInteger(beds) && beds > 0 &&
+            Number.isInteger(capacity) && capacity > 0 &&
+            Number.isInteger(occupied) && occupied >= 0 &&
+            occupied + beds === capacity &&
+            Number.isFinite(price) && price > 0 &&
+            String(room.status).toLowerCase() === 'available';
+        });
+        const lines = available.slice(0, 15).map(room =>
+          String(room.code || room.room).trim().toUpperCase() +
+          ': ' + room.availableBeds + ' available bed(s), GHS ' +
+          Number(room.rentAmount).toLocaleString('en-GH') + ' per resident per semester.'
+        );
+        const intro = lines.length
+          ? 'Hello. Here are the rooms currently showing available on our website:\n' + lines.join('\n') + '\n\n'
+          : 'Hello. There are no available rooms I can confidently confirm from the live list right now. Please contact reception.\n\n';
+        reply.textContent = intro + safety;
+        status.textContent = 'Reply built from the current room feed. Not sent.';
+      } catch (_) {
+        status.textContent = 'The live feed could not be verified. No room price or available space will be guessed.';
+        reply.textContent = 'Hello. I cannot confirm the current room price or availability right now. Please contact reception to arrange a viewing. ' + safety;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
