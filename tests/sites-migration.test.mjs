@@ -15,5 +15,5 @@ test('POST forms and backend/asset requests are not redirected or consumed',asyn
  const request=new Request(old+'/',{method:'POST',body:'form-name=contact&message=synthetic'});
  assert.equal(migrate(request),undefined);assert.equal(await request.text(),'form-name=contact&message=synthetic');
  for(const path of ['/api/rooms','/api/room-info','/Assets/images/logo.jpg','/.netlify/functions/backend','/unrelated']) assert.equal(migrate(new Request(old+path)),undefined);
- assert.deepEqual(config.method,['GET','HEAD']);assert(!config.path.includes('/*'));
+ assert.equal(config.method,undefined,'Netlify manifest does not accept HEAD filters; handler must guard methods');assert(!config.path.includes('/*'));
 });

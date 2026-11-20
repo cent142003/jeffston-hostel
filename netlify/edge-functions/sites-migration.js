@@ -9,6 +9,5 @@ export default function migrate(request) {
   return new Response(null, {status: 301, headers: {Location: destination + path + url.search}});
 }
 export const config = {
-  path: ['/', '/index.html', '/hostel-near-legon', '/hostel-near-legon/', '/hostel-near-upsa', '/hostel-near-upsa/', '/student-hostel-adenta', '/student-hostel-adenta/', '/hostel-near-academic-city', '/hostel-near-academic-city/', '/room-updates', '/room-updates/'],
-  method: ['GET', 'HEAD']
+  path: ['/', '/index.html', '/hostel-near-legon', '/hostel-near-legon/', '/hostel-near-upsa', '/hostel-near-upsa/', '/student-hostel-adenta', '/student-hostel-adenta/', '/hostel-near-academic-city', '/hostel-near-academic-city/', '/room-updates', '/room-updates/']
 };
