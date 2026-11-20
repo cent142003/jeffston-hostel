@@ -2,7 +2,7 @@
 import json, urllib.request, urllib.parse
 from html.parser import HTMLParser
 from datetime import datetime, timezone
-HOST='jeffston-court-hostel.vercel.app'
+HOST='jeffston-court-hostel.cent142003.chatgpt.site'
 PATHS=['/','/hostel-near-legon/','/hostel-near-upsa/','/hostel-near-academic-city/','/student-hostel-adenta/','/robots.txt','/sitemap.xml']
 class Redirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self,req,fp,code,msg,headers,url):
