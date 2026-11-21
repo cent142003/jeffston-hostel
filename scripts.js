@@ -377,27 +377,7 @@ function openWhatsApp(messageType, roomTitle = '') {
   });
 })();
 
-// Enhanced contact form integration
-document.addEventListener('DOMContentLoaded', function() {
-  const contactForm = document.querySelector('.contact-form');
-  
-  if (contactForm) {
-    // Add WhatsApp option to contact form
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-    if (submitButton) {
-      // Create WhatsApp alternative button
-      const whatsappAlt = document.createElement('p');
-      whatsappAlt.className = 'contact-alternative';
-      whatsappAlt.innerHTML = `
-        Or <a href="#" class="whatsapp-link" onclick="openWhatsApp('general'); return false;">
-          send us a message on WhatsApp
-        </a> for faster response
-      `;
-      
-      submitButton.parentNode.insertBefore(whatsappAlt, submitButton.nextSibling);
-    }
-  }
-});
+// The contact form includes a direct, accessible WhatsApp alternative in its markup.
 
 // ============================================================================
 // 7. Room Photo Slideshow
