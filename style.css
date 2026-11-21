@@ -2353,3 +2353,35 @@ textarea:focus {
 .home-redesign .about-story h2{text-align:left}
 .home-redesign .about-tour .video-container{height:auto;aspect-ratio:16/9}
 .home-redesign .about-tour video{position:static;height:100%;max-height:none}
+
+/* Campus guidance and the closing navigation share the homepage's calm hierarchy. */
+.home-redesign #campus-access .campus-card-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.home-redesign #campus-access .campus-card{padding:28px;display:flex;flex-direction:column;align-items:stretch;min-width:0}
+.home-redesign #campus-access .campus-card h3{font-size:24px;line-height:1.3;margin:8px 0 16px;color:#142536}
+.home-redesign #campus-access .campus-card p:not(.campus-card-kicker){font-size:16px;line-height:1.75;color:#536170;margin-bottom:24px}
+.home-redesign #campus-access .campus-card .btn{margin-top:auto;min-height:50px;padding:12px 14px;display:flex;align-items:center;justify-content:center;white-space:normal;text-align:center;line-height:1.5}
+.home-redesign .campus-local{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:20px 0 32px;padding:24px 28px;border:1px solid #dee6ee;border-radius:10px;background:#fff}
+.home-redesign .campus-local h3,.home-redesign .campus-planning h3{font-size:21px;line-height:1.4;margin:0 0 8px;color:#142536}
+.home-redesign .campus-local p,.home-redesign .campus-planning p{margin:0;color:#536170;font-size:16px;line-height:1.75}
+.home-redesign .campus-local a{display:inline-flex;align-items:center;min-height:48px;color:#216c40;font-weight:600;text-decoration:underline;flex-shrink:0}
+.home-redesign .campus-planning{padding:28px;background:#edf2f6;border-radius:12px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 40px;align-items:start}
+.home-redesign .campus-planning ul{margin:0;padding-left:22px;font-size:16px;color:#536170;line-height:1.75}
+.home-redesign .campus-planning li+li{margin-top:10px}
+.home-redesign .campus-planning .btn{justify-self:start;min-height:50px;display:inline-flex;align-items:center}
+.home-redesign .site-footer{margin-top:32px;background:#142536;color:#e3eaf0;padding:56px 32px 24px}
+.home-redesign .footer-grid{max-width:1176px;margin:0 auto;display:grid;grid-template-columns:1.15fr .8fr 1.2fr 1.1fr;gap:32px}
+.home-redesign .site-footer a{color:#fff;overflow-wrap:anywhere}
+.home-redesign .footer-home{font-family:Georgia,serif;font-size:26px;line-height:1.35;text-decoration:none;display:inline-flex;align-items:center;min-height:48px}
+.home-redesign .site-footer h2{font-family:inherit;font-size:18px;line-height:1.5;color:#fff;text-align:left;margin:0 0 12px}
+.home-redesign .site-footer p,.home-redesign .site-footer address{font-size:16px;line-height:1.75;margin:0 0 16px;font-style:normal}
+.home-redesign .footer-explore ul{list-style:none;padding:0;margin:0}
+.home-redesign .footer-explore a,.home-redesign .footer-reception>a,.home-redesign .footer-booking>a{display:flex;align-items:center;min-height:44px;padding:8px 0;font-size:16px;line-height:1.5;text-decoration:underline;text-underline-offset:4px}
+.home-redesign .footer-reception .footer-international{font-size:14px;margin:0 0 8px}
+.home-redesign .footer-bottom{max-width:1176px;margin:36px auto 0;border-top:1px solid #41515f;padding-top:20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.home-redesign .footer-bottom p{margin:0;font-size:14px}
+.home-redesign .footer-bottom a{min-height:44px;display:inline-flex;align-items:center;font-size:16px;text-decoration:underline}
+.home-redesign .site-footer a:focus-visible{outline:3px solid #b4dfc4;outline-offset:4px;border-radius:3px}
+@media(max-width:1000px){.home-redesign .footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.home-redesign #campus-access .campus-card-grid{grid-template-columns:1fr}.home-redesign .campus-local{flex-direction:column;align-items:stretch;padding:24px}.home-redesign .campus-planning{grid-template-columns:1fr;padding:24px}.home-redesign .campus-planning .btn{justify-self:stretch;justify-content:center}.home-redesign .footer-grid{grid-template-columns:1fr;gap:28px}.home-redesign .site-footer{padding:40px 20px 112px}.home-redesign .footer-bottom{flex-direction:column;align-items:flex-start}.home-redesign #campus-access .campus-card{padding:24px}}
+.home-redesign .site-footer{scroll-margin-top:100px}
+@media(min-width:701px){.home-redesign .footer-bottom{padding-right:180px}}
