@@ -262,8 +262,8 @@
 <section id="rooms" class="rooms-section" aria-labelledby="rooms-heading" data-rooms-api="/api/rooms" data-rooms-fallback-api="https://script.google.com/macros/s/AKfycbzjBfEHdqU2pgfLJD3P5dNkMB888WYuY77VKvepAqcw4nGdfncFHuQ_KYD7piwbBCvH/exec?action=rooms">
   <div class="section-intro" data-aos="fade-up">
     <p class="section-kicker">Find your fit</p>
-    <h2 id="rooms-heading">Your room. Your study space.</h2>
-    <p>Compare current room prices and available beds. Reception will confirm your room and booking arrangements.</p>
+    <h2 id="rooms-heading">Find the room that fits your term.</h2>
+    <p>Compare live semester rates and remaining bed spaces. Choose a room to see your booking options; reception will confirm your room and arrangements.</p>
   </div>
 
   <div class="availability-summary" aria-label="Availability summary" data-aos="fade-up" data-aos-delay="100">
@@ -285,7 +285,33 @@
     </div>
   </div>
 
-  <div class="rooms-showcase" data-aos="fade-up" data-aos-delay="150">
+
+  <div class="room-filters" aria-label="Filter room options">
+    <div class="room-filter-select"><label for="room-filter-type">Room type</label><select id="room-filter-type"><option value="">All room types</option><option>Standard</option><option>Standard Big</option><option>General</option><option>Premium</option></select></div>
+    <label class="room-available-filter" for="room-filter-available"><input id="room-filter-available" type="checkbox">Show available rooms only</label>
+    <button id="room-filter-reset" type="button">Reset filters</button>
+    <p id="room-filter-count" role="status" aria-live="polite">Loading room options…</p>
+  </div>
+  <p class="room-pricing-note">Rent is listed per bed space, per semester. Full academic year covers two semesters. Confirm the total and included services with reception before paying.</p>
+  <div class="availability-board" data-aos="fade-up" data-aos-delay="200">
+    <table class="rooms-table">
+      <caption class="visually-hidden">Rooms overview with type, occupancy, rent, status, and booking action</caption>
+      <thead>
+        <tr>
+          <th scope="col">Room</th>
+          <th scope="col">Type</th>
+          <th scope="col">Occupied / capacity</th>
+          <th scope="col">Semester rent</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="6" role="status" aria-live="polite">Checking live room prices and bed availability…</td></tr>
+      </tbody>
+    </table>
+  </div>
+<details class="room-gallery"><summary>Explore hostel photos</summary><p>Photos show examples of hostel rooms and shared facilities. Reception will confirm the room assigned to your booking.</p>  <div class="rooms-showcase" data-aos="fade-up" data-aos-delay="150">
     <div class="rooms-slideshow" aria-label="Jeffston Court Hostel photo slideshow">
       <div class="slideshow-viewport">
         <figure class="slideshow-slide is-active" data-caption="Four-bed student room with wooden bunk beds, study desks, air conditioning, and storage">
@@ -409,25 +435,7 @@
       </div>
     </div>
   </div>
-
-  <div class="availability-board" data-aos="fade-up" data-aos-delay="200">
-    <table class="rooms-table">
-      <caption class="visually-hidden">Rooms overview with type, occupancy, rent, status, and booking action</caption>
-      <thead>
-        <tr>
-          <th scope="col">Room</th>
-          <th scope="col">Type</th>
-          <th scope="col">Occupancy</th>
-          <th scope="col">Rent</th>
-          <th scope="col">Status</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td colspan="6" role="status" aria-live="polite">Checking live room prices and bed availability…</td></tr>
-      </tbody>
-    </table>
-  </div>
+</details>
 </section>
 
 
@@ -566,48 +574,50 @@
 
 <!-- BOOKING SECTION -->
 <section id="booking" class="booking-section" aria-labelledby="booking-heading">
-  <h2 id="booking-heading" data-aos="fade-up">Book a Room</h2>
+  <div class="section-intro"><p class="section-kicker">Your booking details</p><h2 id="booking-heading">Make your next move with confidence.</h2><p>Choose your room and period, review your total, then add your contact details. Selecting a room does not reserve a bed.</p></div>
   <form id="booking-form" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="booking-form">
   <input type="hidden" name="form-name" value="booking" />
   <p hidden>
     <label>Don't fill this out if you're human: <input name="bot-field" /></label>
   </p>
     <fieldset>
-      <!-- Personal info fields -->
-      <legend>Personal Information</legend>
-      <label for="fullName">Full Name</label>
-      <input id="fullName" type="text" name="fullName" placeholder="John Doe" required aria-describedby="error-fullName">
-      <span id="error-fullName" class="error-message" role="alert"></span>
-
-      <label for="email">Email Address</label>
-      <input id="email" type="email" name="email" placeholder="you@example.com" required aria-describedby="error-email">
-      <span id="error-email" class="error-message" role="alert"></span>
-
-      <label for="phone">Phone Number</label>
-      <input id="phone" type="tel" name="phone" placeholder="+233 123 456 789" required aria-describedby="error-phone">
-      <span id="error-phone" class="error-message" role="alert"></span>
-    </fieldset>
-
-    <fieldset>
       <!-- Booking details -->
-      <legend>Booking Details</legend>
-      <label for="roomType">Room</label>
-      <select id="roomType" name="roomType" required aria-describedby="error-roomType">
+      <legend>Room &amp; booking period</legend>
+      <label for="roomType">Choose room</label>
+      <select id="roomType" name="roomType" required aria-describedby="error-roomType room-feed-status">
         <option value="" disabled selected>Checking live room availability…</option>
       </select>
       <span id="error-roomType" class="error-message" role="alert"></span>
       <p id="room-feed-status" class="room-feed-status" role="status" aria-live="polite">Checking live room prices and available spaces…</p>
       <button id="retry-room-feed" class="room-feed-retry" type="button" hidden>Reload room options</button>
-      <p id="selected-room-summary" class="selected-room-summary" role="status" aria-live="polite" hidden></p>
 
-      <label for="duration">Duration</label>
-      <select id="duration" name="duration" required aria-describedby="error-duration">
+
+      <label for="duration">Booking period</label>
+      <select id="duration" name="duration" required aria-describedby="error-duration booking-period-help">
         <option value="" disabled selected>Select Duration</option>
         <option value="first-semester">First Semester (2026/2027)</option>
         <option value="second-semester">Second Semester (2026/2027)</option>
         <option value="full-academic-year">Full Academic Year (2 semesters)</option>
       </select>
+      <p id="booking-period-help" class="booking-field-help">One semester or the full academic year (two semesters). Reception will confirm dates and included services.</p>
       <span id="error-duration" class="error-message" role="alert"></span>
+    </fieldset>
+
+    <aside class="booking-review" aria-labelledby="booking-review-heading"><h3 id="booking-review-heading">Your selection &amp; total</h3><p id="selected-room-summary" class="selected-room-summary" role="status" aria-live="polite">Choose a room and period to see your total.</p><p class="booking-field-help">A selected bed space is not held until booking is confirmed. Please check your room, booking period and included services with reception.</p><a href="#rooms">Compare rooms again</a></aside>
+    <fieldset>
+      <!-- Personal info fields -->
+      <legend>Your contact details</legend>
+      <label for="fullName">Full Name</label>
+      <input id="fullName" type="text" name="fullName" placeholder="Your full name" autocomplete="name" required aria-describedby="error-fullName">
+      <span id="error-fullName" class="error-message" role="alert"></span>
+
+      <label for="email">Email Address</label>
+      <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required aria-describedby="error-email">
+      <span id="error-email" class="error-message" role="alert"></span>
+
+      <label for="phone">Phone Number</label>
+      <input id="phone" type="tel" name="phone" placeholder="e.g. 020 123 4567" autocomplete="tel" inputmode="tel" required aria-describedby="error-phone">
+      <span id="error-phone" class="error-message" role="alert"></span>
     </fieldset>
 
     <input type="hidden" name="paystackKey" value="pk_live_9302b8356f0551937a496101908e2eb772328962">
@@ -615,7 +625,7 @@
     <input type="hidden" name="bookingReference" id="bookingRef" value="">
 
     <div class="booking-actions">
-      <button type="button" class="btn btn-primary" id="paystack-trigger">Proceed to Payment</button>
+      <button type="button" class="btn btn-primary" id="paystack-trigger">Continue to payment</button>
       <p class="booking-help">Need help with booking? <a href="https://wa.me/233201349321?text=JCH%20Website%20-%20Hi%2C%20I%20need%20help%20with%20booking%20a%20room%20at%20Jeffston%20Court%20Hostel.%20Can%20you%20assist%20me%3F" target="_blank" rel="noopener noreferrer" class="whatsapp-link">Chat with us on WhatsApp</a></p>
     </div>
   </form>

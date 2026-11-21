@@ -223,15 +223,15 @@ function openWhatsApp(messageType, roomTitle = '') {
       const isFull = room.status.toLowerCase() === 'full';
       const filled = room.capacity ? Math.min(100, Math.round((room.occupied / room.capacity) * 100)) : 0;
       const action = isFull
-        ? `<a class="btn room-waitlist-btn" href="${waitlistUrl(room.code)}" target="_blank" rel="noopener noreferrer">Waitlist</a>`
-        : `<button type="button" class="btn room-select-btn" data-room-value="${roomValue(room.code)}">Book ${room.availableBeds} space${room.availableBeds === 1 ? '' : 's'}</button>`;
+        ? `<a class="btn room-waitlist-btn" href="${waitlistUrl(room.code)}" target="_blank" rel="noopener noreferrer">Ask about waitlist</a>`
+        : `<button type="button" class="btn room-select-btn" data-room-value="${roomValue(room.code)}" aria-label="Choose room ${room.code}">Choose room</button>`;
 
       return `
-        <tr>
+        <tr data-room-type="${room.type}" data-available="${!isFull}">
           <th scope="row">${room.code}</th>
           <td>${room.type}</td>
           <td><span class="occupancy-meter ${isFull ? 'is-full' : ''}" style="--filled: ${filled}%;"></span>${room.occupancy}</td>
-          <td>${formatCedi(room.rent)}</td>
+          <td>${formatCedi(room.rent)}<small class="room-price-unit">per bed / semester</small></td>
           <td><span class="status-pill ${isFull ? 'status-full' : 'status-available'}">${isFull ? 'Full' : `${room.availableBeds} bed${room.availableBeds === 1 ? '' : 's'} available`}</span></td>
           <td>${action}</td>
         </tr>
@@ -334,6 +334,9 @@ function openWhatsApp(messageType, roomTitle = '') {
         if (requestNumber !== newestRoomRequest) return;
         window.JCH_ROOM_FEED_READY = false;
         window.JCH_ROOM_PRICING = {};
+        const staleRows = document.querySelector('.rooms-table tbody');
+        if (staleRows) staleRows.innerHTML = '<tr><td colspan="6" role="status">Live room information is unavailable. Reload room options in booking or contact reception before paying.</td></tr>';
+        ['live-total-rooms','live-available-beds','live-starting-rent','live-full-rooms'].forEach(id => { const el=document.getElementById(id); if(el)el.textContent='—'; });
         const roomSelect = document.querySelector('#roomType');
         const payButton = document.querySelector('#paystack-trigger');
         const amountField = document.querySelector('#amountInKobo');
@@ -348,8 +351,8 @@ function openWhatsApp(messageType, roomTitle = '') {
         if (amountField) amountField.value = '';
         const selectionSummary = document.querySelector('#selected-room-summary');
         if (selectionSummary) {
-          selectionSummary.textContent = '';
-          selectionSummary.hidden = true;
+          selectionSummary.textContent = 'Live pricing is unavailable. Please reload room options or contact reception before paying.';
+          selectionSummary.hidden = false;
         }
         if (payButton) {
           payButton.disabled = true;
@@ -358,6 +361,7 @@ function openWhatsApp(messageType, roomTitle = '') {
         if (heroAvailability) heroAvailability.textContent = 'Call or WhatsApp for live availability';
         if (heroPrice) heroPrice.textContent = 'Live price temporarily unavailable';
         setRoomFeedStatus('Cannot load live room prices. Retry, or WhatsApp the hostel before paying.', true);
+        document.dispatchEvent(new CustomEvent('jch:rooms-unavailable'));
         console.warn('Live room sync failed; online payment safely disabled:', error, fallbackError);
       }
     }
@@ -661,7 +665,7 @@ document.addEventListener('DOMContentLoaded', function () {
       isValid = false;
     }
 
-    if (!email || !email.includes('@')) {
+    if (!email || !document.getElementById('email')?.validity.valid) {
       document.getElementById('error-email').textContent = 'Valid email is required';
       isValid = false;
     }
@@ -681,6 +685,7 @@ document.addEventListener('DOMContentLoaded', function () {
       isValid = false;
     }
 
+    if (!isValid) { const firstError = [...bookingForm.querySelectorAll('.error-message')].find(el => el.textContent); if (firstError) document.getElementById(firstError.id.replace('error-', ''))?.focus(); }
     return { isValid, fullName, email, phone, roomType, duration };
   }
 
@@ -719,8 +724,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (amountField) amountField.value = '';
       const selectedSummary = document.querySelector('#selected-room-summary');
       if (selectedSummary) {
-        selectedSummary.textContent = '';
-        selectedSummary.hidden = true;
+        selectedSummary.textContent = 'Live room information is loading. Your total will appear after you choose a room and period.';
+        selectedSummary.hidden = false;
       }
       payBtn.textContent = 'Loading live price…';
       payBtn.disabled = true;
@@ -740,17 +745,17 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedSummary.textContent = 'Selected: ' + roomCode + ' — ' + formatCurrency(amount) + ' for ' + durationLabel + '. Bed space is not held until booking is confirmed.';
         selectedSummary.hidden = false;
       } else {
-        selectedSummary.textContent = '';
-        selectedSummary.hidden = true;
+        selectedSummary.textContent = 'Choose a room and period to see your total.';
+        selectedSummary.hidden = false;
       }
     }
 
     // Update payment button with amount (your style enhanced)
     if (payBtn && amount > 0) {
-      payBtn.textContent = `Proceed to Payment - ${formatCurrency(amount)}`;
+      payBtn.textContent = `Continue to payment · ${formatCurrency(amount)}`;
       payBtn.disabled = false;
     } else {
-      payBtn.textContent = 'Proceed to Payment';
+      payBtn.textContent = 'Choose room & period first';
       payBtn.disabled = true;
     }
   }
@@ -897,13 +902,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const roomLabel = roomTypeInput?.selectedOptions?.[0]?.textContent?.trim() || roomType;
     const durationLabel = durationInput?.selectedOptions?.[0]?.textContent?.trim() || duration;
 
-    console.log('Form data:', { fullName, email, phone, roomType, duration, amount });
     console.log('Paystack available:', typeof PaystackPop !== 'undefined');
 
     if (!window.JCH_ROOM_FEED_READY) {
       alert('Live room price is temporarily unavailable. Please wait or contact us on WhatsApp before paying.');
       return;
     }
+
+    if (!validateBookingForm().isValid) return;
 
     if (![fullName, email, phone, roomType, duration].every(Boolean) || amount === 0) {
       alert('Please complete all booking fields correctly before payment.');
@@ -1035,3 +1041,23 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+// Accessible room filters operate on live rows without resetting the native booking picker.
+(function(){
+ function init(){
+  const type=document.getElementById('room-filter-type'),available=document.getElementById('room-filter-available'),reset=document.getElementById('room-filter-reset'),count=document.getElementById('room-filter-count');
+  if(!type||!available||!reset||!count)return;
+  function apply(){
+   const body=document.querySelector('.rooms-table tbody');if(!body)return;
+   body.querySelector('.room-filter-empty')?.remove();
+   const rows=[...body.querySelectorAll('tr[data-room-type]')];let shown=0;
+   rows.forEach(row=>{row.hidden=!!((type.value&&row.dataset.roomType!==type.value)||(available.checked&&row.dataset.available!=='true'));if(!row.hidden)shown++;});
+   count.textContent=window.JCH_ROOM_FEED_READY?`Showing ${shown} of ${rows.length} rooms`:'Live room information unavailable. Reload room options in booking or contact reception.';
+   if(window.JCH_ROOM_FEED_READY&&rows.length&&!shown){const row=document.createElement('tr');row.className='room-filter-empty';const cell=document.createElement('td');cell.colSpan=6;cell.textContent='No rooms match these filters. Reset filters or ask reception about other options.';row.appendChild(cell);body.appendChild(row);}
+  }
+  type.addEventListener('change',apply);available.addEventListener('change',apply);reset.addEventListener('click',()=>{type.value='';available.checked=false;apply();});
+  document.addEventListener('jch:rooms-updated',apply);document.addEventListener('jch:rooms-unavailable',apply);
+  if(window.JCH_ROOM_FEED_READY)apply();
+ }
+ document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+})();
