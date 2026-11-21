@@ -349,6 +349,7 @@ function openWhatsApp(messageType, roomTitle = '') {
           roomSelect.disabled = true;
         }
         if (amountField) amountField.value = '';
+        updateAmount();
         const selectionSummary = document.querySelector('#selected-room-summary');
         if (selectionSummary) {
           selectionSummary.textContent = 'Live pricing is unavailable. Please reload room options or contact reception before paying.';
@@ -650,8 +651,8 @@ document.addEventListener('DOMContentLoaded', function () {
       isValid = false;
     }
 
-    if (!phone) {
-      document.getElementById('error-phone').textContent = 'Phone number is required';
+    if (!phone || !/^\+?[\d\s().-]+$/.test(phone) || phone.replace(/\D/g, '').length < 7 || phone.replace(/\D/g, '').length > 15) {
+      document.getElementById('error-phone').textContent = 'Enter a valid phone number (7–15 digits)';
       isValid = false;
     }
 
@@ -752,7 +753,8 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     const whatsappUrl = `https://wa.me/233201349321?text=Hi%2C%20I%20just%20completed%20my%20payment%20for%20Jeffston%20Court%20Hostel.%20Reference%3A%20${encodeURIComponent(reference)}`;
 
-    // Create thank you modal
+    // Preserve the payment reference for reception without promising booking confirmation.
+    const returnFocus = document.activeElement;
     const modal = document.createElement('div');
     modal.style.cssText = `
       position: fixed;
@@ -767,21 +769,27 @@ document.addEventListener('DOMContentLoaded', function () {
       z-index: 10000;
     `;
 
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'payment-result-title');
     const content = document.createElement('div');
     content.style.cssText = `
       background: white;
-      padding: 2rem;
+      padding: 1.25rem;
       border-radius: 10px;
       max-width: 500px;
-      width: 90%;
+      width: calc(100% - 32px);
+      max-height: 85dvh;
+      overflow-y: auto;
+      overflow-wrap: anywhere;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     `;
 
     content.innerHTML = `
       <div style="color: #25d366; font-size: 4rem; margin-bottom: 1rem;">✅</div>
-      <h2 style="color: #2c3e50; margin-bottom: 1rem;">Payment Successful!</h2>
-      <p style="color: #7f8c8d; margin-bottom: 1rem;">Thank you for booking with Jeffston Court Hostel</p>
+      <h2 id="payment-result-title" style="color: #2c3e50; margin-bottom: 1rem;">Payment response received</h2>
+      <p style="color: #7f8c8d; margin-bottom: 1rem;">Keep your payment reference and confirm your booking with reception.</p>
       
       <div style="background: #f8f9fa; padding: 1rem; border-radius: 5px; margin: 1rem 0; text-align: left;">
         <h3 style="color: #2c3e50; margin-bottom: 0.5rem;">Booking Details:</h3>
@@ -794,22 +802,19 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
       
       <div style="background: #e8f5e8; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
-        <h4 style="color: #25d366; margin-bottom: 0.5rem;">What's Next?</h4>
+        <h4 style="color: #216c40; margin-bottom: 0.5rem;">What's Next?</h4>
         <p style="font-size: 0.9rem; color: #2c3e50;">
-          • We'll send a confirmation email within 24 hours<br>
-          • You'll receive your room assignment details<br>
-          • Contact us on WhatsApp for any questions
+          Save your reference and contact reception to confirm payment, room assignment and arrival arrangements. This payment response does not independently confirm your booking.
         </p>
       </div>
       
       <div style="margin-top: 1.5rem;">
-        <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
-                style="background: #25d366; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer; margin-right: 0.5rem;">
+        <button type="button" data-payment-close style="background: #216c40; color: white; border: none; min-height:44px; padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer; margin-right: 0.5rem;">
           Close
         </button>
         <a href="${escapeHTML(whatsappUrl)}" 
            target="_blank" rel="noopener noreferrer"
-           style="background: #128c7e; color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; display: inline-block;">
+           style="background: #216c40; color: white; min-height:44px; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; display: inline-block;">
           Contact on WhatsApp
         </a>
       </div>
@@ -818,12 +823,19 @@ document.addEventListener('DOMContentLoaded', function () {
     modal.appendChild(content);
     document.body.appendChild(modal);
 
-    // Auto-remove after 30 seconds
-    setTimeout(() => {
-      if (document.body.contains(modal)) {
-        modal.remove();
+    const closeButton = modal.querySelector('[data-payment-close]');
+    const closeResult = () => { modal.remove(); returnFocus?.focus(); };
+    closeButton.addEventListener('click', closeResult);
+    modal.addEventListener('keydown', event => {
+      if (event.key === 'Escape') { event.preventDefault(); closeResult(); }
+      if (event.key === 'Tab') {
+        const focusable = [...modal.querySelectorAll('button, a[href]')];
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
       }
-    }, 30000);
+    });
+    closeButton.focus();
   }
 
   function showErrorMessage(message) {
@@ -935,6 +947,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
         bookingForm.reset();
         if (amountField) amountField.value = '';
+        updateAmount();
       },
       onClose: function () {
         console.log('Payment window closed');
