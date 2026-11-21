@@ -38,8 +38,7 @@
   <!-- Paystack inline SDK - loaded asynchronously -->
   <script src="https://js.paystack.co/v1/inline.js" defer></script>
 
-  <script type="application/ld+json">
-{
+  <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -139,7 +138,7 @@
           "name": "Where is Jeffston Court Hostel?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Jeffston Court Hostel is in Adenta Court Complex, Greater Accra. Students can use our campus guides for University of Ghana Legon, UPSA and Academic City to plan their stay. Confirm your campus and transport needs with reception before booking."
+            "text": "Jeffston Court Hostel is at Adenta Court Complex, PR9Q+6CJ, Adenta Municipality, Greater Accra, Ghana. Use the location map on this website and confirm your campus route with reception before travelling."
           }
         },
         {
@@ -155,7 +154,7 @@
           "name": "How do I check room prices and free beds?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Check the live room table for current availability and listed semester prices, or request room information by email. Availability can change. Reception will confirm your room, agreed period and total price before booking."
+            "text": "Use the live room table for current bed availability and listed semester prices. The dated room-rate guide is a reference and does not confirm availability. Reception will confirm your room, agreed period and total price before booking."
           }
         },
         {
@@ -187,14 +186,61 @@
           "name": "How can I contact reception?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Call 0201349321, 0557527592 or 0302549680, or email jeffstoncourthostel@gmail.com for room and booking enquiries."
+            "text": "Call or WhatsApp 0201349321, or email jeffstoncourthostel@gmail.com for room and booking enquiries."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are payments refundable?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Payments are non-refundable. Confirm your chosen room, booking period, total price and included services with reception before paying."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a deposit required?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Contact reception on 0201349321 to confirm whether a deposit is required, the amount and the payment schedule before paying."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if I need to cancel or change my booking?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Contact reception on 0201349321 as soon as possible. Payments are non-refundable. Ask reception whether a booking change can be arranged; do not assume a change is confirmed until reception agrees."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in my room rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Facilities and included services vary by room. Confirm the utilities, Wi-Fi, air conditioning, laundry, transport arrangements and any additional charges with reception before paying."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I arrange a room inspection?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Call or WhatsApp 0201349321 to arrange an inspection and confirm the meeting time before travelling to the hostel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which website and contact details should I use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use https://jeffston-court-hostel.cent142003.chatgpt.site/ for current hostel information. Confirm any booking or payment instructions directly with reception on 0201349321."
           }
         }
       ]
     }
   ]
-}
-  </script>
+}</script>
 
   <script defer src="scripts.js"></script>
 <script defer src="/analytics.js"></script></head>
@@ -441,44 +487,29 @@
 
  <!-- ABOUT SECTION -->
 <section id="about" class="about-section" aria-labelledby="about-heading">
-  <div class="about-container" data-aos="fade-up">
-    <div class="about-text">
-      <p class="section-kicker">Life at Jeffston Court</p><h2 id="about-heading">More than a place to sleep.</h2>
-      <p>Make Adenta Court Complex your base for student life in Accra. Explore furnished rooms, shared spaces and the practical details that matter to your day.</p>
-
-      <p>Understanding the demands of student life, we aim to offer everything within arm's reach under one roof. For the 2026/2027 Academic Year, prices and remaining beds are checked against the hostel management system.</p>
-
-      <p><strong>Live availability:</strong> Room prices and available bed spaces in the room table are pulled from the hostel management system, so a new live booking reduces the public availability automatically.</p>
-
-      <p>Our comprehensive amenities include:</p>
-      <ul>
-         <li>Free Wi-Fi throughout the facility</li>
-         <li>Water and power support, including backup power equipment</li>
-         <li>Ask management about current utility arrangements and what your room rate includes</li>
-         <li>Confirm current transport routes and schedules before booking</li>
-         <li>Smart TVs, air conditioning and other room features vary by room</li>
-         <li>Check the specific room's facilities before reserving</li>
-         <li>Shared common areas and laundry facilities; confirm any service charges</li>
-         <li>On-site convenience shop and food unit</li>
-      </ul>
-
-      <p>Speak with reception about security arrangements, room facilities and the services included in your rate before reserving.</p>
-
-      <p>Discover modern student living at Jeffston Court. Here, you can live better, learn focused, and move freely.</p>
-
-      <!-- Current hostel video rendered with Remotion -->
-      <div class="video-container">
-        <video
+  <div class="about-story-grid">
+    <div class="about-story">
+      <p class="section-kicker">Life at Jeffston Court</p>
+      <h2 id="about-heading">A place for your student life.</h2>
+      <p class="about-lead">Make Adenta Court Complex your base in Greater Accra, with furnished shared rooms, study desks and spaces to spend time together.</p>
+      <dl class="about-highlights">
+        <div><dt>Space to focus</dt><dd>Beds, desks and storage for your day-to-day student routine. Compare room types to find your fit.</dd></div>
+        <div><dt>Room to connect</dt><dd>A shared lounge and kitchen give you space beyond your room. Explore the hostel facilities before deciding.</dd></div>
+        <div><dt>Plan your day</dt><dd>Confirm your campus journey, utility arrangements and included services with reception. Room features and any extra charges vary.</dd></div>
+      </dl>
+      <div class="about-actions"><a class="btn btn-primary" href="#rooms">Compare rooms</a><a class="btn btn-outline" href="https://wa.me/233201349321?text=Hello%2C%20can%20I%20arrange%20a%20room%20inspection%3F" target="_blank" rel="noopener noreferrer">Arrange a viewing</a></div>
+    </div>
+    <figure class="about-tour">
+      <div class="video-container"><video
           controls
           preload="metadata"
           poster="Assets/videos/jeffston-court-hostel-poster.png"
           aria-label="Video tour of Jeffston Court Hostel rooms and facilities">
           <source src="Assets/videos/jeffston-court-hostel-2026.mp4" type="video/mp4">
           Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
-    <div class="about-image" aria-hidden="true"></div>
+        </video></div>
+      <figcaption><strong>Take a look around Jeffston Court</strong><span>A look at the hostel's rooms and shared spaces. Features vary by room; confirm your chosen room with reception.</span></figcaption>
+    </figure>
   </div>
 </section>
     <section id="campus-access" class="campus-access-section" aria-labelledby="campus-access-heading">
@@ -557,20 +588,26 @@
 <section id="faq" class="faq-section" aria-labelledby="faq-heading">
   <div class="section-intro" data-aos="fade-up">
     <p class="section-kicker">Student questions</p>
-    <h2 id="faq-heading">FAQs about Jeffston Court Hostel</h2>
-    <p>Quick answers for students and parents comparing rooms, campus access, and booking options.</p>
+    <h2 id="faq-heading">Clear answers before you choose.</h2>
+    <p>Room options, payments and everyday life — find the details that matter to your decision. Open any question to read the answer.</p>
   </div>
 
   <div class="faq-list">
-    <details open><summary>Where is Jeffston Court Hostel?</summary><p>Jeffston Court Hostel is in Adenta Court Complex, Greater Accra. Students can use our campus guides for University of Ghana Legon, UPSA and Academic City to plan their stay. Confirm your campus and transport needs with reception before booking.</p></details>
-    <details><summary>Can I book for a semester or a full academic year?</summary><p>You can request a semester or a full academic year. Reception will confirm your agreed academic period, total charge and what is included before booking. A semester payment does not automatically cover the full academic year.</p></details>
-    <details><summary>How do I check room prices and free beds?</summary><p>Check the live room table for current availability and listed semester prices, or request room information by email. Availability can change. Reception will confirm your room, agreed period and total price before booking.</p></details>
-    <details><summary>Does requesting room information reserve a bed?</summary><p>No. An email enquiry does not reserve a bed or create a booking. Reception will help you confirm availability and complete the booking process.</p></details>
-    <details><summary>How do I plan transport to campus?</summary><p>Tell reception which campus you attend and your lecture timetable. Ask about the current shuttle schedule, pickup points and any charges. Journey times vary with the day and traffic; confirm your journey before relying on a departure time.</p></details>
-    <details><summary>What should I do when my exams finish?</summary><p>Let reception know when your exams for the booked academic period finish so staff can agree your checkout arrangements. If you have booked the full academic year, confirm your between-semester arrangements with reception.</p></details>
-    <details><summary>How can I contact reception?</summary><p>Call 0201349321, 0557527592 or 0302549680, or email jeffstoncourthostel@gmail.com for room and booking enquiries.</p></details>
-  </div>
-  <p><a href="#room-information">Get room information by email</a> · <a href="tel:+233201349321">Call reception</a></p>
+<section class="faq-group" aria-labelledby="faq-group-0"><h3 id="faq-group-0">Rooms &amp; booking</h3><details><summary>How do I check room prices and free beds?</summary><p>Use the live room table for current bed availability and listed semester prices. The dated room-rate guide is a reference and does not confirm availability. Reception will confirm your room, agreed period and total price before booking.</p></details>
+<details><summary>Can I book for a semester or a full academic year?</summary><p>You can request a semester or a full academic year. Reception will confirm your agreed academic period, total charge and what is included before booking. A semester payment does not automatically cover the full academic year.</p></details>
+<details><summary>Does requesting room information reserve a bed?</summary><p>No. An email enquiry does not reserve a bed or create a booking. Reception will help you confirm availability and complete the booking process.</p></details>
+<details><summary>What is included in my room rate?</summary><p>Facilities and included services vary by room. Confirm the utilities, Wi-Fi, air conditioning, laundry, transport arrangements and any additional charges with reception before paying.</p></details></section>
+<section class="faq-group" aria-labelledby="faq-group-1"><h3 id="faq-group-1">Payments &amp; changes</h3><details><summary>Are payments refundable?</summary><p>No. Payments are non-refundable. Confirm your chosen room, booking period, total price and included services with reception before paying.</p></details>
+<details><summary>Is a deposit required?</summary><p>Contact reception on 0201349321 to confirm whether a deposit is required, the amount and the payment schedule before paying.</p></details>
+<details><summary>What if I need to cancel or change my booking?</summary><p>Contact reception on 0201349321 as soon as possible. Payments are non-refundable. Ask reception whether a booking change can be arranged; do not assume a change is confirmed until reception agrees.</p></details></section>
+<section class="faq-group" aria-labelledby="faq-group-2"><h3 id="faq-group-2">Life, location &amp; visits</h3><details><summary>Where is Jeffston Court Hostel?</summary><p>Jeffston Court Hostel is at Adenta Court Complex, PR9Q+6CJ, Adenta Municipality, Greater Accra, Ghana. Use the location map on this website and confirm your campus route with reception before travelling.</p></details>
+<details><summary>How do I plan transport to campus?</summary><p>Tell reception which campus you attend and your lecture timetable. Ask about the current shuttle schedule, pickup points and any charges. Journey times vary with the day and traffic; confirm your journey before relying on a departure time.</p></details>
+<details><summary>What should I do when my exams finish?</summary><p>Let reception know when your exams for the booked academic period finish so staff can agree your checkout arrangements. If you have booked the full academic year, confirm your between-semester arrangements with reception.</p></details>
+<details><summary>Can I arrange a room inspection?</summary><p>Call or WhatsApp 0201349321 to arrange an inspection and confirm the meeting time before travelling to the hostel.</p></details>
+<details><summary>How can I contact reception?</summary><p>Call or WhatsApp 0201349321, or email jeffstoncourthostel@gmail.com for room and booking enquiries.</p></details>
+<details><summary>Which website and contact details should I use?</summary><p>Use https://jeffston-court-hostel.cent142003.chatgpt.site/ for current hostel information. Confirm any booking or payment instructions directly with reception on 0201349321.</p></details></section>
+</div>
+  <aside class="faq-help"><div><h3>Still have a question?</h3><p>Reception can help you compare rooms and confirm the details before you book.</p></div><a class="btn btn-outline" href="#contact">Contact reception</a></aside>
 </section>
 
 <!-- BOOKING SECTION -->

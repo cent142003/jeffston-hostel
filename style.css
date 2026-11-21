@@ -2318,3 +2318,38 @@ textarea:focus {
 .contact-map-disclosure{padding:0 24px}.contact-map-disclosure summary{cursor:pointer;font-size:16px;font-weight:650;padding:22px 0;min-height:52px;line-height:1.5;color:#142536}.contact-map-disclosure>p{font-size:15px;color:#536170;line-height:1.7;padding:0 0 20px}.home-redesign .contact-map-disclosure iframe{position:static;width:100%;height:340px;display:block;border:0;border-radius:8px;margin-bottom:24px}
 @media(max-width:900px){.facilities-confirmation{flex-direction:column;align-items:stretch}.facilities-confirmation .btn{justify-content:center;align-self:flex-start}.home-redesign .contact-container{grid-template-columns:minmax(0,1fr);gap:24px}.home-redesign .map-container{grid-column:1}}
 @media(max-width:768px){.home-redesign #facilities .home-facility-photo{height:270px}.home-redesign #facilities .facility-box h3{margin:22px 22px 12px;font-size:22px}.home-redesign #facilities .facility-box p{margin:0 22px}.facilities-confirmation{padding:22px;gap:20px;margin-top:22px}.facilities-confirmation .btn{width:100%;align-self:stretch;font-size:16px}.home-redesign #contact{padding-top:44px;padding-bottom:120px}.home-redesign .contact-options,.home-redesign .contact-form{padding:22px}.home-redesign .contact-form legend{font-size:22px}.home-redesign .contact-options h3{font-size:22px}.contact-directory dd{font-size:16px}.contact-map-disclosure{padding:0 20px}.home-redesign .contact-map-disclosure iframe{height:300px}.home-redesign .contact-alternative a{display:inline-block;padding:8px 0;min-height:44px}.home-redesign .contact-form label{margin-top:18px}}
+
+/* About and FAQ: focused story, native disclosures and comfortable phone targets. */
+.home-redesign .about-story-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:start}
+.home-redesign .about-lead{font-size:18px;line-height:1.7;color:#536170}
+.home-redesign .about-highlights{display:grid;gap:22px;margin:28px 0}
+.home-redesign .about-highlights div{padding-left:18px;border-left:3px solid #386447}
+.home-redesign .about-highlights dt{font-weight:700;color:#142536;font-size:18px;margin-bottom:6px}
+.home-redesign .about-highlights dd{margin:0;color:#536170;font-size:16px;line-height:1.7}
+.home-redesign .about-actions{display:flex;flex-wrap:wrap;gap:12px}
+.home-redesign .about-actions .btn{min-height:50px;display:inline-flex;align-items:center;justify-content:center}
+.home-redesign .about-tour{margin:0;overflow:hidden;border:1px solid #dee6ee;border-radius:12px;background:#fff}
+.home-redesign .about-tour .video-container{margin:0;padding:0;background:#142536}
+.home-redesign .about-tour video{display:block;width:100%;height:auto;max-height:540px;object-fit:contain}
+.home-redesign .about-tour figcaption{padding:24px}
+.home-redesign .about-tour figcaption strong{display:block;color:#142536;font-size:20px;line-height:1.4;margin-bottom:8px}
+.home-redesign .about-tour figcaption span{color:#536170;font-size:16px;line-height:1.7}
+.home-redesign .faq-list{display:grid;grid-template-columns:1fr;gap:32px;max-width:900px;margin:32px auto}
+.home-redesign .faq-group h3{font-size:21px;margin:0 0 16px;color:#142536}
+.home-redesign .faq-list details{margin:0 0 12px;overflow:hidden}
+.home-redesign .faq-list summary{display:flex;align-items:center;justify-content:space-between;gap:18px;list-style:none;min-height:64px;padding:18px 22px;line-height:1.5;cursor:pointer;font-weight:600}
+.home-redesign .faq-list summary::-webkit-details-marker{display:none}
+.home-redesign .faq-list summary::after{content:'+';flex:0 0 24px;text-align:center;font-size:24px;font-weight:400}
+.home-redesign .faq-list details[open] summary::after{content:'−'}
+.home-redesign .faq-list details[open] summary{border-bottom:1px solid #dee6ee}
+.home-redesign .faq-list details p{padding:18px 22px;margin:0;line-height:1.75}
+.home-redesign .faq-help{max-width:900px;margin:32px auto 0;padding:24px;background:#edf2f6;border-radius:12px;display:flex;gap:24px;align-items:center;justify-content:space-between}
+.home-redesign .faq-help h3{margin:0 0 8px;font-size:21px}
+.home-redesign .faq-help p{margin:0;color:#536170;font-size:16px;line-height:1.7}
+.home-redesign .faq-help .btn{flex-shrink:0;min-height:50px;display:inline-flex;align-items:center}
+@media(max-width:900px){.home-redesign .about-story-grid{grid-template-columns:1fr;gap:28px}}
+@media(max-width:600px){.home-redesign .about-actions{flex-direction:column}.home-redesign .about-tour figcaption{padding:20px}.home-redesign .faq-help{flex-direction:column;align-items:stretch;padding:20px}.home-redesign .faq-help .btn{justify-content:center}.home-redesign .faq-list summary{padding:18px 16px}.home-redesign .faq-list details p{padding:16px}.home-redesign .faq-group h3{font-size:20px}}
+.home-redesign .faq-list details{padding:0}
+.home-redesign .about-story h2{text-align:left}
+.home-redesign .about-tour .video-container{height:auto;aspect-ratio:16/9}
+.home-redesign .about-tour video{position:static;height:100%;max-height:none}
