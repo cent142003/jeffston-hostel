@@ -91,9 +91,9 @@ function generateRoomMessage(roomType, roomTitle) {
   const messages = {
     'room-budget': `Hi! I'm interested in the ${roomTitle} at Jeffston Court Hostel. Can you provide more details about availability, pricing, and amenities?`,
     'room-premium': `Hello! I'd like to know more about the ${roomTitle} at Jeffston Court Hostel. What are the current rates and availability?`,
-    'room-standard': `Hi there! I'm interested in booking the ${roomTitle} at Jeffston Court Hostel. Can you help me with the booking process?`,
+    'room-standard': `Hi, I'd like to arrange a viewing for the ${roomTitle} at Jeffston Court Hostel. Please let me know when I can come. I understand payment is at the property after viewing.`,
     'general': 'Hello! I\'m interested in accommodation at Jeffston Court Hostel. Can you please provide more information about your rooms and services?',
-    'booking-help': 'Hi! I need assistance with booking a room at Jeffston Court Hostel. Can you help me complete my reservation?'
+    'booking-help': 'Hi, I would like to view a room at Jeffston Court Hostel before paying. Please help me arrange a visit.'
   };
   
   const message = messages[roomType] || messages['general'];
@@ -185,7 +185,7 @@ function openWhatsApp(messageType, roomTitle = '') {
   }
 
   function waitlistUrl(roomCode) {
-    const text = `Hi, I'd like to join the waitlist for Room ${roomCode} at Jeffston Court Hostel.`;
+    const text = `Hi, I'd like to join the waitlist for Room ${roomCode} at Jeffston Court Hostel. I understand payment is only at the property after a viewing.`;
     return `https://wa.me/233201349321?text=${encodeURIComponent(text)}`;
   }
 
@@ -224,7 +224,7 @@ function openWhatsApp(messageType, roomTitle = '') {
       const filled = room.capacity ? Math.min(100, Math.round((room.occupied / room.capacity) * 100)) : 0;
       const action = isFull
         ? `<a class="btn room-waitlist-btn" href="${waitlistUrl(room.code)}" target="_blank" rel="noopener noreferrer">Waitlist</a>`
-        : `<button type="button" class="btn room-select-btn" data-room-value="${roomValue(room.code)}">Book ${room.availableBeds} space${room.availableBeds === 1 ? '' : 's'}</button>`;
+        : `<button type="button" class="btn room-select-btn" data-room-value="${roomValue(room.code)}">Arrange a Viewing</button>`;
 
       return `
         <tr>
@@ -335,8 +335,8 @@ function openWhatsApp(messageType, roomTitle = '') {
         window.JCH_ROOM_FEED_READY = false;
         window.JCH_ROOM_PRICING = {};
         const roomSelect = document.querySelector('#roomType');
-        const payButton = document.querySelector('#paystack-trigger');
-        const amountField = document.querySelector('#amountInKobo');
+        const viewingButton = document.querySelector('#viewing-trigger');
+        const amountField = document.querySelector('#quotedAmountPesewas');
         const heroAvailability = document.querySelector('#hero-live-availability');
         const heroPrice = document.querySelector('#hero-live-price');
         if (roomSelect) {
@@ -351,14 +351,14 @@ function openWhatsApp(messageType, roomTitle = '') {
           selectionSummary.textContent = '';
           selectionSummary.hidden = true;
         }
-        if (payButton) {
-          payButton.disabled = true;
-          payButton.textContent = 'Live price unavailable — contact us';
+        if (viewingButton) {
+          viewingButton.disabled = true;
+          viewingButton.textContent = 'Live availability unavailable — contact reception';
         }
         if (heroAvailability) heroAvailability.textContent = 'Call or WhatsApp for live availability';
         if (heroPrice) heroPrice.textContent = 'Live price temporarily unavailable';
-        setRoomFeedStatus('Cannot load live room prices. Retry, or WhatsApp the hostel before paying.', true);
-        console.warn('Live room sync failed; online payment safely disabled:', error, fallbackError);
+        setRoomFeedStatus('Cannot load live room prices. Retry or contact reception to arrange a viewing. Never pay online.', true);
+        console.warn('Live room sync failed; viewing enquiry disabled:', error, fallbackError);
       }
     }
   }
@@ -631,58 +631,16 @@ if (menuBtn && menuLinks) {
 }
 
 // ============================================================================
-// 2. Enhanced Paystack Integration - Your Custom Implementation Improved
+// 2. Viewing enquiries — all payments at the property after an inspection
 // ============================================================================
 document.addEventListener('DOMContentLoaded', function () {
   const bookingForm = document.querySelector('#booking-form');
-  const payBtn = document.querySelector('#paystack-trigger');
+  const viewingBtn = document.querySelector('#viewing-trigger');
   const durationInput = document.querySelector('#duration');
   const roomTypeInput = document.querySelector('#roomType');
-  const amountField = document.querySelector('#amountInKobo');
-
-  // Updated pricing structure (amounts in pesewas for Paystack)
+  const amountField = document.querySelector('#quotedAmountPesewas');
+  const selectedSummary = document.querySelector('#selected-room-summary');
   let pricing = window.JCH_ROOM_PRICING || {};
-
-  // Enhanced validation function
-  function validateBookingForm() {
-    const fullName = document.getElementById('fullName')?.value?.trim();
-    const email = document.getElementById('email')?.value?.trim();
-    const phone = document.getElementById('phone')?.value?.trim();
-    const roomType = document.getElementById('roomType')?.value;
-    const duration = document.getElementById('duration')?.value;
-
-    // Clear previous error messages
-    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-
-    let isValid = true;
-
-    if (!fullName) {
-      document.getElementById('error-fullName').textContent = 'Full name is required';
-      isValid = false;
-    }
-
-    if (!email || !email.includes('@')) {
-      document.getElementById('error-email').textContent = 'Valid email is required';
-      isValid = false;
-    }
-
-    if (!phone) {
-      document.getElementById('error-phone').textContent = 'Phone number is required';
-      isValid = false;
-    }
-
-    if (!roomType) {
-      document.getElementById('error-roomType').textContent = 'Please select a room';
-      isValid = false;
-    }
-
-    if (!duration) {
-      document.getElementById('error-duration').textContent = 'Please select duration';
-      isValid = false;
-    }
-
-    return { isValid, fullName, email, phone, roomType, duration };
-  }
 
   function calculateAmount(roomType, duration) {
     return pricing[roomType]?.[duration] || 0;
@@ -696,48 +654,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }).format(amount / 100);
   }
 
-  function escapeHTML(value) {
-    const htmlEscapes = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;'
-    };
-
-    return String(value ?? '').replace(/[&<>"']/g, char => htmlEscapes[char]);
-  }
-
-  function formatSelectionLabel(value) {
-    return String(value ?? '').replace(/-/g, ' ');
-  }
-
   function updateAmount() {
-    if (!payBtn) return;
-
-    if (!window.JCH_ROOM_FEED_READY) {
-      if (amountField) amountField.value = '';
-      const selectedSummary = document.querySelector('#selected-room-summary');
-      if (selectedSummary) {
-        selectedSummary.textContent = '';
-        selectedSummary.hidden = true;
-      }
-      payBtn.textContent = 'Loading live price…';
-      payBtn.disabled = true;
-      return;
-    }
-
+    if (!viewingBtn) return;
     const roomType = roomTypeInput?.value;
     const duration = durationInput?.value;
-    const amount = calculateAmount(roomType, duration);
-    if (amountField) amountField.value = amount;
+    const selectedOption = roomTypeInput?.selectedOptions?.[0];
+    const amount = window.JCH_ROOM_FEED_READY && selectedOption && !selectedOption.disabled
+      ? calculateAmount(roomType, duration)
+      : 0;
 
-    const selectedSummary = document.querySelector('#selected-room-summary');
+    if (amountField) amountField.value = amount || '';
     if (selectedSummary) {
-      if (amount > 0 && roomTypeInput?.selectedOptions?.[0]) {
-        const roomCode = roomTypeInput.selectedOptions[0].textContent.split(' - ')[0];
-        const durationLabel = durationInput?.selectedOptions?.[0]?.textContent || 'selected duration';
-        selectedSummary.textContent = 'Selected: ' + roomCode + ' — ' + formatCurrency(amount) + ' for ' + durationLabel + '. Bed space is not held until booking is confirmed.';
+      if (amount > 0) {
+        const roomCode = selectedOption.textContent.split(' - ')[0];
+        const period = durationInput?.selectedOptions?.[0]?.textContent || 'selected period';
+        selectedSummary.textContent = 'Selected: ' + roomCode + ' — ' +
+          formatCurrency(amount) + ' for ' + period +
+          '. Price and availability must be confirmed by reception. View the room before paying at the hostel.';
         selectedSummary.hidden = false;
       } else {
         selectedSummary.textContent = '';
@@ -745,130 +678,21 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
-    // Update payment button with amount (your style enhanced)
-    if (payBtn && amount > 0) {
-      payBtn.textContent = `Proceed to Payment - ${formatCurrency(amount)}`;
-      payBtn.disabled = false;
-    } else {
-      payBtn.textContent = 'Proceed to Payment';
-      payBtn.disabled = true;
-    }
-  }
-
-  function showThankYouMessage(response, bookingDetails) {
-    const reference = String(response.reference ?? '');
-    const safeDetails = {
-      fullName: escapeHTML(bookingDetails.fullName),
-      email: escapeHTML(bookingDetails.email),
-      room: escapeHTML(bookingDetails.roomLabel || formatSelectionLabel(bookingDetails.roomType)),
-      duration: escapeHTML(bookingDetails.durationLabel || formatSelectionLabel(bookingDetails.duration)),
-      amount: escapeHTML(formatCurrency(bookingDetails.amount)),
-      reference: escapeHTML(reference)
-    };
-    const whatsappUrl = `https://wa.me/233201349321?text=Hi%2C%20I%20just%20completed%20my%20payment%20for%20Jeffston%20Court%20Hostel.%20Reference%3A%20${encodeURIComponent(reference)}`;
-
-    // Create thank you modal
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-    `;
-
-    const content = document.createElement('div');
-    content.style.cssText = `
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      max-width: 500px;
-      width: 90%;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    `;
-
-    content.innerHTML = `
-      <div style="color: #25d366; font-size: 4rem; margin-bottom: 1rem;">✅</div>
-      <h2 style="color: #2c3e50; margin-bottom: 1rem;">Payment Successful!</h2>
-      <p style="color: #7f8c8d; margin-bottom: 1rem;">Thank you for booking with Jeffston Court Hostel</p>
-      
-      <div style="background: #f8f9fa; padding: 1rem; border-radius: 5px; margin: 1rem 0; text-align: left;">
-        <h3 style="color: #2c3e50; margin-bottom: 0.5rem;">Booking Details:</h3>
-        <p><strong>Name:</strong> ${safeDetails.fullName}</p>
-        <p><strong>Email:</strong> ${safeDetails.email}</p>
-        <p><strong>Room:</strong> ${safeDetails.room}</p>
-        <p><strong>Duration:</strong> ${safeDetails.duration}</p>
-        <p><strong>Amount:</strong> ${safeDetails.amount}</p>
-        <p><strong>Reference:</strong> ${safeDetails.reference}</p>
-      </div>
-      
-      <div style="background: #e8f5e8; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
-        <h4 style="color: #25d366; margin-bottom: 0.5rem;">What's Next?</h4>
-        <p style="font-size: 0.9rem; color: #2c3e50;">
-          • We'll send a confirmation email within 24 hours<br>
-          • You'll receive your room assignment details<br>
-          • Contact us on WhatsApp for any questions
-        </p>
-      </div>
-      
-      <div style="margin-top: 1.5rem;">
-        <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
-                style="background: #25d366; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer; margin-right: 0.5rem;">
-          Close
-        </button>
-        <a href="${escapeHTML(whatsappUrl)}" 
-           target="_blank" rel="noopener noreferrer"
-           style="background: #128c7e; color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; display: inline-block;">
-          Contact on WhatsApp
-        </a>
-      </div>
-    `;
-
-    modal.appendChild(content);
-    document.body.appendChild(modal);
-
-    // Auto-remove after 30 seconds
-    setTimeout(() => {
-      if (document.body.contains(modal)) {
-        modal.remove();
-      }
-    }, 30000);
-  }
-
-  function showErrorMessage(message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.style.cssText = `
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: #dc3545;
-      color: white;
-      padding: 1rem;
-      border-radius: 5px;
-      z-index: 10000;
-      max-width: 300px;
-    `;
-    errorDiv.textContent = message;
-    document.body.appendChild(errorDiv);
-
-    setTimeout(() => errorDiv.remove(), 5000);
+    viewingBtn.disabled = amount <= 0;
+    viewingBtn.textContent = window.JCH_ROOM_FEED_READY
+      ? 'Arrange a Viewing on WhatsApp'
+      : 'Live availability unavailable — contact reception';
   }
 
   function selectRoom(roomValue) {
     if (!roomTypeInput) return;
-
     roomTypeInput.value = roomValue;
     roomTypeInput.dispatchEvent(new Event('change', { bubbles: true }));
     document.querySelector('#booking')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     durationInput?.focus();
   }
 
+  // Preserve the live room selection and refresh behavior. No checkout is created.
   document.addEventListener('click', event => {
     const button = event.target.closest('[data-room-value]');
     if (!button) return;
@@ -876,91 +700,31 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.addEventListener('jch:rooms-updated', () => {
-    pricing = window.JCH_ROOM_PRICING || pricing;
+    pricing = window.JCH_ROOM_PRICING || {};
     updateAmount();
   });
-
-  // Your original event listeners
   roomTypeInput?.addEventListener('change', updateAmount);
   durationInput?.addEventListener('change', updateAmount);
+  bookingForm?.addEventListener('submit', event => event.preventDefault());
 
-  payBtn?.addEventListener('click', () => {
-    console.log('Payment button clicked!');
-    
-    const formData = new FormData(bookingForm);
-    const fullName = formData.get('fullName');
-    const email = formData.get('email');
-    const phone = formData.get('phone');
-    const roomType = formData.get('roomType');
-    const duration = formData.get('duration');
-    const amount = calculateAmount(roomType, duration);
-    const roomLabel = roomTypeInput?.selectedOptions?.[0]?.textContent?.trim() || roomType;
-    const durationLabel = durationInput?.selectedOptions?.[0]?.textContent?.trim() || duration;
-
-    console.log('Form data:', { fullName, email, phone, roomType, duration, amount });
-    console.log('Paystack available:', typeof PaystackPop !== 'undefined');
-
-    if (!window.JCH_ROOM_FEED_READY) {
-      alert('Live room price is temporarily unavailable. Please wait or contact us on WhatsApp before paying.');
+  viewingBtn?.addEventListener('click', () => {
+    // Fail closed: stale, sold-out and unselected rooms cannot produce a quote.
+    if (!window.JCH_ROOM_FEED_READY || !roomTypeInput?.value || !durationInput?.value ||
+        roomTypeInput.selectedOptions?.[0]?.disabled ||
+        calculateAmount(roomTypeInput.value, durationInput.value) <= 0) {
+      updateAmount();
       return;
     }
-
-    if (![fullName, email, phone, roomType, duration].every(Boolean) || amount === 0) {
-      alert('Please complete all booking fields correctly before payment.');
-      console.log('Validation failed');
-      return;
-    }
-
-    if (typeof PaystackPop === 'undefined') {
-      alert('Payment system is loading. Please try again in a moment.');
-      console.error('PaystackPop is not available');
-      return;
-    }
-
-    console.log('Setting up Paystack payment...');
-
-    const handler = PaystackPop.setup({
-      key: 'pk_live_9302b8356f0551937a496101908e2eb772328962',
-      email,
-      amount,
-      currency: 'GHS',
-      metadata: {
-        custom_fields: [
-          { display_name: 'Full Name', value: fullName },
-          { display_name: 'Phone Number', value: phone },
-          { display_name: 'Room', value: roomLabel },
-          { display_name: 'Duration', value: durationLabel }
-        ]
-      },
-      callback: function (response) {
-        if(window.jchTrack)window.jchTrack('Payment popup completed');
-        // Show professional thank you message
-        showThankYouMessage(response, {
-          fullName,
-          email,
-          phone,
-          roomType,
-          roomLabel,
-          duration,
-          durationLabel,
-          amount,
-          reference: response.reference
-        });
-        
-        bookingForm.reset();
-        if (amountField) amountField.value = '';
-      },
-      onClose: function () {
-        console.log('Payment window closed');
-        alert('Payment window closed.');
-      }
-    });
-
-    console.log('Opening Paystack iframe...');
-    handler.openIframe();
+    const roomCode = roomTypeInput.selectedOptions[0].textContent.split(' - ')[0];
+    const period = durationInput.selectedOptions[0]?.textContent || 'selected period';
+    const message = 'Hi, I would like to arrange a viewing for Room ' + roomCode +
+      ' at Jeffston Court Hostel for ' + period +
+      '. Please let me know when I can come. I understand all payments are made at the hostel after viewing the room, not online.';
+    const url = 'https://wa.me/233201349321?text=' + encodeURIComponent(message);
+    if (window.jchTrack) window.jchTrack('Viewing enquiry opened');
+    window.open(url, '_blank', 'noopener,noreferrer');
   });
 
-  // Initialize amount display on page load
   updateAmount();
 });
 
