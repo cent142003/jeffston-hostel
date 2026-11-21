@@ -2180,3 +2180,77 @@ textarea:focus {
 /* Optional room information request, separate from booking. */
 #room-information label{display:block;margin:16px 0 6px}#room-information input[type=email]{width:100%;padding:12px;border:1px solid #789399;border-radius:8px;font:inherit}#room-information .consent{display:flex;align-items:flex-start;gap:12px}#room-information .consent input{min-width:20px;min-height:20px;margin-top:5px}#room-information .trap{display:none}#room-information button{padding:14px 22px;background:#153846;color:white;border:0;border-radius:8px;font:inherit;cursor:pointer}#room-information button:disabled{opacity:.6}#room-information .note{font-size:14px}#room-information #jch-info-status{margin-top:12px}
 #room-information{scroll-margin-top:100px}#room-information .consent input{width:20px;flex:0 0 20px;padding:0}#room-information .consent span{flex:1;min-width:0}#room-information .consent{justify-content:flex-start;text-align:left}#room-information a{color:#18576b;text-decoration:underline}
+
+/* Stitch: Jeffston Court Residence, reviewed for truthful student enquiries. */
+.home-redesign {--green:#216c40;--green-light:#216c40;--purple:#142536;--pink:#216c40;--gray-11:#f7f9fc;--logo-gradient:none;background:#f7f9fc;color:#142536;font-size:16px;line-height:1.65}
+.home-redesign :is(h1,h2){font-family:Georgia,'Times New Roman',serif;font-weight:400;letter-spacing:-.035em}
+.home-redesign h2{font-size:clamp(2rem,3.6vw,3.1rem);color:#142536;line-height:1.14}
+.home-redesign h3{color:#142536;font-size:1.2rem;line-height:1.35}
+.home-redesign :is(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #216c40;outline-offset:4px}
+.home-redesign [data-aos]{opacity:1!important;transform:none!important;transition:none!important}
+.home-redesign .navbar{background:#fff;border-bottom:1px solid #e1e7ed;box-shadow:none}
+.home-redesign .navbar-inner{max-width:1240px;padding:18px 32px}
+.home-redesign .logo{gap:10px;flex-shrink:0;color:#142536}
+.home-redesign .logo img{width:42px;height:42px;object-fit:cover;border-radius:6px}
+.home-redesign .logo-text{font:500 22px/1.2 Georgia,serif;color:#142536;background:none;-webkit-text-fill-color:currentColor}
+.home-redesign .logo-text small{display:block;font:600 10px/1.6 'Segoe UI',sans-serif;letter-spacing:.1em;margin-top:4px}
+.home-redesign .nav-links a{color:#263747;font-size:14px;font-weight:600;background:none}
+.home-redesign .nav-links .nav-book{background:#142536;color:white;padding:12px 17px;border-radius:6px}
+.home-redesign .hero{min-height:0;max-width:1240px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;padding:64px 32px 56px;background:transparent;color:#142536;overflow:visible}
+.home-redesign .hero::before,.home-redesign .hero::after{display:none}
+.home-redesign .hero-content{width:auto;max-width:none;margin:0}
+.home-redesign .hero h1{font-size:clamp(2.8rem,4.6vw,4.4rem);line-height:1.08;color:#142536;margin:20px 0 24px;max-width:none}
+.home-redesign .hero h1 em{font-weight:400;color:#216c40}
+.home-redesign .hero p{color:#536170;font-size:17px;margin:0 0 24px;max-width:510px}
+.home-redesign .hero .hero-subtitle{font:650 13px/1.6 'Segoe UI',sans-serif;color:#216c40;letter-spacing:.055em;margin:0;text-transform:uppercase}
+.home-redesign .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 20px}
+.home-redesign .btn{font-size:15px;font-weight:650;line-height:1.4;border-radius:6px;padding:15px 21px;box-shadow:none;transform:none}
+.home-redesign .btn-primary{background:#142536;color:#fff;border:1px solid #142536}
+.home-redesign .btn-primary:hover{background:#263c50;color:#fff;transform:none;box-shadow:none}
+.home-redesign .btn-outline{background:white;border:1px solid #bbc8c3;color:#216c40}
+.home-redesign .hero .hero-help{font-size:14px}.home-redesign .hero-help a{text-decoration:underline;text-underline-offset:3px;color:#142536}
+.home-features{list-style:none;display:flex;flex-wrap:wrap;gap:10px 20px;padding:20px 0 0!important;border-top:1px solid #dde4eb;font-size:14px;color:#44515e}
+.home-features li{margin:0}.home-features li::before{content:'✓';margin-right:7px;color:#216c40}
+.home-hero-photo{margin:0;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 12px 30px #1425360d;position:relative}
+.home-hero-photo picture{display:block}.home-hero-photo img{width:100%;height:410px;object-fit:cover;object-position:center 48%}
+.home-hero-photo figcaption{padding:20px 24px}.home-hero-photo strong{font:400 25px/1.3 Georgia,serif;display:block}.home-hero-photo span{display:block;font-size:14px;color:#62707b;margin-top:5px}
+.home-live-strip{background:#eaf0f7;border-block:1px solid #dce5ef;padding:18px max(32px,calc((100vw - 1176px)/2));display:flex;gap:16px 30px;justify-content:space-between;align-items:center;font-size:14px;font-weight:600}
+.home-live-strip>div{display:flex;flex-wrap:wrap;gap:12px 20px}.home-live-strip a{color:#216c40;text-decoration:underline;text-underline-offset:3px}
+.home-redesign :is(.rooms-section,.about-section,.campus-access-section,.facilities-section,.faq-section,.booking-section,.contact-section,.home-steps){max-width:1240px;margin:0 auto;padding:72px 32px;background:transparent;scroll-margin-top:105px}
+.home-redesign .section-kicker{color:#216c40;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;margin-bottom:14px}
+.home-redesign .section-intro{margin-bottom:30px;text-align:left;max-width:760px;margin-left:0}
+.home-redesign .section-intro p{color:#536170;font-size:16px}.home-redesign .section-intro .section-kicker{color:#216c40;font-size:13px}
+.home-redesign .availability-summary{gap:16px;margin:28px 0}.home-redesign .summary-tile{border:1px solid #dee6ee;background:white;color:#142536;box-shadow:none;border-radius:8px;padding:22px}
+.home-redesign .summary-tile span{color:#142536;font-size:27px}.home-redesign .summary-tile small{font-size:14px;color:#5a6774}
+.home-redesign .rooms-showcase{max-width:100%;border-radius:12px;overflow:hidden}.home-redesign .room-slideshow{max-height:450px}.home-redesign .slideshow-slide img{max-height:450px;object-fit:cover}
+.home-redesign .rooms-table-container{background:#fff;border:1px solid #dee6ee;border-radius:10px;box-shadow:none}
+.home-redesign table{font-size:15px}.home-redesign th{background:#eaf0f7;color:#142536}.home-redesign td{border-color:#e4e9ef}
+.home-redesign .rooms-filter{background:white;border:1px solid #cbd5df;color:#142536}.home-redesign .rooms-filter.active,.home-redesign .rooms-filter[aria-pressed=true]{background:#142536;color:#fff}
+.home-redesign .about-container{gap:40px}.home-redesign .about-text p{color:#536170}.home-redesign .about-text ul{font-size:16px;color:#536170}
+.home-redesign .about-image{border-radius:12px;box-shadow:none}
+.home-redesign .campus-card{background:white;border:1px solid #dee6ee;box-shadow:none;border-radius:10px}.home-redesign .campus-card a{color:#216c40}
+.home-redesign .facilities-section>h2{margin-bottom:32px}
+.home-redesign .facility-box{background:#fff!important;color:#536170;box-shadow:none;border:1px solid #dee6ee;border-radius:10px;padding:0 0 26px;overflow:hidden;text-align:left;transform:none}
+.home-redesign .facility-box::before,.home-redesign .facility-box::after{display:none}.home-facility-photo{width:100%;height:230px;object-fit:cover}
+.home-redesign .facility-box h3{margin:24px 24px 12px}.home-redesign .facility-box p{margin:0 24px;color:#536170;font-size:16px}
+.home-steps{border-top:1px solid #dee6ee}.home-step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:32px}.home-step-grid article{background:#fff;border:1px solid #dee6ee;border-radius:10px;padding:28px}.home-step-grid h3{margin-bottom:16px}.home-step-grid p{font-size:16px;color:#536170}.home-step-grid a{display:inline-block;color:#216c40;text-decoration:underline;margin-top:20px;font-weight:600}
+.home-redesign #room-information{max-width:1176px!important;background:#eaf0f7!important;border:1px solid #dce5ef;border-radius:12px!important;margin:32px auto!important;padding:32px!important}.home-redesign #room-information h2{font-size:2rem}
+.home-redesign .faq-list details{background:white;border:1px solid #dee6ee;box-shadow:none;border-radius:8px}.home-redesign .faq-list summary{font-size:16px;color:#142536}.home-redesign .faq-list p{font-size:16px;color:#536170}
+.home-redesign :is(input,select,textarea){font-size:16px!important;border-radius:6px!important;border-color:#bcc9d5!important;background:white;color:#142536;min-height:44px}
+.home-redesign input[type=checkbox]{min-height:0}.home-redesign .booking-form,.home-redesign .contact-form{background:white;border:1px solid #dee6ee;box-shadow:none;border-radius:12px}
+.home-redesign .mobile-booking-bar{background:white;border-top:1px solid #dce5ef}.home-redesign .whatsapp-float{z-index:90}
+.home-redesign #room-rate-guide{border-color:#dce5ef!important;background:white!important}
+@media(min-width:769px){.home-redesign .room-slideshow{max-width:660px;margin:auto}.home-redesign .rooms-showcase{margin:28px 0}}
+@media(max-width:1000px) and (min-width:769px){.home-redesign .navbar-inner{padding:15px 20px}.home-redesign .nav-links ul{gap:10px}.home-redesign .nav-links a{font-size:12px}.home-redesign .hero{gap:28px}.home-redesign .hero h1{font-size:3rem}}
+@media(max-width:768px){
+.home-redesign .navbar-inner{padding:14px 20px}.home-redesign .logo-text{font-size:20px}.home-redesign .hero{display:flex;flex-direction:column;align-items:stretch;gap:28px;padding:36px 20px 32px;text-align:left;min-height:0}
+.home-redesign .hero-content{max-width:none}.home-redesign .hero h1{font-size:clamp(2.6rem,9vw,3.5rem);line-height:1.08;margin:16px 0 20px}.home-redesign .hero p{font-size:16px}.home-redesign .hero .hero-subtitle{font-size:12px}.home-redesign .hero-actions{display:flex;flex-direction:column;gap:10px}.home-redesign .hero-actions .btn{width:100%;padding:16px}.home-hero-photo img{height:310px;object-position:center 48%}.home-hero-photo figcaption{padding:18px 20px}.home-features{gap:10px 16px;font-size:13px}
+.home-live-strip{padding:20px;display:block}.home-live-strip>div{margin-top:10px;gap:8px 16px;font-size:13px}
+.home-redesign :is(.rooms-section,.about-section,.campus-access-section,.facilities-section,.faq-section,.booking-section,.contact-section,.home-steps){padding:44px 20px;scroll-margin-top:90px}
+.home-redesign .availability-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.home-redesign .summary-tile{padding:16px 12px}.home-redesign .summary-tile span{font-size:24px}.home-redesign .summary-tile small{font-size:13px}
+.home-redesign .section-intro{text-align:left}.home-redesign .rooms-showcase{margin:24px 0}.home-redesign .room-slideshow,.home-redesign .slideshow-slide img{max-height:360px}
+.home-redesign .facilities-grid,.home-step-grid{grid-template-columns:1fr;gap:18px}.home-facility-photo{height:260px}.home-redesign #room-information{margin:20px!important;padding:24px!important}.home-redesign .home-step-grid article{padding:24px}.home-redesign .about-container{display:block}.home-redesign .about-image{min-height:260px;margin-top:24px}.home-redesign .nav-links .nav-book{color:#fff}.home-redesign .faq-list summary{padding:18px;font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){.home-redesign *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+.home-redesign .hero :is(h1,p){text-shadow:none}.home-redesign .hero-actions{justify-content:flex-start}

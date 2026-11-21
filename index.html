@@ -25,7 +25,7 @@
   <!-- Preload critical resources for faster loading -->
   <link rel="preload" href="style.css" as="style" />
   <link rel="preload" href="scripts.js" as="script" />
-  <link rel="preload" href="Assets/images/HERO.png" as="image" type="image/png" />
+  <link rel="preload" href="Assets/images/jch-gallery/jeffston-court-hostel-four-bed-bunk-room.webp" as="image" type="image/webp" />
   
   <!-- DNS prefetch for external resources -->
   <link rel="dns-prefetch" href="//js.paystack.co" />
@@ -198,7 +198,7 @@
 
   <script defer src="scripts.js"></script>
 <script defer src="/analytics.js"></script></head>
-<body>
+<body class="home-redesign">
   <a class="skip-link" href="#main">Skip to main content</a>
 
   <!-- WhatsApp Floating Button -->
@@ -219,7 +219,7 @@
     <div class="navbar-inner">
       <a href="#home" class="logo" aria-label="Go to Home">
         <img src="Assets/images/logo2.jpg" alt="Jeffston Court Hostel Logo" width="40" height="40" loading="lazy">
-        <span class="logo-text">JCH</span>
+        <span class="logo-text">Jeffston Court<small>STUDENT HOSTEL · ADENTA</small></span>
       </a>
 
       <button id="mobile-menu" class="nav-toggle" aria-label="Toggle navigation" aria-controls="primary-navigation" aria-expanded="false">
@@ -228,13 +228,12 @@
 
       <nav id="primary-navigation" class="nav-links" role="navigation" aria-label="Primary">
         <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#campus-access">Campus</a></li>
+          <li><a href="#rooms">Rooms &amp; prices</a></li>
           <li><a href="#facilities">Facilities</a></li>
-          <li><a href="#rooms">Rooms</a></li>
-          <li><a href="#booking">Booking</a></li>
+          <li><a href="#campus-access">Location</a></li>
+          <li><a href="#faq">FAQs</a></li>
           <li><a href="#contact">Contact</a></li>
+          <li><a href="#booking" class="nav-book">Book a room</a></li>
         </ul>
       </nav>
     </div>
@@ -243,145 +242,27 @@
   <main id="main" role="main">
     <!-- HERO SECTION -->
 <section id="home" class="hero" aria-labelledby="hero-heading">
-  <div class="hero-content" data-aos="fade-up">
-    <h1 id="hero-heading">Jeffston Court Hostel</h1>
-    <p class="hero-subtitle">2026/2027 Academic Year: Student Accommodation Enquiries Open</p>
-    <p>Furnished rooms at Adenta Court Complex, with live prices and remaining spaces shown below.</p>
-    <div class="hero-quick-facts" aria-label="Availability highlights">
-      <span id="hero-live-availability">Checking live space…</span>
-      <span id="hero-live-price">Checking live price…</span>
-      <span>Adenta Court</span>
-    </div>
+  <div class="hero-content">
+    <p class="hero-subtitle">Adenta Court Complex · 2026/2027</p>
+    <h1 id="hero-heading">A place to settle.<br><em>Space to focus.</em></h1>
+    <p class="hero-description">Furnished student rooms in Adenta. Compare room options, check live bed availability and speak directly with reception.</p>
     <div class="hero-actions">
-      <a href="#booking" class="btn btn-primary" role="button">Book a Room</a>
-      <a href="https://wa.me/233201349321?text=JCH%20Website%20-%20Hello%2C%20I%27m%20interested%20in%20Jeffston%20Court%20Hostel.%20Can%20you%20please%20provide%20more%20information%3F"
-         target="_blank" 
-         rel="noopener noreferrer"
-         class="btn btn-whatsapp" 
-         role="button">
-        <svg class="btn-icon" viewBox="0 0 24 24" width="20" height="20">
-          <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
-        </svg>
-        WhatsApp Us
-      </a>
+      <a href="#rooms" class="btn btn-primary">Check rooms &amp; prices</a>
+      <a href="https://wa.me/233201349321?text=Hello%2C%20I%27d%20like%20to%20arrange%20a%20viewing%20at%20Jeffston%20Court%20Hostel.%20Please%20confirm%20a%20suitable%20time." target="_blank" rel="noopener noreferrer" class="btn btn-outline">Arrange a viewing</a>
     </div>
+    <p class="hero-help">Questions first? <a href="tel:+233201349321">Call reception: 0201349321</a></p>
+    <ul class="home-features" aria-label="Room and facility highlights"><li>2–4 person options</li><li>Study desks</li><li>Shared kitchen</li></ul>
   </div>
+  <figure class="home-hero-photo">
+    <picture><source media="(max-width: 768px)" srcset="Assets/images/jch-gallery/jeffston-court-hostel-four-bed-bunk-room-mobile.webp" type="image/webp"><source srcset="Assets/images/jch-gallery/jeffston-court-hostel-four-bed-bunk-room.webp" type="image/webp"><img src="Assets/images/jch-gallery/jeffston-court-hostel-four-bed-bunk-room.jpg" alt="A real Jeffston Court Hostel shared room with wooden bunk beds, desks and storage" width="720" height="1280" fetchpriority="high" decoding="async"></picture>
+    <figcaption><strong>Your next chapter starts here.</strong><span>Explore the rooms. Ask questions. See it for yourself.</span></figcaption>
+  </figure>
 </section>
-
- <!-- ABOUT SECTION -->
-<section id="about" class="about-section" aria-labelledby="about-heading">
-  <div class="about-container" data-aos="fade-up">
-    <div class="about-text">
-      <h2 id="about-heading">About Jeffston Court Hostel</h2>
-      <p>Jeffston Court Hostel offers a comprehensive student living experience here in Accra, Ghana. Located in the tranquil Adenta Court Complex, our facility is optimized for students looking for safety, discipline, and a quality living environment.</p>
-
-      <p>Understanding the demands of student life, we aim to offer everything within arm's reach under one roof. For the 2026/2027 Academic Year, prices and remaining beds are checked against the hostel management system.</p>
-
-      <p><strong>Live availability:</strong> Room prices and available bed spaces below are pulled from the hostel management system, so a new live booking reduces the public availability automatically.</p>
-
-      <p>Our comprehensive amenities include:</p>
-      <ul>
-         <li>Free Wi-Fi throughout the facility</li>
-         <li>Water and power support, including backup power equipment</li>
-         <li>Ask management about current utility arrangements and what your room rate includes</li>
-         <li>Confirm current transport routes and schedules before booking</li>
-         <li>Smart TVs, air conditioning and other room features vary by room</li>
-         <li>Check the specific room's facilities before reserving</li>
-         <li>Shared common areas and laundry facilities; confirm any service charges</li>
-         <li>On-site convenience shop and food unit</li>
-      </ul>
-
-      <p>With constant surveillance and staff dedicated to providing support, we help ensure a comfortable and smart living environment.</p>
-
-      <p>Discover modern student living at Jeffston Court. Here, you can live better, learn focused, and move freely.</p>
-
-      <!-- Current hostel video rendered with Remotion -->
-      <div class="video-container">
-        <video
-          controls
-          preload="metadata"
-          poster="Assets/videos/jeffston-court-hostel-poster.png"
-          aria-label="Video tour of Jeffston Court Hostel rooms and facilities">
-          <source src="Assets/videos/jeffston-court-hostel-2026.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
-    <div class="about-image" aria-hidden="true"></div>
-  </div>
-</section>
-    <section id="campus-access" class="campus-access-section" aria-labelledby="campus-access-heading">
-      <div class="section-intro" data-aos="fade-up">
-        <p class="section-kicker">Campus access</p>
-        <h2 id="campus-access-heading">Student hostel routes for Legon and UPSA</h2>
-        <p>Use the campus pages below to compare the most relevant Jeffston Court Hostel details for your school, then jump straight to rooms and booking.</p>
-      </div>
-
-      <div class="campus-card-grid">
-        <article class="campus-card" data-aos="fade-up" data-aos-delay="100">
-          <p class="campus-card-kicker">University of Ghana</p>
-          <h3><a href="hostel-near-legon/">Hostel near University of Ghana Legon</a></h3>
-          <p>Furnished rooms, study desks, Wi-Fi, and quick booking support for Legon students who want a calm Adenta base.</p>
-          <ul class="campus-points">
-            <li>Check current room rents and bed counts live</li>
-            <li>WhatsApp booking support for parents and students</li>
-            <li>Shared kitchen, laundry, and common spaces</li>
-          </ul>
-          <a class="btn btn-secondary" href="hostel-near-legon/">View Legon page</a>
-        </article>
-
-        <article class="campus-card" data-aos="fade-up" data-aos-delay="200">
-          <p class="campus-card-kicker">UPSA access</p>
-          <h3><a href="hostel-near-upsa/">Hostel near UPSA</a></h3>
-          <p>A practical student-living option for UPSA students looking for secure rooms, reliable utilities, and focused study space.</p>
-          <ul class="campus-points">
-            <li>Standard, General, and Premium room options</li>
-            <li>Air-conditioned rooms and Smart TVs in selected rooms</li>
-            <li>Book online or ask questions on WhatsApp</li>
-          </ul>
-          <a class="btn btn-secondary" href="hostel-near-upsa/">View UPSA page</a>
-        </article>
-        <article class="campus-card" data-aos="fade-up">
-          <p class="campus-card-kicker">Adenta &amp; Fafraha</p>
-          <h3><a href="student-hostel-adenta/">Student accommodation in Adenta</a></h3>
-          <p>Explore room sizes, shared facilities, location, what to check before paying, and 2026/2027 live availability.</p>
-          <ul class="campus-points"><li>Two-, three- and four-person furnished rooms</li><li>Security and shared study-friendly facilities</li><li>Inspection enquiries and Google Maps directions</li></ul>
-          <a class="btn btn-secondary" href="student-hostel-adenta/">Explore the Adenta guide</a>
-        </article>
-        <article class="campus-card" data-aos="fade-up">
-          <p class="campus-card-kicker">Academic City students</p>
-          <h3><a href="hostel-near-academic-city/">Accommodation for Academic City students</a></h3>
-          <p>Understand the location, private student housing options and how to check the route before committing.</p>
-          <ul class="campus-points"><li>Ask us about rooms and move-in dates</li><li>Check campus travel independently</li><li>No unconfirmed shuttle promise</li></ul>
-          <a class="btn btn-secondary" href="hostel-near-academic-city/">View Academic City guide</a>
-        </article>
-      </div>
-    </section>
-
-    <!-- FACILITIES SECTION -->
-    <section id="facilities" class="facilities-section" aria-labelledby="facilities-heading">
-      <h2 id="facilities-heading" data-aos="fade-up">Our Facilities</h2>
-      <div class="facilities-grid">
-        <article class="facility-box facility-modern" role="region" aria-labelledby="fac-modern" data-aos="fade-up" data-aos-delay="100">
-          <h3 id="fac-modern">Modern Living Spaces</h3>
-          <p>Air-conditioned rooms and Smart TVs are available in selected rooms. Confirm your room's facilities and included services before booking.</p>
-        </article>
-        <article class="facility-box facility-common" role="region" aria-labelledby="fac-common" data-aos="fade-up" data-aos-delay="200">
-          <h3 id="fac-common">Spacious Common Area</h3>
-          <p>Comfortable lounge where residents can relax, study, or socialize.</p>
-        </article>
-        <article class="facility-box facility-exec" role="region" aria-labelledby="fac-exec" data-aos="fade-up" data-aos-delay="300">
-          <h3 id="fac-exec">Dining & Kitchen Facilities</h3>
-          <p>Fully equipped kitchen and dining area with fridge, microwave, and more.</p>
-        </article>
-      </div>
-    </section>
-
-<!-- ROOMS SECTION -->
+<aside class="home-live-strip" aria-label="Live availability"><span>Room information, directly from the hostel</span><div><span id="hero-live-availability">Checking live space…</span><span id="hero-live-price">Checking live price…</span><a href="#rooms">Compare room options</a></div></aside>
 <section id="rooms" class="rooms-section" aria-labelledby="rooms-heading" data-rooms-api="/api/rooms" data-rooms-fallback-api="https://script.google.com/macros/s/AKfycbzjBfEHdqU2pgfLJD3P5dNkMB888WYuY77VKvepAqcw4nGdfncFHuQ_KYD7piwbBCvH/exec?action=rooms">
   <div class="section-intro" data-aos="fade-up">
-    <p class="section-kicker">Rooms Overview</p>
-    <h2 id="rooms-heading">Live Room Availability</h2>
+    <p class="section-kicker">Find your fit</p>
+    <h2 id="rooms-heading">Your room. Your study space.</h2>
     <p>Compare current room prices and available beds. Reception will confirm your room and booking arrangements.</p>
   </div>
 
@@ -549,7 +430,121 @@
   </div>
 </section>
 
+
+ <!-- ABOUT SECTION -->
+<section id="about" class="about-section" aria-labelledby="about-heading">
+  <div class="about-container" data-aos="fade-up">
+    <div class="about-text">
+      <p class="section-kicker">Life at Jeffston Court</p><h2 id="about-heading">More than a place to sleep.</h2>
+      <p>Make Adenta Court Complex your base for student life in Accra. Explore furnished rooms, shared spaces and the practical details that matter to your day.</p>
+
+      <p>Understanding the demands of student life, we aim to offer everything within arm's reach under one roof. For the 2026/2027 Academic Year, prices and remaining beds are checked against the hostel management system.</p>
+
+      <p><strong>Live availability:</strong> Room prices and available bed spaces in the room table are pulled from the hostel management system, so a new live booking reduces the public availability automatically.</p>
+
+      <p>Our comprehensive amenities include:</p>
+      <ul>
+         <li>Free Wi-Fi throughout the facility</li>
+         <li>Water and power support, including backup power equipment</li>
+         <li>Ask management about current utility arrangements and what your room rate includes</li>
+         <li>Confirm current transport routes and schedules before booking</li>
+         <li>Smart TVs, air conditioning and other room features vary by room</li>
+         <li>Check the specific room's facilities before reserving</li>
+         <li>Shared common areas and laundry facilities; confirm any service charges</li>
+         <li>On-site convenience shop and food unit</li>
+      </ul>
+
+      <p>Speak with reception about security arrangements, room facilities and the services included in your rate before reserving.</p>
+
+      <p>Discover modern student living at Jeffston Court. Here, you can live better, learn focused, and move freely.</p>
+
+      <!-- Current hostel video rendered with Remotion -->
+      <div class="video-container">
+        <video
+          controls
+          preload="metadata"
+          poster="Assets/videos/jeffston-court-hostel-poster.png"
+          aria-label="Video tour of Jeffston Court Hostel rooms and facilities">
+          <source src="Assets/videos/jeffston-court-hostel-2026.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="about-image" aria-hidden="true"></div>
+  </div>
+</section>
+    <section id="campus-access" class="campus-access-section" aria-labelledby="campus-access-heading">
+      <div class="section-intro" data-aos="fade-up">
+        <p class="section-kicker">Campus access</p>
+        <h2 id="campus-access-heading">Student hostel routes for Legon and UPSA</h2>
+        <p>Use the campus pages below to compare the most relevant Jeffston Court Hostel details for your school, then jump straight to rooms and booking.</p>
+      </div>
+
+      <div class="campus-card-grid">
+        <article class="campus-card" data-aos="fade-up" data-aos-delay="100">
+          <p class="campus-card-kicker">University of Ghana</p>
+          <h3><a href="hostel-near-legon/">Hostel near University of Ghana Legon</a></h3>
+          <p>Furnished rooms, study desks, Wi-Fi, and quick booking support for Legon students who want a calm Adenta base.</p>
+          <ul class="campus-points">
+            <li>Check current room rents and bed counts live</li>
+            <li>WhatsApp booking support for parents and students</li>
+            <li>Shared kitchen, laundry, and common spaces</li>
+          </ul>
+          <a class="btn btn-secondary" href="hostel-near-legon/">View Legon page</a>
+        </article>
+
+        <article class="campus-card" data-aos="fade-up" data-aos-delay="200">
+          <p class="campus-card-kicker">UPSA access</p>
+          <h3><a href="hostel-near-upsa/">Hostel near UPSA</a></h3>
+          <p>A practical student-living option for UPSA students looking for secure rooms, reliable utilities, and focused study space.</p>
+          <ul class="campus-points">
+            <li>Standard, General, and Premium room options</li>
+            <li>Air-conditioned rooms and Smart TVs in selected rooms</li>
+            <li>Book online or ask questions on WhatsApp</li>
+          </ul>
+          <a class="btn btn-secondary" href="hostel-near-upsa/">View UPSA page</a>
+        </article>
+        <article class="campus-card" data-aos="fade-up">
+          <p class="campus-card-kicker">Adenta &amp; Fafraha</p>
+          <h3><a href="student-hostel-adenta/">Student accommodation in Adenta</a></h3>
+          <p>Explore room sizes, shared facilities, location, what to check before paying, and 2026/2027 live availability.</p>
+          <ul class="campus-points"><li>Two-, three- and four-person furnished rooms</li><li>Security and shared study-friendly facilities</li><li>Inspection enquiries and Google Maps directions</li></ul>
+          <a class="btn btn-secondary" href="student-hostel-adenta/">Explore the Adenta guide</a>
+        </article>
+        <article class="campus-card" data-aos="fade-up">
+          <p class="campus-card-kicker">Academic City students</p>
+          <h3><a href="hostel-near-academic-city/">Accommodation for Academic City students</a></h3>
+          <p>Understand the location, private student housing options and how to check the route before committing.</p>
+          <ul class="campus-points"><li>Ask us about rooms and move-in dates</li><li>Check campus travel independently</li><li>No unconfirmed shuttle promise</li></ul>
+          <a class="btn btn-secondary" href="hostel-near-academic-city/">View Academic City guide</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- FACILITIES SECTION -->
+    <section id="facilities" class="facilities-section" aria-labelledby="facilities-heading">
+      <h2 id="facilities-heading" data-aos="fade-up">Our Facilities</h2>
+      <div class="facilities-grid">
+        <article class="facility-box facility-modern" role="region" aria-labelledby="fac-modern" data-aos="fade-up" data-aos-delay="100"><img class="home-facility-photo" src="Assets/images/jch-gallery/jeffston-court-hostel-bright-shared-room.webp" alt="Furnished shared room with study spaces" width="720" height="960" loading="lazy" decoding="async">
+          <h3 id="fac-modern">Modern Living Spaces</h3>
+          <p>Air-conditioned rooms and Smart TVs are available in selected rooms. Confirm your room's facilities and included services before booking.</p>
+        </article>
+        <article class="facility-box facility-common" role="region" aria-labelledby="fac-common" data-aos="fade-up" data-aos-delay="200"><img class="home-facility-photo" src="Assets/images/jch-gallery/jeffston-court-hostel-common-lounge.webp" alt="Jeffston Court Hostel common lounge" width="720" height="960" loading="lazy" decoding="async">
+          <h3 id="fac-common">Spacious Common Area</h3>
+          <p>Comfortable lounge where residents can relax, study, or socialize.</p>
+        </article>
+        <article class="facility-box facility-exec" role="region" aria-labelledby="fac-exec" data-aos="fade-up" data-aos-delay="300"><img class="home-facility-photo" src="Assets/images/jch-gallery/jeffston-court-hostel-shared-kitchen-cabinets.webp" alt="Shared kitchen at Jeffston Court Hostel" width="720" height="960" loading="lazy" decoding="async">
+          <h3 id="fac-exec">Dining & Kitchen Facilities</h3>
+          <p>Fully equipped kitchen and dining area with fridge, microwave, and more.</p>
+        </article>
+      </div>
+    </section>
+
+<!-- ROOMS SECTION -->
+
+
 <section id="room-information" aria-labelledby="room-information-title" style="max-width:760px;margin:28px auto;padding:28px;border-radius:16px;background:#eef2f1;color:#183b42"><h2 id="room-information-title">Not ready to book? Get the details first.</h2><p>We can email you current room availability and semester prices. Requesting information does not reserve a bed.</p><form id="info-form"><label for="jch-info-email">Your email address</label><input id="jch-info-email" name="email" type="email" autocomplete="email" maxlength="254" required><div class="trap" aria-hidden="true"><label>Company<input name="company" tabindex="-1" autocomplete="off"></label></div><label class="consent"><input id="jch-info-marketing" type="checkbox"><span>Also email me future room availability and accommodation offers from Jeffston Court. I can unsubscribe at any time.</span></label><p class="note">This choice is optional. We use your email to respond and a daily network tag to limit repeated requests. Future marketing starts only if you select the box and confirm by email. <a href="/room-updates/#privacy">How we use your information</a>.</p><button id="jch-info-submit" type="submit">Email me room information</button><p id="jch-info-status" role="status" aria-live="polite"></p></form></section><script src="/room-updates/form.js" defer></script>
+<section class="home-steps" aria-labelledby="steps-heading"><p class="section-kicker">A clear next step</p><h2 id="steps-heading">Feel at home with your decision.</h2><div class="home-step-grid"><article><h3>Compare your options</h3><p>Use the live room table to check room types, listed rent and remaining bed spaces.</p><a href="#rooms">Explore rooms</a></article><article><h3>See it for yourself</h3><p>Call or WhatsApp reception to arrange an inspection. Confirm a meeting time before travelling.</p><a href="https://wa.me/233201349321?text=Hello%2C%20can%20I%20arrange%20a%20room%20inspection%3F" target="_blank" rel="noopener noreferrer">Ask about a viewing</a></article><article><h3>Confirm before paying</h3><p>Confirm your room, booking period, total price and included services with reception. Payments are non-refundable.</p><a href="#booking">Go to booking</a></article></div></section>
 <section id="faq" class="faq-section" aria-labelledby="faq-heading">
   <div class="section-intro" data-aos="fade-up">
     <p class="section-kicker">Student questions</p>
@@ -731,7 +726,7 @@
 
   <!-- Footer could be added here for additional content -->
   <div class="mobile-booking-bar" aria-label="Quick booking actions">
-    <a href="#booking" class="mobile-booking-primary">Book a Room</a>
+    <a href="#rooms" class="mobile-booking-primary">Check rooms</a>
     <a href="https://wa.me/233201349321?text=JCH%20Website%20-%20Hello%2C%20I%27m%20interested%20in%20Jeffston%20Court%20Hostel.%20Can%20you%20please%20help%20me%20book%20a%20room%3F"
        target="_blank" 
        rel="noopener noreferrer"
